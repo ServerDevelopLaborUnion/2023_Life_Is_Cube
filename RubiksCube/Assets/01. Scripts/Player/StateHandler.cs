@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class StateHandler : MonoBehaviour
 {
+    [SerializeField] State currentState = null;
     private Dictionary<StateFlags, State> stateDictionary = new Dictionary<StateFlags, State>();
-    private State currentState = null;
 
     private void Awake()
     {
@@ -31,6 +31,12 @@ public class StateHandler : MonoBehaviour
 
     public void ChangeState(StateFlags targetState)
     {
+        if(stateDictionary.ContainsKey(targetState) == false)
+        {
+            Debug.LogWarning($"There is no script about {targetState} state");
+            return;
+        }
+
         currentState?.OnStateExit();
 
         currentState = stateDictionary[targetState];

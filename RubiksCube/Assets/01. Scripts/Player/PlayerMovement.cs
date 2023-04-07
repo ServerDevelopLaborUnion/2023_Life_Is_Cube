@@ -4,7 +4,7 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] float moveSpeed = 8f;
     [SerializeField] float rotateSpeed = 8f;
-    [SerializeField] float gravity = -9.81f;
+    [SerializeField] float gravityScale = 1;
 
     private CharacterController characterController = null;
 
@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 MovementVelocity => movementVelocity;
 
     private float verticalVelocity = 0f;
+    private float gravity = -9.81f;
 
     public bool IsActiveMove { get; set; }
 
@@ -26,9 +27,9 @@ public class PlayerMovement : MonoBehaviour
             CalculateMovement();
     
         if(characterController.isGrounded == false)
-            verticalVelocity = gravity * Time.fixedDeltaTime;
+            verticalVelocity = gravity * gravityScale * Time.fixedDeltaTime;
         else
-            verticalVelocity = gravity * 0.3f * Time.fixedDeltaTime;
+            verticalVelocity = gravity * gravityScale * 0.3f * Time.fixedDeltaTime;
 
         Vector3 move = movementVelocity + verticalVelocity * Vector3.up;
         characterController.Move(move);
@@ -50,7 +51,7 @@ public class PlayerMovement : MonoBehaviour
     private void CalculateMovement()
     {
         movementVelocity.Normalize();
-        movementVelocity = Quaternion.Euler(0, -45f, 0) * movementVelocity;
+        // movementVelocity = Quaternion.Euler(0, -45f, 0) * movementVelocity;
 
         movementVelocity *= moveSpeed * Time.fixedDeltaTime;
         if(movementVelocity.sqrMagnitude > 0)

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PlayerInput : MonoBehaviour
 {
-    public event Action<Vector2> OnMovementKeyPressed = null;
+    public event Action<Vector3> OnMovementKeyPressed = null;
 
     private void Update()
     {
@@ -15,7 +15,7 @@ public class PlayerInput : MonoBehaviour
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
 
-        Vector2 input = new Vector2(h, v);
+        Vector3 input = new Vector3(h, 0, v);
 
         OnMovementKeyPressed?.Invoke(input);
     }
