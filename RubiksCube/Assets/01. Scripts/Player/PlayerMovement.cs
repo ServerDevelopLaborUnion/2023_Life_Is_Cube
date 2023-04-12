@@ -51,7 +51,7 @@ public class PlayerMovement : MonoBehaviour
     private void CalculateMovement()
     {
         movementVelocity.Normalize();
-        // movementVelocity = Quaternion.Euler(0, -45f, 0) * movementVelocity;
+        movementVelocity = Quaternion.Euler(0, 45f, 0) * movementVelocity;
 
         movementVelocity *= moveSpeed * Time.fixedDeltaTime;
         if(movementVelocity.sqrMagnitude > 0)
