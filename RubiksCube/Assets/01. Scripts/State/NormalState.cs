@@ -27,6 +27,6 @@ public class NormalState : State
 
     private void MovementHandle(Vector3 input)
     {
-        playerMovement.SetMovementVelocity(input);
+        playerMovement.SetMovementDirection(input);
     }
 }
