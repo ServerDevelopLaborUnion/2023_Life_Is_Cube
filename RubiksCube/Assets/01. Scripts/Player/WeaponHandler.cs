@@ -1,12 +1,13 @@
+using System;
 using UnityEngine;
 
 public class WeaponHandler : MonoBehaviour
 {
     [SerializeField] Weapon currentWeapon = null;
 
-    public void ActiveWeapon()
+    public bool TryActiveWeapon()
     {
-        currentWeapon.TryAticveWeapon();;
+        return currentWeapon.TryAticveWeapon();
     }
 
     public void SetWeapon(Weapon weapon)

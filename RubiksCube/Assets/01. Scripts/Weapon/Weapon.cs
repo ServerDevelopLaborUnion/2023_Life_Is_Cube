@@ -18,4 +18,6 @@ public abstract class Weapon : MonoBehaviour
         
         return true;
     }
+
+    public bool AbleToActive() => (Time.time - latestActiveTime < attackCooldown);
 }

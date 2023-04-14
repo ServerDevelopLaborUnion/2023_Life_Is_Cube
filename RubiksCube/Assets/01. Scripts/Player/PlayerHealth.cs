@@ -13,7 +13,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         playerStat = GetComponent<PlayerStat>();
     }
 
-    public void OnDamage(float damage)
+    public void OnDamage(float damage, Vector3 point, Vector3 normal)
     {
         if(currentHP <= 0f)
             return;
