@@ -13163,7 +13163,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6721992598156349183}
   - component: {fileID: 4525449427675921942}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Box002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13558,6 +13558,7 @@ SkinnedMeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: ea9cee7d49cf0864593b2167803d5706, type: 2}
+  - {fileID: 2100000, guid: b7ae915783f5f754ca70b5d5aed1f07c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
