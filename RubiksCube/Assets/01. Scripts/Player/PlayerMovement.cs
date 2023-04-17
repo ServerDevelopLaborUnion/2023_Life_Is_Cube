@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float gravityScale = 1;
 
     private CharacterController characterController = null;
-    private PlayerAnimator playerAnimator = null;
+    private AnimatorHandler playerAnimator = null;
 
     private Vector3 movementDir = Vector3.zero;
     public Vector3 MovementDir => movementDir;
@@ -25,7 +25,7 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
-        playerAnimator = transform.Find("Model").GetComponent<PlayerAnimator>();
+        playerAnimator = transform.Find("Model").GetComponent<AnimatorHandler>();
         IsActiveMove = true;
         IsActiveRotate = true;
     }

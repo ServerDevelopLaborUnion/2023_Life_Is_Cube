@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class PlayerAnimator : MonoBehaviour
+public class AnimatorHandler : MonoBehaviour
 {   
     public event Action OnAnimationEndTrigger = null;
     public event Action OnAnimationEventTrigger = null;
