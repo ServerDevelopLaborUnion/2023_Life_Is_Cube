@@ -19,7 +19,7 @@ public class NavMovement : MonoBehaviour
 
     public bool IsArrived()
     {
-        if(navAgent.pathPending == false && navAgent.remainingDistance <= navAgent.stoppingDistance)
+        if(navAgent.pathPending == false && navAgent.remainingDistance <= navAgent.stoppingDistance + 0.5f)
             return true;
         else
             return false;

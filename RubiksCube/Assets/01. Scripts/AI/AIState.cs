@@ -23,7 +23,7 @@ public abstract class AIState : MonoBehaviour, IState
         }
     }
 
-    public void SetUp(Transform root)
+    public virtual void SetUp(Transform root)
     {
         navMovement = root.GetComponent<NavMovement>();
         enemyAnimator = root.Find("Model").GetComponent<AnimatorHandler>();
