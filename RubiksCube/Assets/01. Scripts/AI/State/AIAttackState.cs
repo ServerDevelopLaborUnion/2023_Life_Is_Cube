@@ -4,7 +4,7 @@ public class AIAttackState : AIState
 {
     public override void OnStateEnter()
     {
-        aiBrain.NavMovement.StopImmediately();
+        navMovement.StopImmediately();
     }
 
     public override void StateUpdate()
