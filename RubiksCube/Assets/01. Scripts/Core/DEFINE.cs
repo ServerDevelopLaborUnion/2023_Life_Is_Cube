@@ -3,6 +3,7 @@ using UnityEngine;
 public class DEFINE
 {
     public const int EnemyLayer = 1 << 7;
+    public const int CubeLayer = 1 << 8;
 
     private static Transform playerTrm = null;
     public static Transform PlayerTrm {
