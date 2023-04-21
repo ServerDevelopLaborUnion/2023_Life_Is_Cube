@@ -11,19 +11,18 @@ public class PlayerInput : MonoBehaviour
 
     private void Update()
     {
-        MovementInput();
         ConsumeInput();
-        AttackInput();
+        //AttackInput();
     }
 
-    private void MovementInput()
+    public void MovementInput(Vector2 input)
     {
-        float h = Input.GetAxisRaw("Horizontal");
-        float v = Input.GetAxisRaw("Vertical");
+        // float h = Input.GetAxisRaw("Horizontal");
+        // float v = Input.GetAxisRaw("Vertical");
 
-        Vector3 input = new Vector3(h, 0, v);
+        Vector3 dir = new Vector3(input.x, 0, input.y);
 
-        OnMovementKeyPressed?.Invoke(input);
+        OnMovementKeyPressed?.Invoke(dir);
     }
 
     private void ConsumeInput()
@@ -32,10 +31,10 @@ public class PlayerInput : MonoBehaviour
             OnConsumeKeyPressed?.Invoke();
     }
 
-    private void AttackInput()
+    public void AttackInput()
     {
-        if(Input.GetMouseButtonDown(0))
-            OnAttackKeyPressed?.Invoke();
+        //if(Input.GetMouseButtonDown(0))
+        OnAttackKeyPressed?.Invoke();
     }
     
     public Vector3 GetMouseWorldPosition() 
