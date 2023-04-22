@@ -36,5 +36,5 @@ public class Cube : MonoBehaviour
             yield return cubeAxesDictionary[(DirectionFlags)axis].Rotate(rotateDuration, (i % 2) == 0);
             yield return new WaitForSeconds(0.1f);
         }
-    }
+    } 
 }
