@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] float moveSpeed = 10f;
     [SerializeField] float rotateSpeed = 10f;
     [SerializeField] float gravityScale = 1;
 
     private CharacterController characterController = null;
     private AnimatorHandler playerAnimator = null;
+    private PlayerStat playerStat = null;
 
     private Vector3 movementDir = Vector3.zero;
     public Vector3 MovementDir => movementDir;
@@ -16,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
 
     private Vector3 movementVelocity = Vector3.zero;
 
+    public float MoveSpeed => playerStat.GetStat(StatFlags.Speed);
     private float gravity = -9.81f;
     private float verticalVelocity = 0f;
 
@@ -26,6 +27,8 @@ public class PlayerMovement : MonoBehaviour
     {
         characterController = GetComponent<CharacterController>();
         playerAnimator = transform.Find("Model").GetComponent<AnimatorHandler>();
+        playerStat = GetComponent<PlayerStat>();
+
         IsActiveMove = true;
         IsActiveRotate = true;
     }
@@ -50,7 +53,7 @@ public class PlayerMovement : MonoBehaviour
 
         playerAnimator?.SetSpeed(movementDir.sqrMagnitude);
 
-        movementVelocity *= moveSpeed * Time.fixedDeltaTime;
+        movementVelocity *= MoveSpeed * Time.fixedDeltaTime;
         
         if (IsActiveRotate)
         {

@@ -4,13 +4,15 @@ using UnityEngine.EventSystems;
 
 public class JoyStick : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    [SerializeField, Tooltip("The distance from the center the stick able to move")] float maxDistance = 10f;
+    //[SerializeField, Tooltip("The distance from the center the stick able to move")] float maxDistance = 10f;
     [SerializeField, Tooltip("the speed at which the stick returns when the drag is finished")] float returningSpeed = 50f;
 
     [Header("Events")]
     [SerializeField] UnityEvent<Vector2> OnValueChagned;
     [SerializeField] UnityEvent OnDragStart;
     [SerializeField] UnityEvent OnDragEnd;
+
+    private float maxDistance = 10f;
 
     private Vector3 center = Vector3.zero;
     public Vector3 Center => center;
