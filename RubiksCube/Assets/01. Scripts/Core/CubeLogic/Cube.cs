@@ -25,16 +25,16 @@ public class Cube : MonoBehaviour
         });
     }
 
-    // private IEnumerator Start()
-    // {
-    //     for(int i = 0; i < 10; ++ i)
-    //     {
-    //         int axis = Random.Range(0, (int)DirectionFlags.End);
-    //         cubeAxesDictionary[(DirectionFlags)axis].SetBlocksOfAxis();
-    //         // cubeAxesDictionary[(DirectionFlags)axis].Rotate(rotateDuration, (i % 2) == 0);
+    private IEnumerator Start()
+    {
+        for(int i = 0; i < 10; ++ i)
+        {
+            int axis = Random.Range(0, (int)DirectionFlags.End);
+            cubeAxesDictionary[(DirectionFlags)axis].SetBlocksOfAxis();
+            // cubeAxesDictionary[(DirectionFlags)axis].Rotate(rotateDuration, (i % 2) == 0);
 
-    //         yield return cubeAxesDictionary[(DirectionFlags)axis].Rotate(rotateDuration, (i % 2) == 0);
-    //         yield return new WaitForSeconds(0.1f);
-    //     }
-    // }
+            yield return cubeAxesDictionary[(DirectionFlags)axis].Rotate(rotateDuration, (i % 2) == 0);
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
 }
