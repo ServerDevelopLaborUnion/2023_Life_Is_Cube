@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Cube : MonoBehaviour
 {
+    [SerializeField] bool startingRotate = false;
     [SerializeField] float rotateDuration = 1f;
 
     private Dictionary<DirectionFlags, CubeAxis> cubeAxesDictionary;
@@ -27,6 +28,9 @@ public class Cube : MonoBehaviour
 
     private IEnumerator Start()
     {
+        if(startingRotate == false)
+            yield break;
+
         for(int i = 0; i < 10; ++ i)
         {
             int axis = Random.Range(0, (int)DirectionFlags.End);
