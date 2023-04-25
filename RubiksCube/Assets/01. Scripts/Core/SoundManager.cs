@@ -7,7 +7,7 @@ using UnityEngine;
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance = null;
-    
+
     private AudioSource audioSource;
 
     [SerializeField] private AudioClip testClip1;
@@ -24,7 +24,6 @@ public class SoundManager : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
-
     public void PlayTestClip1()
     {
         audioSource.PlayOneShot(testClip1);
@@ -34,4 +33,5 @@ public class SoundManager : MonoBehaviour
     {
         audioSource.PlayOneShot(testClip2);
     }
+
 }
