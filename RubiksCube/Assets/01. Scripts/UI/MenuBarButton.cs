@@ -1,5 +1,6 @@
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public class MenuBarButton : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class MenuBarButton : MonoBehaviour
     [SerializeField] float enactivePosX;
 
     private RectTransform rectTrm = null;
+    private Button slideButton = null;
 
     private bool isActived = false;
     private bool onTweening = false;
@@ -16,22 +18,29 @@ public class MenuBarButton : MonoBehaviour
     private void Awake()
     {
         rectTrm = GetComponent<RectTransform>();
+        slideButton = transform.Find("SlideButton").GetComponent<Button>();
 
         isActived = false;
         onTweening = false;
     }
 
     public void Slide()
-    {
+    {        
         Sequence seq = DOTween.Sequence();
 
+        slideButton.interactable = false;
         onTweening = true;
-        seq.Append(rectTrm.DOLocalMoveX(isActived ? forwardPosX : backwardPosX, 0.2f).SetEase(Ease.InExpo));
-        seq.Append(rectTrm.DOLocalMoveX(isActived ? backwardPosX : forwardPosX, 0.3f).SetEase(Ease.OutCubic));
-        seq.Append(rectTrm.DOLocalMoveX(isActived ? enactivePosX : activePosX, 0.05f).SetEase(Ease.Linear));
+
+        slideButton.transform.localScale = Vector3.one * (isActived ? 1 : -1);
+
+        seq.Append(rectTrm.DOAnchorPosX(isActived ? forwardPosX : backwardPosX, 0.15f).SetEase(Ease.InExpo));
+        seq.Append(rectTrm.DOAnchorPosX(isActived ? backwardPosX : forwardPosX, 0.4f).SetEase(Ease.OutCubic));
+        seq.Append(rectTrm.DOAnchorPosX(isActived ? enactivePosX : activePosX, 0.15f).SetEase(Ease.OutExpo));
         seq.AppendCallback(() => {
-            isActived = !isActived;
             onTweening = false;
+            slideButton.interactable = true;
+
+            isActived = !isActived;
             seq.Kill();
         });
     }
