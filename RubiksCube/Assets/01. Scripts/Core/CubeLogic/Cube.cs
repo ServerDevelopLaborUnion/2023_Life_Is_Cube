@@ -6,6 +6,7 @@ public class Cube : MonoBehaviour
 {
     [SerializeField] bool startingRotate = false;
     [SerializeField] float rotateDuration = 1f;
+    [SerializeField] float startDelay = 1f;
 
     private Dictionary<DirectionFlags, CubeAxis> cubeAxesDictionary;
 
@@ -30,6 +31,8 @@ public class Cube : MonoBehaviour
     {
         if(startingRotate == false)
             yield break;
+            
+        yield return new WaitForSeconds(startDelay);
 
         for(int i = 0; i < 10; ++ i)
         {
