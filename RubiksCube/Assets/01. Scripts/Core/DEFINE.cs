@@ -27,4 +27,14 @@ public class DEFINE
             return mainCam;
         }
     }
+
+    private static Transform mainCanvas = null;
+    public static Transform MainCanvas {
+        get {
+            if(mainCanvas == null)
+                mainCanvas = GameObject.Find("MainCanvas").transform;
+
+            return mainCanvas;
+        }
+    }
 }

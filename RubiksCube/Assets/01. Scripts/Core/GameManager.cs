@@ -18,5 +18,7 @@ public class GameManager : MonoBehaviour
 
         PoolManager.Instance = new PoolManager();
         poolingList.ForEach(p => PoolManager.Instance.CreatePool(p, transform));
+
+        UIManager.Instance = new UIManager();
     }
 }
