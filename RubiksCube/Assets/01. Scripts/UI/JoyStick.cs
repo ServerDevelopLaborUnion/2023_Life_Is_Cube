@@ -25,7 +25,7 @@ public class JoyStick : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         center = transform.position;
 
         RectTransform parentRect = transform.parent.GetComponent<RectTransform>();
-        maxDistance = parentRect.rect.xMax * Screen.width / 1920f;
+        maxDistance = (parentRect.rect.xMax - parentRect.rect.xMin) * Screen.width / 1920f * 0.5f;
     }
 
     private void Update()
