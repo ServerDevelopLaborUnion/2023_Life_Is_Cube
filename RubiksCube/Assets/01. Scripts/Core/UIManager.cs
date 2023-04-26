@@ -7,8 +7,7 @@ public class UIManager
     private RectTransform menuPanel = null;
     public RectTransform MenuPanel
     {
-        get
-        {
+        get {
             if (menuPanel == null)
                 menuPanel = DEFINE.MainCanvas.Find("MenuPanel").GetComponent<RectTransform>();
 

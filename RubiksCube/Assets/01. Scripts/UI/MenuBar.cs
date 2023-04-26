@@ -10,6 +10,7 @@ public class MenuBar : MonoBehaviour
     [SerializeField] float enactivePosX;
 
     private RectTransform rectTrm = null;
+    private GameObject blockPanel = null;
     private Button slideButton = null;
 
     private bool isActived = false;
@@ -19,20 +20,32 @@ public class MenuBar : MonoBehaviour
     {
         rectTrm = GetComponent<RectTransform>();
         slideButton = transform.Find("SlideButton").GetComponent<Button>();
+        blockPanel = transform.Find("BlockPanel").gameObject;
 
         isActived = false;
         onTweening = false;
     }
 
-    public void Slide()
-    {        
+    public void Slide(bool pause = false)
+    {
+        if(onTweening)
+        {
+            if(isActived)
+                //if(pause)
+                    TimeController.Instance.ModifyTimeScale(1, 0f);
+
+            return;
+        }
+
         Sequence seq = DOTween.Sequence().SetUpdate(true);
 
         slideButton.interactable = false;
         onTweening = true;
 
         slideButton.transform.localScale = Vector3.one * (isActived ? 1 : -1);
-        TimeController.Instance.ModifyTimeScale(isActived ? 1 : 0, 0f);
+
+        if(pause)
+            TimeController.Instance.ModifyTimeScale(isActived ? 1 : 0, 0f);
 
         seq.Append(rectTrm.DOAnchorPosX(isActived ? forwardPosX : backwardPosX, 0.15f).SetEase(Ease.InExpo));
         seq.Append(rectTrm.DOAnchorPosX(isActived ? backwardPosX : forwardPosX, 0.4f).SetEase(Ease.OutCubic));
@@ -45,4 +58,6 @@ public class MenuBar : MonoBehaviour
             seq.Kill();
         });
     }
+
+    public void Block(bool isBlock) => blockPanel.SetActive(isBlock);
 }
