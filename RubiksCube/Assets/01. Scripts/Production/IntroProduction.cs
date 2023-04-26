@@ -4,6 +4,7 @@ using UnityEngine;
 public class IntroProduction : MonoBehaviour
 {
     [SerializeField] Vector2 loopDelay = new Vector2(1.5f, 2.5f);
+    [SerializeField] bool cameraProduction = false;
     
     private Transform cameraTrm = null;
     private Cube cube = null;
@@ -21,7 +22,8 @@ public class IntroProduction : MonoBehaviour
 
     private void Update()
     {
-        cameraTrm.rotation =  cameraTrm.rotation * Quaternion.Euler(0, -15f * Time.deltaTime, 0);
+        if(cameraProduction)
+            cameraTrm.Rotate(new Vector3(0, -15f * Time.deltaTime, 0));
     }
 
     private IEnumerator RotateCubeLoop()

@@ -12,6 +12,7 @@ public class CubeAxis : MonoBehaviour
     [SerializeField] Vector3 upward;
 
     private Transform childTrm = null;
+    public Transform ChildTrm => childTrm;
 
     // up => forward, up
     // down => forward, -up
@@ -32,7 +33,7 @@ public class CubeAxis : MonoBehaviour
 
         for(int i = 0; i < 8; ++i)
         {
-            ray.direction = Quaternion.AngleAxis(45f * i, upward) * forward;
+            ray.direction = Quaternion.AngleAxis(45f * i, upward) * Quaternion.AngleAxis(-45, upward) * forward; // upward 축의 왼쪽 위부터 돌릴 거임
             // Debug.DrawLine(transform.position, transform.position + Quaternion.AngleAxis(45f * i, upward) * forward * 1000f, Color.green, 0.1f);
             
             if (Physics.Raycast(ray, out hit, CubeLayer))
@@ -58,13 +59,12 @@ public class CubeAxis : MonoBehaviour
         Quaternion startRotation = transform.rotation;
         Quaternion endRotation = startRotation * Quaternion.AngleAxis(90f * (clockWise ? 1 : -1), upward);
         float timer = 0f;
-        float ratio = 0f;
+        float theta = 0f;
 
         while(timer < rotateDuration)
         {
-            ratio = timer / rotateDuration;
-            transform.rotation = Quaternion.Lerp(startRotation, endRotation, ratio);
-            Debug.Log(transform.rotation);
+            theta = timer / rotateDuration;
+            transform.rotation = Quaternion.Lerp(startRotation, endRotation, theta);
 
             timer += Time.deltaTime;
             yield return null;

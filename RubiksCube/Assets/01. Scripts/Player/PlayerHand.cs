@@ -21,7 +21,7 @@ public class PlayerHand : MonoBehaviour
     {
         itemDatas.Add(itemData);
 
-        itemData.itemStats.ForEach(s => { 
+        itemData.ItemStats.ForEach(s => { 
             playerStat.ModifyStat(s.statType, s.value); 
         });
         itemEvents.ForEach(e => {

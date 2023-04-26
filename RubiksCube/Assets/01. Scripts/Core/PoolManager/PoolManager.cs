@@ -43,4 +43,18 @@ public class PoolManager
 
         return obj;
     }
+
+    public PoolableMono Pop(PoolableMono prefab)
+    {
+        if(pools.ContainsKey(prefab.name) == false) 
+        { 
+            Debug.LogWarning($"current name of pool doesn't existed on pools : {prefab.name}, returning null"); 
+            return null;
+        }
+
+        PoolableMono obj = pools[prefab.name].Pop();
+        obj.Reset();
+
+        return obj;
+    }
 }

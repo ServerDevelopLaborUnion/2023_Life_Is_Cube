@@ -4,6 +4,7 @@ public class DEFINE
 {
     public const int EnemyLayer = 1 << 7;
     public const int CubeLayer = 1 << 8;
+    public const int CellLayer = 1 << 9;
     public const int InteractableLayer = 1 << 10;
 
     public const float InteractRadius = 3f;
