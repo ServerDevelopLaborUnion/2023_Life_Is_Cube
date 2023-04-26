@@ -11,12 +11,19 @@ public class CubeAxis : MonoBehaviour
     [SerializeField] Vector3 forward;
     [SerializeField] Vector3 upward;
 
+    private Transform childTrm = null;
+
     // up => forward, up
     // down => forward, -up
     // left => up, -right
     // right => up, right
     // forward => up, forward
     // back => up, -forward
+
+    private void Awake()
+    {
+        childTrm = transform.Find("ChildBlocks");
+    }
 
     public void SetBlocksOfAxis()
     {
@@ -29,16 +36,16 @@ public class CubeAxis : MonoBehaviour
             // Debug.DrawLine(transform.position, transform.position + Quaternion.AngleAxis(45f * i, upward) * forward * 1000f, Color.green, 0.1f);
             
             if (Physics.Raycast(ray, out hit, CubeLayer))
-                hit.transform.SetParent(transform);
+                hit.transform.SetParent(childTrm);
         }
 
-        Debug.Log(transform.childCount);
+        //Debug.Log(transform.childCount);
     }
 
     public void UnsetBlocksOfAxis()
     {
-        while(transform.childCount > 0)
-            transform.GetChild(0).SetParent(transform.parent);
+        while(childTrm.childCount > 0)
+            childTrm.GetChild(0).SetParent(transform.parent);
     }
 
     public Coroutine Rotate(float rotateDuration, bool clockWise = true)
@@ -57,6 +64,7 @@ public class CubeAxis : MonoBehaviour
         {
             ratio = timer / rotateDuration;
             transform.rotation = Quaternion.Lerp(startRotation, endRotation, ratio);
+            Debug.Log(transform.rotation);
 
             timer += Time.deltaTime;
             yield return null;

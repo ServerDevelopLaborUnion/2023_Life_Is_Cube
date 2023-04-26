@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class Cube : MonoBehaviour
 {
-    [SerializeField] bool startingRotate = false;
     [SerializeField] float rotateDuration = 1f;
-    [SerializeField] float startDelay = 1f;
 
     private Dictionary<DirectionFlags, CubeAxis> cubeAxesDictionary;
 
@@ -27,21 +25,15 @@ public class Cube : MonoBehaviour
         });
     }
 
-    private IEnumerator Start()
+    public Coroutine RotateAroundAxis(DirectionFlags axis, bool clockWise = true)
     {
-        if(startingRotate == false)
-            yield break;
-            
-        yield return new WaitForSeconds(startDelay);
+        return StartCoroutine(RotateAroundAxisCoroutine(axis, clockWise));
+    }
 
-        for(int i = 0; i < 10; ++ i)
-        {
-            int axis = Random.Range(0, (int)DirectionFlags.End);
-            cubeAxesDictionary[(DirectionFlags)axis].SetBlocksOfAxis();
-            // cubeAxesDictionary[(DirectionFlags)axis].Rotate(rotateDuration, (i % 2) == 0);
-
-            yield return cubeAxesDictionary[(DirectionFlags)axis].Rotate(rotateDuration, (i % 2) == 0);
-            yield return new WaitForSeconds(0.1f);
-        }
+    private IEnumerator RotateAroundAxisCoroutine(DirectionFlags axis, bool clockWise = true)
+    {
+        cubeAxesDictionary[(DirectionFlags)axis].SetBlocksOfAxis();
+        yield return cubeAxesDictionary[(DirectionFlags)axis].Rotate(rotateDuration, clockWise);
+        yield return new WaitForSeconds(0.1f);
     }
 }
