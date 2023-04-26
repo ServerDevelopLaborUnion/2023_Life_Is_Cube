@@ -26,12 +26,13 @@ public class MenuBar : MonoBehaviour
 
     public void Slide()
     {        
-        Sequence seq = DOTween.Sequence();
+        Sequence seq = DOTween.Sequence().SetUpdate(true);
 
         slideButton.interactable = false;
         onTweening = true;
 
         slideButton.transform.localScale = Vector3.one * (isActived ? 1 : -1);
+        TimeController.Instance.ModifyTimeScale(isActived ? 1 : 0, 0f);
 
         seq.Append(rectTrm.DOAnchorPosX(isActived ? forwardPosX : backwardPosX, 0.15f).SetEase(Ease.InExpo));
         seq.Append(rectTrm.DOAnchorPosX(isActived ? backwardPosX : forwardPosX, 0.4f).SetEase(Ease.OutCubic));

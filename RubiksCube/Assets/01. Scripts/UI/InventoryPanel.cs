@@ -26,7 +26,7 @@ public class InventoryPanel : MonoBehaviour
 
     public void Slide()
     {
-        Sequence seq = DOTween.Sequence();
+        Sequence seq = DOTween.Sequence().SetUpdate(true);
 
         onTweening = true;
         spotlightCamTrm.gameObject.SetActive(!isActived);

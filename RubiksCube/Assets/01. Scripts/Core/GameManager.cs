@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
         PoolManager.Instance = new PoolManager();
         poolingList.ForEach(p => PoolManager.Instance.CreatePool(p, transform));
 
+        TimeController.Instance = gameObject.AddComponent<TimeController>();
+
         UIManager.Instance = new UIManager();
     }
 }
