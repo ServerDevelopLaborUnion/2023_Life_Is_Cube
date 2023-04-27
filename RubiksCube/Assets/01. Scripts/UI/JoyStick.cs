@@ -31,7 +31,7 @@ public class JoyStick : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     private void Update()
     {
         if(onDragged == false)
-            transform.localPosition = Vector3.Lerp(transform.localPosition, Vector3.zero, Time.deltaTime * returningSpeed);
+            transform.localPosition = Vector3.Lerp(transform.localPosition, Vector3.zero, Time.unscaledDeltaTime * returningSpeed);
         
         OnValueChagned?.Invoke(GetJoyStickValue());
     }

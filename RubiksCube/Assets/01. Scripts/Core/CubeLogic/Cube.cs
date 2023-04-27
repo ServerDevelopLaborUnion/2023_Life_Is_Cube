@@ -7,6 +7,7 @@ public class Cube : MonoBehaviour
     [SerializeField] float rotateDuration = 1f;
 
     private Dictionary<DirectionFlags, CubeAxis> cubeAxesDictionary;
+    private CubeCell currentCell = null;
 
     private void Awake()
     {
@@ -54,7 +55,16 @@ public class Cube : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
     }
 
-    private void SortIdexesOnCells()
+    public void GetCurrentCell()
+    {
+        if(Physics.Raycast(DEFINE.PlayerTrm.position, Vector3.down, out RaycastHit hit, 1000f, DEFINE.CellLayer))
+        {
+            currentCell = hit.collider.GetComponent<CubeCell>();
+            Debug.Log(currentCell);
+        }
+    }
+
+    public void SortIdexesOnCells()
     {
         CubeAxis topAxis = cubeAxesDictionary[DirectionFlags.Up];
         topAxis.SetBlocksOfAxis();
