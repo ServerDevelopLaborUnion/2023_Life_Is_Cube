@@ -1,51 +1,93 @@
+using System.Transactions;
 using UnityEngine;
 
 public class TIntroCube : MonoBehaviour
 {
-    [SerializeField] float rotateSpeed = 5f;
+    [SerializeField] float rotateSpeed = 30f;
+    [SerializeField] float lowestSimilar = 0.95f;
 
-    private bool isSelected = false;
-    private bool isSide = false;
-    private Transform cube;
-    private Vector2 startPos;
-    private Vector2 lastPos;
+    private bool selected = false;
+    private Transform cameraTrm = null;
+    private Quaternion targetDir = Quaternion.identity;
+    private DirectionFlags targetAxis = DirectionFlags.End;
 
     private void Awake()
     {
-        cube = transform.Find("Cube");
+        cameraTrm = DEFINE.MainCam.transform;
+        targetDir = Quaternion.LookRotation(-cameraTrm.forward);
     }
 
     private void Update()
     {
-        if(Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
         {
             Ray ray = DEFINE.MainCam.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            isSelected = Physics.Raycast(ray, out hit, DEFINE.MainCam.farClipPlane, DEFINE.CellLayer);
-
-            if(isSelected)
-            {
-                isSide = (hit.transform.name != "Top");
-                lastPos = Input.mousePosition;
-            }
+            selected = Physics.Raycast(ray, out RaycastHit hit, DEFINE.MainCam.farClipPlane, DEFINE.CellLayer);
         }
 
-        if(isSelected)
+        if (Input.GetMouseButtonUp(0))
         {
-            float xFactor = (isSide ? (lastPos.x - Input.mousePosition.x) : 0) * Time.deltaTime * rotateSpeed;
-            float yFactor = (isSide ? 0 : (lastPos.y - Input.mousePosition.y)) * Time.deltaTime * rotateSpeed;
-            cube.Rotate(-yFactor, xFactor, 0, Space.World);
+            selected = false;
 
-            lastPos = Input.mousePosition;
+            float highestSimilar = lowestSimilar;
+
+            CompareRotation(transform.up, DirectionFlags.Up, ref highestSimilar);
+            CompareRotation(-transform.forward, DirectionFlags.Back, ref highestSimilar);
+            CompareRotation(-transform.right, DirectionFlags.Left, ref highestSimilar);
+
+            if (highestSimilar <= lowestSimilar)
+                targetAxis = DirectionFlags.End;
         }
 
-        if(Input.GetMouseButtonUp(0))
+        RotateCube();
+    }
+
+    private void CompareRotation(Vector3 normal, DirectionFlags axis, ref float highestSimilar)
+    {
+        float dot = Quaternion.Dot(targetDir, Quaternion.LookRotation(normal));
+
+        if (dot >= highestSimilar)
         {
-            isSelected = false;
-            if(isSide == false)
+            highestSimilar = dot;
+            targetAxis = axis;
+        }
+    }
+
+    private void RotateCube()
+    {
+        if (selected)
+        {
+            float xFactor = Input.GetAxis("Mouse X") * Time.deltaTime * rotateSpeed;
+            float yFactor = Input.GetAxis("Mouse Y") * Time.deltaTime * rotateSpeed;
+
+            transform.Rotate(Vector3.up, -xFactor);
+            transform.Rotate(Vector3.forward - Vector3.right, -yFactor);
+        }
+        else
+        {
+            if(targetAxis == DirectionFlags.End)
             {
-                cube.Rotate()
+                transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.identity, Time.deltaTime * 10f);
+                return;
             }
+
+            Vector3 fromDir = Vector3.zero;
+            switch (targetAxis)
+            {
+                case DirectionFlags.Up:
+                    fromDir = transform.up;
+                    break;
+                case DirectionFlags.Left:
+                    fromDir = -transform.right;
+                    break;
+                case DirectionFlags.Back:
+                    fromDir = -transform.forward;
+                    break;
+            }
+
+            Vector3 dir = -cameraTrm.forward;
+            Quaternion targetRotation = Quaternion.FromToRotation(fromDir, dir);
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation * transform.rotation, Time.deltaTime * 10f);
         }
     }
 }
