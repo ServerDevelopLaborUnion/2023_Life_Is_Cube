@@ -13,7 +13,7 @@ public class AIBrain : PoolableMono
         List<AIState> states = new List<AIState>();
         transform.Find("AI").GetComponentsInChildren<AIState>(states);
 
-        states.ForEach(state => state.SetUp(transform.root));
+        states.ForEach(state => state.SetUp(transform));
     }
 
     private void Start()

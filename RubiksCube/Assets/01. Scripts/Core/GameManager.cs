@@ -23,6 +23,6 @@ public class GameManager : MonoBehaviour
         UIManager.Instance = new UIManager();
 
         TimeController.Instance = gameObject.AddComponent<TimeController>();
-        StageManager.Instance = gameObject.AddComponent<StageManager>();
+        StageManager.Instance = GetComponent<StageManager>();
     }
 }

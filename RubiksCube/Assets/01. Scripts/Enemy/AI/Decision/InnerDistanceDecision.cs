@@ -2,8 +2,13 @@ using UnityEngine;
 
 public class InnerDistanceDecision : AIDecision
 {
-    [SerializeField] Transform targetTrm;
     [SerializeField, Range(0f, 50f)] float distance = 10f;
+    private Transform targetTrm;
+
+    private void Awake()
+    {
+        targetTrm = DEFINE.PlayerTrm;
+    }
 
     public override bool MakeDecision()
     {
