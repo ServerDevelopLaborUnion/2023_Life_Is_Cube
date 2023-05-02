@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Ocean
   m_EditorClassIdentifier: 
   Biome: 5
-  EnemyList: []
+  EnemyList:
+  - {fileID: 5363496000027121330, guid: b0c61fb223ef225418a8f05b89c8e262, type: 3}

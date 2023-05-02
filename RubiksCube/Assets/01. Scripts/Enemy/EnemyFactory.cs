@@ -54,6 +54,15 @@ public class EnemyFactory : MonoBehaviour
         }
     }
 
+    public void SpawnImmediately(int cnt, BiomeFlags biome, int cellIdx)
+    {
+        this.biome = biome;
+        this.cellIdx = cellIdx;
+
+        for(int i = 0; i < cnt; i++)
+            SpawnEnemy();
+    }
+
     public void SpawnEnemy()
     {
         int randIdx = Random.Range(0, enemyDictionary[biome].Count);

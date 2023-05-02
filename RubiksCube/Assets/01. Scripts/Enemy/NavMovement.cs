@@ -12,6 +12,11 @@ public class NavMovement : MonoBehaviour
         agentAnimator = transform.Find("Model").GetComponent<AnimatorHandler>();
     }
 
+    private void Start()
+    {
+        navAgent.enabled = true;
+    }
+
     private void Update()
     {
         agentAnimator.SetSpeed(IsArrived() ? 0f : 1f);

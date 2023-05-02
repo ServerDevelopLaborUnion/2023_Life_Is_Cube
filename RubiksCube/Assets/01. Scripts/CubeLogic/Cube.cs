@@ -41,7 +41,7 @@ public class Cube : MonoBehaviour
     {
         cubeAxesDictionary[axis].SetBlocksOfAxis();
         yield return cubeAxesDictionary[axis].Rotate(rotateDuration, clockWise);
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.001f);
     }
 
     public void GetCurrentCell()
@@ -53,8 +53,10 @@ public class Cube : MonoBehaviour
         }
     }
 
-    public void SortIdexesOnCells()
+    public CubeCell[] SortIdexesOnCells()
     {
+        List<CubeCell> cells = new List<CubeCell>();
+
         CubeAxis topAxis = cubeAxesDictionary[DirectionFlags.Up];
         topAxis.SetBlocksOfAxis();
 
@@ -75,7 +77,8 @@ public class Cube : MonoBehaviour
                         cell?.ModifyCellIndex(12 - i);
                     else 
                         cell?.ModifyCellIndex(i);
-                    Debug.Log($"{cell.CellBiome}, {cell.CellIndex}, {cell.transform.parent.name}");
+                    
+                    cells.Add(cell);
                 }
             }
         }
@@ -85,10 +88,13 @@ public class Cube : MonoBehaviour
             if (hit.transform.TryGetComponent<CubeCell>(out cell))
             {
                 cell?.ModifyCellIndex(4);
-                Debug.Log($"{cell.CellBiome}, {cell.CellIndex}, {cell.transform.parent.name}");
+                cells.Add(cell);
             }
         }
 
         topAxis.UnsetBlocksOfAxis();
+
+        cells.Sort((a, b) => a.CellIndex - b.CellIndex);
+        return cells.ToArray();
     }
 }
