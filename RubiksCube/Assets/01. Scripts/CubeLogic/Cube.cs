@@ -41,7 +41,7 @@ public class Cube : MonoBehaviour
     {
         cubeAxesDictionary[axis].SetBlocksOfAxis();
         yield return cubeAxesDictionary[axis].Rotate(rotateDuration, clockWise);
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.001f);
     }
 
     public void GetCurrentCell()
