@@ -12,11 +12,11 @@ public class SoundManager : MonoBehaviour
 
     [SerializeField] private AudioClip testClip1;
     [SerializeField] private AudioClip testClip2;
-    private AudioMixer _audioMixer;
+    [SerializeField] private AudioMixer _audioMixer;
 
-    Slider masterSlider;
-    Slider bgmSlider;
-    Slider sfxSlider;
+    [SerializeField] private Slider masterSlider;
+    [SerializeField] private Slider bgmSlider;
+    [SerializeField] private Slider sfxSlider;
 
     private void Awake()
     {
@@ -27,7 +27,6 @@ public class SoundManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
         audioSource = GetComponent<AudioSource>();
-        _audioMixer = GetComponent<AudioMixer>();
     }
 
     public void PlayTestClip1()
@@ -42,16 +41,17 @@ public class SoundManager : MonoBehaviour
 
     public void SetMasterVolume()
     {
-        _audioMixer.SetFloat("Master", masterSlider.value);
+        Debug.Log(1);
+        _audioMixer.SetFloat("Master", masterSlider.value * 20);
     }
 
     public void SetBGMVolume()
     {
-        _audioMixer.SetFloat("BGM", bgmSlider.value);
+        _audioMixer.SetFloat("BGM", masterSlider.value * 20);
     }
 
     public void SetSFXVolume()
     {
-        _audioMixer.SetFloat("SFX", sfxSlider.value);
+        _audioMixer.SetFloat("SFX", sfxSlider.value * 20);
     }
 }
