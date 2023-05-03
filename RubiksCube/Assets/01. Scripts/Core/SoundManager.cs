@@ -23,35 +23,23 @@ public class SoundManager : MonoBehaviour
         if (Instance != null)
         {
             Debug.Log("Multiple SoundManager Running");
+
+            Instance = this;
+
+            DontDestroyOnLoad(gameObject);
+            audioSource = GetComponent<AudioSource>();
         }
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
-        audioSource = GetComponent<AudioSource>();
-    }
-
-    public void PlayTestClip1()
-    {
-        audioSource.PlayOneShot(testClip1);
-    }
-
-    public void PlayTestClip2()
-    {
-        audioSource.PlayOneShot(testClip2);
     }
 
     public void SetMasterVolume()
     {
+        _audioMixer.SetFloat("Master", masterSlider.value);
         Debug.Log(1);
-        _audioMixer.SetFloat("Master", masterSlider.value * 20);
     }
 
     public void SetBGMVolume()
     {
-        _audioMixer.SetFloat("BGM", masterSlider.value * 20);
+        _audioMixer.SetFloat("BGM", bgmSlider.value);
     }
-
-    public void SetSFXVolume()
-    {
-        _audioMixer.SetFloat("SFX", sfxSlider.value * 20);
-    }
+    
 }
