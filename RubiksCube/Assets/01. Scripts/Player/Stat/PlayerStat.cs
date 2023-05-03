@@ -10,7 +10,6 @@ public class PlayerStat : MonoBehaviour
     {
         foreach(StatData data in statDatas)
             statDictionary.Add(data.statType, data);
-
     }
 
     public StatData GetStatData(StatFlags statType) => statDictionary[statType];
