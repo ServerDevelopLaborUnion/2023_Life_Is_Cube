@@ -14,9 +14,9 @@ public class CameraManager
     
     public CameraManager()
     {
-        cmMainCam = GameObject.Find("CmMainCam").GetComponent<CinemachineVirtualCamera>();
-        cmMapCam = GameObject.Find("CmMapCam").GetComponent<CinemachineVirtualCamera>();
-        cmDirectingCam = GameObject.Find("CmDirectingCam").GetComponent<CinemachineVirtualCamera>();
+        cmMainCam = GameObject.Find("CmMainCam")?.GetComponent<CinemachineVirtualCamera>();
+        cmMapCam = GameObject.Find("CmMapCam")?.GetComponent<CinemachineVirtualCamera>();
+        cmDirectingCam = GameObject.Find("CmDirectingCam")?.GetComponent<CinemachineVirtualCamera>();
     }
 
     public void SetActiveCam(CinemachineVirtualCamera cam, bool value) => cam.m_Priority = (value ? 15 : 5);

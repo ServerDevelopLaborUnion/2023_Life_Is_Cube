@@ -7,9 +7,12 @@ public class PlayerHand : MonoBehaviour
     private List<ItemDataSO> itemDatas = new List<ItemDataSO>();
     private List<ItemEvent> itemEvents = new List<ItemEvent>();
 
+    private InventoryUI inventoryUI = null;
+
     private void Awake()
     {
         playerStat = GetComponent<PlayerStat>();
+        inventoryUI = DEFINE.MainCanvas.Find("InventoryPanel").GetComponent<InventoryUI>();
     }
 
     private void Update()
@@ -28,6 +31,8 @@ public class PlayerHand : MonoBehaviour
             e.InitEvent();
             this.itemEvents.Add(e);
         });
+
+        inventoryUI.SetItem(itemData);
     }
 
     public void ConsumeItem()
