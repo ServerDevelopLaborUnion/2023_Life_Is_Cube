@@ -8,9 +8,22 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     private PlayerStat playerStat = null;
     private float currentHP = 0f;
 
+    private HPPanel hpPanel = null;
+    private StatPanel statPanel = null;
+
     private void Awake()
     {
         playerStat = GetComponent<PlayerStat>();
+        hpPanel = DEFINE.MainCanvas.Find("HPPanel")?.GetComponent<HPPanel>();
+        statPanel = DEFINE.MainCanvas.Find("StatPanel")?.GetComponent<StatPanel>();
+
+        Debug.Log($"MaxHP : {MaxHP} \n(PlayerHealth Awake)");
+        currentHP = MaxHP;
+    }
+
+    private void Start()
+    {
+        statPanel?.DisplayHP(currentHP, MaxHP);
     }
 
     public void OnDamage(float damage, Vector3 point, Vector3 normal)
@@ -19,6 +32,8 @@ public class PlayerHealth : MonoBehaviour, IDamageable
             return;
 
         currentHP -= damage;
+        hpPanel?.SetHP(currentHP / MaxHP);
+        statPanel?.DisplayHP(currentHP, MaxHP);
 
         if(currentHP <= 0f)
             OnDie();
