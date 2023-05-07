@@ -7,13 +7,14 @@ public class PlayerStat : MonoBehaviour
     private Dictionary<StatFlags, StatData> statDictionary = new Dictionary<StatFlags, StatData>();
     private StatPanel statPanel = null;
 
-    private void Awake()
-    {
-        foreach(StatData data in statDatas)
-            statDictionary.Add(data.statType, data);
-
-        statPanel = DEFINE.MainCanvas.Find("StatPanel")?.GetComponent<StatPanel>();
-    }
+    //private void Awake()
+    //{
+    //    foreach (StatData data in statDatas)
+    //    {
+    //        if (statDictionary.ContainsKey(data.statType) == false)
+    //            statDictionary.Add(data.statType, data);
+    //    }
+    //}
 
     private void Start()
     {
@@ -34,6 +35,18 @@ public class PlayerStat : MonoBehaviour
     public void SetStat(StatFlags statType, float value)
     {
         statDictionary[statType] = statDictionary[statType].SetStat(value);
+        statPanel?.DisplayStat(statType, statDictionary[statType].value);
+    }
+
+    public void SetStat(StatFlags statType, StatData data)
+    {
+        if (statDictionary.ContainsKey(statType) == false)
+            statDictionary.Add(statType, data);
+        else
+            statDictionary[statType] = data;
+
+        Debug.Log(statType + ", " + statDictionary[statType].value);
+
         statPanel?.DisplayStat(statType, statDictionary[statType].value);
     }
 }
