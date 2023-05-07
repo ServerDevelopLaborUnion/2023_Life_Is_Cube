@@ -7,14 +7,15 @@ public class PlayerStat : MonoBehaviour
     private Dictionary<StatFlags, StatData> statDictionary = new Dictionary<StatFlags, StatData>();
     private StatPanel statPanel = null;
 
-    //private void Awake()
-    //{
-    //    foreach (StatData data in statDatas)
-    //    {
-    //        if (statDictionary.ContainsKey(data.statType) == false)
-    //            statDictionary.Add(data.statType, data);
-    //    }
-    //}
+    private void Awake()
+    {
+        foreach (StatData data in statDatas)
+        {
+            if (statDictionary.ContainsKey(data.statType) == false)
+                statDictionary.Add(data.statType, data);
+        }
+        statPanel = DEFINE.MainCanvas.Find("StatPanel").GetComponent<StatPanel>();
+    }
 
     private void Start()
     {
