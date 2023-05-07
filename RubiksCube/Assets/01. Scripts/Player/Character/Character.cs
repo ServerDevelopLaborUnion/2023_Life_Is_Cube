@@ -6,9 +6,15 @@ using UnityEngine.EventSystems;
 public class Character : MonoBehaviour, IPointerDownHandler
 {
     public List<StatData> stats;
+    private CharacterSelectPanel current;
+
+    private void Awake()
+    {
+        current = transform.parent.parent.GetComponent<CharacterSelectPanel>();
+    }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        CharacterSelectPanel.instance.Current = this;
+        current.Current = this;
     }
 }

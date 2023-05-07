@@ -15,15 +15,15 @@ public class GameManager : MonoBehaviour
         }
 
         Instance = this;
+        DontDestroyOnLoad(gameObject);
+        //PoolManager.Instance = new PoolManager();
+        //poolingList.ForEach(p => PoolManager.Instance.CreatePool(p, transform));
 
-        PoolManager.Instance = new PoolManager();
-        poolingList.ForEach(p => PoolManager.Instance.CreatePool(p, transform));
+        //CameraManager.Instance = new CameraManager();
+        //UIManager.Instance = new UIManager();
 
-        CameraManager.Instance = new CameraManager();
-        UIManager.Instance = new UIManager();
-
-        TimeController.Instance = gameObject.AddComponent<TimeController>();
+        //TimeController.Instance = gameObject.AddComponent<TimeController>();
         SceneLoader.Instance = gameObject.AddComponent<SceneLoader>();
-        StageManager.Instance = GetComponent<StageManager>();
+        //StageManager.Instance = GetComponent<StageManager>();
     }
 }
