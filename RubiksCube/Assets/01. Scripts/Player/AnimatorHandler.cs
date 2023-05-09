@@ -10,6 +10,7 @@ public class AnimatorHandler : MonoBehaviour
 
     private readonly int speedHash = Animator.StringToHash("Speed");
     private readonly int onAttackHash = Animator.StringToHash("OnAttack");
+    private readonly int onSpecialAttackHash = Animator.StringToHash("OnSpecialAttack"); //이거 바꿔야 됨
 
     private void Awake()
     {
@@ -18,6 +19,7 @@ public class AnimatorHandler : MonoBehaviour
 
     public void SetSpeed(float speed) => animator.SetFloat(speedHash, speed);
     public void ToggleAttack(bool value) => animator.SetBool(onAttackHash, value);
+    public void ToggleSpecialAttack(bool value) => animator.SetBool(onAttackHash, value);
 
     public void OnAnimationEnd() => OnAnimationEndTrigger?.Invoke();
     public void OnAnimationEvent() => OnAnimationEventTrigger?.Invoke();

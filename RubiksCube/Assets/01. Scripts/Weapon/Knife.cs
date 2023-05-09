@@ -15,18 +15,24 @@ public class Knife : Weapon
     private Animator animator = null;
     private Transform playerTrm = null;
 
-    private readonly int onSlashHash = Animator.StringToHash("OnSlash");
+    private readonly int onAttackHash = Animator.StringToHash("OnAttack");
+    private readonly int onSpecialAttackHash = Animator.StringToHash("OnSpecialAttack");
 
     private void Awake()
     {
-        animator = GetComponent<Animator>();
+        animator = transform.Find("Model").GetComponent<Animator>();
         playerTrm = transform.root;
     }
 
-    protected override void ActiveWeapon()
+    protected override void Attack()
     {
         //검 휘두르기 시작
-        animator.SetBool(onSlashHash, true);
+        animator.SetBool(onAttackHash, true);
+    }
+
+    protected override void SpecialAttack()
+    {
+        animator.SetBool(onSpecialAttackHash, true);
     }
 
     public void OnAnimationEvent()
@@ -39,7 +45,18 @@ public class Knife : Weapon
     public void OnAnimationEnd()
     {
         //모든 공격이 끝났을 때
-        animator.SetBool(onSlashHash, false);
+        animator.SetBool(onAttackHash, false);
+    }
+
+    //이거 해야됨
+    public void OnSpecialAnimationEvent()
+    {
+        Debug.LogWarning("이거 해야됨");
+    }
+
+    public void OnSpecialAnimationEnd()
+    {
+        animator.SetBool(onSpecialAttackHash, false);
     }
 
     private void CastingDamage()
@@ -78,6 +95,6 @@ public class Knife : Weapon
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(damageCaster.position, detectRadius);
     }
-    
+
     #endif
 }

@@ -9,6 +9,7 @@ public class PlayerInput : MonoBehaviour
     public event Action OnConsumeKeyPressed = null;
     public event Action OnAttackKeyPressed = null;
     public event Action OnInteractKeyPressed = null;
+    public event Action OnSpecialAttackKeyPressed = null;
 
     private void Update()
     {
@@ -34,6 +35,11 @@ public class PlayerInput : MonoBehaviour
     {
         //if(Input.GetMouseButtonDown(0))
         OnAttackKeyPressed?.Invoke();
+    }
+
+    public void SpecialAttackInput()
+    {
+        OnSpecialAttackKeyPressed?.Invoke();
     }
 
     public void InteractInput()

@@ -7,7 +7,12 @@ public class WeaponHandler : MonoBehaviour
 
     public bool TryActiveWeapon()
     {
-        return currentWeapon.TryAticveWeapon();
+        return currentWeapon.TryAttack();
+    }
+
+    public bool TryActiveSpecialAttack()
+    {
+        return currentWeapon.TrySpecialAttack();
     }
 
     public void SetWeapon(Weapon weapon)
