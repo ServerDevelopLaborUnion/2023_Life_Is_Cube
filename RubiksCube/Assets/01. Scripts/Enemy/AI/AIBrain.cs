@@ -41,4 +41,9 @@ public class AIBrain : PoolableMono
     {
         health?.Init();
     }
+
+    public void Release()
+    {
+        PoolManager.Instance.Push(this);
+    }
 }

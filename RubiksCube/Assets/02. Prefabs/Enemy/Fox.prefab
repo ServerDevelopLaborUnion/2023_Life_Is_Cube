@@ -1,5 +1,64 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &715793591
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 715793592}
+  - component: {fileID: 715793594}
+  - component: {fileID: 715793593}
+  m_Layer: 7
+  m_Name: HitFeedback
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &715793592
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 715793591}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5363496000027121329}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &715793594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 715793591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2796e3da46c21aa458fff19e614a96eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &715793593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 715793591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7b7ce3424c818f45b67f888736d76d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitParticle: {fileID: 8353310960293978374, guid: dad6fceb7ebe82d468fe54cebeaffcc0, type: 3}
+  effectPlayTime: 1
 --- !u!1 &5363495998290252932
 GameObject:
   m_ObjectHideFlags: 0
@@ -349,8 +408,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5363496000027121329}
   - component: {fileID: 5363496000027121330}
-  - component: {fileID: 5363496000027121332}
+  - component: {fileID: 1520422540}
   - component: {fileID: 2898179727672672407}
+  - component: {fileID: 5363496000027121332}
   - component: {fileID: 5363496000027121331}
   - component: {fileID: 3825314483573913069}
   m_Layer: 7
@@ -367,7 +427,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5363496000027121328}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -111.4, y: 147.8185, z: 114.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -375,6 +435,7 @@ Transform:
   - {fileID: 8568168923047209219}
   - {fileID: 5363495998611704707}
   - {fileID: 5363495998290252933}
+  - {fileID: 715793592}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -391,7 +452,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: {fileID: 5363495998483135945}
---- !u!114 &5363496000027121332
+--- !u!114 &1520422540
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -400,9 +461,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 5363496000027121328}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e097c7a199f391a499a497742098bc08, type: 3}
+  m_Script: {fileID: 11500000, guid: ccaa406441447fb499fdaa75ac272c02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HitPoint: {x: 0, y: 0, z: 0}
+  HitNormal: {x: 0, y: 0, z: 0}
 --- !u!114 &2898179727672672407
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -415,7 +478,49 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f568bd79d8996440a7f955d01059964, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnHitEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 715793594}
+        m_TargetAssemblyTypeName: FeedbackHandler, Assembly-CSharp
+        m_MethodName: PlayFeedback
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnDeadEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5363496000027121330}
+        m_TargetAssemblyTypeName: AIBrain, Assembly-CSharp
+        m_MethodName: Release
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   maxHP: 40
+--- !u!114 &5363496000027121332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5363496000027121328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e097c7a199f391a499a497742098bc08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!195 &5363496000027121331
 NavMeshAgent:
   m_ObjectHideFlags: 0

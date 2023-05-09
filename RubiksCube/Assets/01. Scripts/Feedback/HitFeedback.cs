@@ -9,20 +9,21 @@ public class HitFeedback : Feedback
 
     private void Awake()
     {
-        aiActionData = transform.parent.Find("AI").GetComponent<AIActionData>();
+        aiActionData = transform.parent.GetComponent<AIActionData>();
     }
 
     public override void CreateFeedback()
     {
-        
-    }
-
-    public override void FinishFeedback()
-    {
         EffectHandler effect = PoolManager.Instance.Pop(hitParticle) as EffectHandler;
+        Debug.Log(aiActionData.HitPoint);
         effect.transform.position = aiActionData.HitPoint;
         effect.transform.rotation = Quaternion.LookRotation(aiActionData.HitNormal);
 
         effect.PlayEffects(effectPlayTime);
+    }
+
+    public override void FinishFeedback()
+    {
+        
     }
 }

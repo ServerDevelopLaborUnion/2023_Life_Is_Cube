@@ -62,19 +62,29 @@ public class Knife : Weapon
     private void CastingDamage()
     {
         //대미지 받아랏
-        Collider[] detectedColliders = Physics.OverlapSphere(damageCaster.position, detectRadius, EnemyLayer);
+        // Collider[] detectedColliders = Physics.OverlapSphere(damageCaster.position, detectRadius, EnemyLayer);
 
-        if(detectedColliders.Length <= 0)
-            return;
-        Debug.Log("start attack");
-        IDamageable id = null;
-        foreach(Collider col in detectedColliders)
+        // if(detectedColliders.Length <= 0)
+        //     return;
+        // Debug.Log("start attack");
+        // IDamageable id = null;
+        // foreach(Collider col in detectedColliders)
+        // {
+        //     if(col.TryGetComponent<IDamageable>(out id))
+        //     {
+        //         Vector3 normal = -(col.transform.position - playerTrm.position);
+        //         normal.y = 0;
+        //         id?.OnDamage(damage, Vector3.zero, normal);
+        //     }
+        // }
+
+        bool result = Physics.SphereCast(damageCaster.position - (damageCaster.forward * detectRadius * 2), detectRadius, damageCaster.forward, out RaycastHit hit, int.MaxValue, EnemyLayer);
+
+        if(result)
         {
-            if(col.TryGetComponent<IDamageable>(out id))
+            if(hit.collider.TryGetComponent<IDamageable>(out IDamageable id))
             {
-                Vector3 normal = -(col.transform.position - playerTrm.position);
-                normal.y = 0;
-                id?.OnDamage(damage, Vector3.zero, normal);
+                id.OnDamage(10f, hit.point, hit.normal);
             }
         }
     }
