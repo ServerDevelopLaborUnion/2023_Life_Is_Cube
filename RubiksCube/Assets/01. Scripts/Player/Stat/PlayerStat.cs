@@ -11,6 +11,8 @@ public class PlayerStat : MonoBehaviour
     {
        foreach (StatData data in statDatas)
             SetStat(data.statType, data);
+
+        statPanel = DEFINE.MainCanvas.Find("StatPanel").GetComponent<StatPanel>();
     }
 
     private void Start()
