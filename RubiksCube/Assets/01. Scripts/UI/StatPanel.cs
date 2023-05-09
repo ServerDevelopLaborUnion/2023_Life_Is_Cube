@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class StatPanel : MonoBehaviour
 {
-    private TextMeshProUGUI hpText;
+    private TextMeshProUGUI karmaText;
 
     private Dictionary<StatFlags, TextMeshProUGUI> statTextDictionary = new Dictionary<StatFlags, TextMeshProUGUI>();
 
@@ -19,12 +19,12 @@ public class StatPanel : MonoBehaviour
                 statTextDictionary.Add(stat, statText);
         }
 
-        hpText = statPanel.Find("MaxHP/Text")?.GetComponent<TextMeshProUGUI>();
+        karmaText = statPanel.Find("Karma/Text")?.GetComponent<TextMeshProUGUI>();
     }
 
-    public void DisplayHP(float currentHP, float maxHP)
+    public void DisplayKarma(int value)
     {
-        hpText.SetText($"{currentHP}/{maxHP}");
+        karmaText.SetText(value.ToString());
     }
 
     public void DisplayStat(StatFlags stat, float value)

@@ -7,21 +7,16 @@ public class PlayerStat : MonoBehaviour
     private Dictionary<StatFlags, StatData> statDictionary = new Dictionary<StatFlags, StatData>();
     private StatPanel statPanel = null;
 
-    //private void Awake()
-    //{
-    //    foreach (StatData data in statDatas)
-    //    {
-    //        if (statDictionary.ContainsKey(data.statType) == false)
-    //            statDictionary.Add(data.statType, data);
-    //    }
-    //}
+    private void Awake()
+    {
+       foreach (StatData data in statDatas)
+            SetStat(data.statType, data);
+    }
 
     private void Start()
     {
         foreach(StatFlags stat in typeof(StatFlags).GetEnumValues())
-            if(stat == StatFlags.MaxHP)
-                continue;
-            else if(statDictionary.ContainsKey(stat))
+            if(statDictionary.ContainsKey(stat))
                 statPanel?.DisplayStat(stat, statDictionary[stat].value);
     }
 
@@ -30,6 +25,7 @@ public class PlayerStat : MonoBehaviour
     public void ModifyStat(StatFlags statType, float degree)
     {
         statDictionary[statType] = statDictionary[statType].ModifyStat(degree);
+
         statPanel?.DisplayStat(statType, statDictionary[statType].value);
     }
     public void SetStat(StatFlags statType, float value)

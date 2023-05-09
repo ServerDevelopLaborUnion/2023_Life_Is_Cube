@@ -1,17 +1,43 @@
+using System.Net;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class HPPanel : MonoBehaviour
 {
-    private Image hpImage = null;
+    private Transform hpBar = null;
+    private Image slider = null;
+    private TextMeshProUGUI hpText = null;
+
+    private bool active = false;
 
     private void Awake()
     {
-        hpImage = transform.Find("HPImage").GetComponent<Image>();
+        hpBar = transform.Find("HPBar");
+        slider = hpBar.Find("Slider").GetComponent<Image>();
+        hpText = hpBar.Find("Text").GetComponent<TextMeshProUGUI>();
     }
 
-    public void SetHP(float percent)
+    private void Start()
     {
-        hpImage.fillAmount = Mathf.Max(0f, percent);
+        SetActive(false);
+    }
+
+    private void FixedUpdate()
+    {
+        if(active)
+            hpBar.position = DEFINE.MainCam.WorldToScreenPoint(DEFINE.PlayerTrm.position);
+    }
+
+    public void SetHP(float currentHP, float maxHP)
+    {
+        slider.fillAmount = Mathf.Max(0f, currentHP / maxHP);
+        hpText.SetText($"{((int)currentHP).ToString()} / {((int)maxHP).ToString()}");
+    }
+
+    public void SetActive(bool value)
+    {
+        active = value;
+        hpBar.gameObject.SetActive(value);
     }
 }

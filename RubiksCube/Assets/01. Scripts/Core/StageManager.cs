@@ -62,9 +62,10 @@ public class StageManager : MonoBehaviour
         CameraManager.Instance.SetActiveCam(CameraManager.Instance.CmMapCam, false);
         CameraManager.Instance.SetActiveCam(CameraManager.Instance.CmMainCam, true);
 
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1.75f);
 
         DEFINE.PlayerTrm.gameObject.SetActive(true);
+        GameObject.Find("HPPanel").GetComponent<HPPanel>().SetActive(true);
     }
 
     public void StartGame()
