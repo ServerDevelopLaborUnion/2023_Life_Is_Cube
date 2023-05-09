@@ -32,4 +32,9 @@ public class StatPanel : MonoBehaviour
         if(statTextDictionary.ContainsKey(stat))
             statTextDictionary[stat]?.SetText(value.ToString());
     }
+
+    public void SetActiveToggle()
+    {
+        gameObject.SetActive(!gameObject.activeSelf);
+    }
 }

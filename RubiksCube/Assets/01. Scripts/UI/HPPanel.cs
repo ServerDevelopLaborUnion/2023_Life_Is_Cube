@@ -40,4 +40,9 @@ public class HPPanel : MonoBehaviour
         active = value;
         hpBar.gameObject.SetActive(value);
     }
+
+    public void SetActiveToggle()
+    {
+        SetActive(!active);
+    }
 }
