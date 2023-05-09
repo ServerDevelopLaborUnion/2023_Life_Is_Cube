@@ -183,7 +183,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsReverse: 1
-  targetTrm: {fileID: 0}
   distance: 7
 --- !u!1 &5363495998611704706
 GameObject:
@@ -326,7 +325,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsReverse: 1
-  targetTrm: {fileID: 0}
   distance: 2
 --- !u!114 &5363495999896171888
 MonoBehaviour:
@@ -352,8 +350,10 @@ GameObject:
   - component: {fileID: 5363496000027121329}
   - component: {fileID: 5363496000027121330}
   - component: {fileID: 5363496000027121332}
+  - component: {fileID: 2898179727672672407}
   - component: {fileID: 5363496000027121331}
-  m_Layer: 0
+  - component: {fileID: 3825314483573913069}
+  m_Layer: 7
   m_Name: Fox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -403,6 +403,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e097c7a199f391a499a497742098bc08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2898179727672672407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5363496000027121328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f568bd79d8996440a7f955d01059964, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHP: 40
 --- !u!195 &5363496000027121331
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -425,6 +438,20 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!136 &3825314483573913069
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5363496000027121328}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5334587
+  m_Height: 1.7522507
+  m_Direction: 2
+  m_Center: {x: 0.0021438599, y: 0.45, z: -0.18474197}
 --- !u!1 &5363496000280714259
 GameObject:
   m_ObjectHideFlags: 0
@@ -484,7 +511,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsReverse: 0
-  targetTrm: {fileID: 0}
   distance: 7
 --- !u!1 &5363496000328607925
 GameObject:
@@ -545,7 +571,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsReverse: 0
-  targetTrm: {fileID: 0}
   distance: 2
 --- !u!1001 &5363496000065726863
 PrefabInstance:

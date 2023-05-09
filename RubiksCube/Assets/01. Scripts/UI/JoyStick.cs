@@ -44,7 +44,8 @@ public class JoyStick : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
     public void OnDrag(PointerEventData eventData)
     {
-        transform.position = Input.mousePosition;
+        if((transform.position - Input.mousePosition).magnitude < 300)
+            transform.position = Input.mousePosition;
 
         if((transform.position - center).magnitude > maxDistance)
         {

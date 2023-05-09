@@ -20,7 +20,7 @@ public class Knife : Weapon
 
     private void Awake()
     {
-        animator = transform.Find("Model").GetComponent<Animator>();
+        animator = /*transform.Find("Model").*/GetComponent<Animator>();
         playerTrm = transform.root;
     }
 
@@ -66,7 +66,7 @@ public class Knife : Weapon
 
         if(detectedColliders.Length <= 0)
             return;
-
+        Debug.Log("start attack");
         IDamageable id = null;
         foreach(Collider col in detectedColliders)
         {

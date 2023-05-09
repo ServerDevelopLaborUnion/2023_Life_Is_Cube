@@ -8,12 +8,16 @@ public class AIBrain : PoolableMono
     private Transform targetTrm;
     public Transform TargetTrm => targetTrm;
 
+    private EnemyHealth health = null;
+
     private void Awake()
     {
         List<AIState> states = new List<AIState>();
         transform.Find("AI").GetComponentsInChildren<AIState>(states);
 
         states.ForEach(state => state.SetUp(transform));
+
+        health = GetComponent<EnemyHealth>();
     }
 
     private void Start()
@@ -35,5 +39,6 @@ public class AIBrain : PoolableMono
 
     public override void Reset()
     {
+        health?.Init();
     }
 }

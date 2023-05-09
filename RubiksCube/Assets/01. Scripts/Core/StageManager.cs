@@ -8,6 +8,8 @@ public class StageManager : MonoBehaviour
     [SerializeField] int startRotateCount = 15;
     [SerializeField] float startDelayTime = 1.8f;
 
+    public bool immediatly = false;
+
     private Cube cube;
     private EnemyFactory enemyFactory;
 
@@ -25,7 +27,7 @@ public class StageManager : MonoBehaviour
     private IEnumerator StartDirectingCoroutine()
     {
         yield return new WaitForSeconds(startDelayTime / 10f);
-        
+
         CameraManager.Instance.SetActiveCam(CameraManager.Instance.CmDirectingCam, true);
         CameraManager.Instance.SetProjection(false);
 
@@ -40,9 +42,9 @@ public class StageManager : MonoBehaviour
         //회전 끝났을 때
 
         CubeCell[] cells = cube.SortIdexesOnCells();
-        for(int i = 0; i < 9; i++)
+        for (int i = 0; i < 9; i++)
         {
-            if(cells.Length <= i || cells[i] == null)
+            if (cells.Length <= i || cells[i] == null)
                 continue;
             enemyFactory.SpawnImmediately(30, cells[i].CellBiome, cells[i].CellIndex);
         }
@@ -58,7 +60,7 @@ public class StageManager : MonoBehaviour
 
         yield return new WaitForSeconds(1.8f);
 
-        
+
         CameraManager.Instance.SetActiveCam(CameraManager.Instance.CmMapCam, false);
         CameraManager.Instance.SetActiveCam(CameraManager.Instance.CmMainCam, true);
 
@@ -70,6 +72,22 @@ public class StageManager : MonoBehaviour
 
     public void StartGame()
     {
+        if (immediatly)
+        {
+            CubeCell[] cells = cube.SortIdexesOnCells();
+            for (int i = 0; i < 9; i++)
+            {
+                if (cells.Length <= i || cells[i] == null)
+                    continue;
+                enemyFactory.SpawnImmediately(30, cells[i].CellBiome, cells[i].CellIndex);
+            }
+
+            GameObject.Find("HPPanel").GetComponent<HPPanel>().SetActive(true);
+
+            return;
+        }
+
+
         DEFINE.PlayerTrm.gameObject.SetActive(false);
         DEFINE.PlayerTrm.position = new Vector3(-22.5f, 147.5f, 15f);
 
