@@ -2,19 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class Character : MonoBehaviour, IPointerDownHandler
 {
+    [SerializeField] private string className;
     public List<StatData> stats;
-    private CharacterSelectPanel current;
+
+    [SerializeField] private Image icon;
+
+    private CharacterSelectPanel panel;
 
     private void Awake()
     {
-        current = transform.parent.parent.GetComponent<CharacterSelectPanel>();
+        panel = transform.parent.GetComponent<CharacterSelectPanel>();
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        current.Current = this;
+        panel.Current = this;
     }
 }

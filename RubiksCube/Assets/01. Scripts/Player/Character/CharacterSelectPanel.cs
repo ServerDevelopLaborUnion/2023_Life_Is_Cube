@@ -15,7 +15,8 @@ public class CharacterSelectPanel : MonoBehaviour
 
     private void Awake()
     {
-        characters = transform.GetChild(0).GetComponentsInChildren<Character>().ToList();
+        characters = GetComponentsInChildren<Character>().ToList();
+        current = characters[0];
     }
 
     public void GameStart()
