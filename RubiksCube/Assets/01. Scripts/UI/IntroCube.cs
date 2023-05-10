@@ -6,7 +6,8 @@ public class IntroCube : MonoBehaviour
     [SerializeField] float rotateSpeed = 30f;
     [SerializeField] float lowestSimilar = 0.95f;
 
-    [SerializeField] GameObject panel;
+    [SerializeField] GameObject settingPanel;
+    [SerializeField] GameObject quitPanel;
 
     private bool selected = false;
     private Camera cam = null;
@@ -87,7 +88,7 @@ public class IntroCube : MonoBehaviour
                             SettingOnOff(true);
                             break;
                         case DirectionFlags.Back:
-
+                            QuitPanelOnOff(true);
                             break;
                     }
                 }
@@ -132,9 +133,22 @@ public class IntroCube : MonoBehaviour
         // }
     }
 
+    #region UI 관련 함수들
+
     public void SettingOnOff(bool value)
     {
-        panel.SetActive(value);
+        settingPanel.SetActive(value);
     }
 
+    public void QuitPanelOnOff(bool value)
+    {
+        quitPanel.SetActive(value);
+    }
+
+    public void Quit()
+    {
+        Debug.Log("Application.Quit() 호출");
+        Application.Quit();
+    }
+    #endregion
 }
