@@ -1,12 +1,15 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class IntroCube : MonoBehaviour
 {
     [SerializeField] float rotateSpeed = 30f;
     [SerializeField] float lowestSimilar = 0.95f;
 
+    [SerializeField] GameObject panel;
+
     private bool selected = false;
-    private Transform cameraTrm = null;
+    private Camera cam = null;
     private Quaternion targetDir = Quaternion.identity;
     private DirectionFlags targetAxis = DirectionFlags.End;
 
@@ -14,8 +17,8 @@ public class IntroCube : MonoBehaviour
 
     private void Awake()
     {
-        cameraTrm = DEFINE.MainCam.transform;
-        targetDir = Quaternion.LookRotation(-cameraTrm.forward);
+        cam = DEFINE.MainCam;
+        targetDir = Quaternion.LookRotation(-cam.transform.forward);
 
         // transform.Rotate(Vector3.forward - Vector3.right, 60);
 
@@ -65,6 +68,31 @@ public class IntroCube : MonoBehaviour
             }
         }
 
+        if (Input.GetMouseButtonUp(0))
+        {
+            Ray ray = DEFINE.MainCam.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit, cam.farClipPlane, DEFINE.CellLayer))
+            {
+                GameObject hitObject = hit.collider.gameObject;
+                if (targetAxis != DirectionFlags.End)
+                {
+                    switch (targetAxis)
+                    {
+                        case DirectionFlags.Up:
+                            Debug.Log("Character SceneLoad");
+                            //SceneManager.LoadScene("JaeHee");
+                            break;
+                        case DirectionFlags.Left:
+                            SettingOnOff(true);
+                            break;
+                        case DirectionFlags.Back:
+
+                            break;
+                    }
+                }
+            }
+        }
         RotateCube();
     }
 
@@ -93,14 +121,20 @@ public class IntroCube : MonoBehaviour
         else
             transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Mathf.Clamp(Time.deltaTime * 10f, 0, 1));
         // {
-            // if (targetAxis == DirectionFlags.End)
-            // {
-            //     transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.identity, Time.deltaTime * 10f);
-            //     return;
-            // }
+        // if (targetAxis == DirectionFlags.End)
+        // {
+        //     transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.identity, Time.deltaTime * 10f);
+        //     return;
+        // }
 
-            // Vector3 dir = -cameraTrm.forward;
-            // Quaternion targetRotation = Quaternion.FromToRotation(fromDir, dir);
+        // Vector3 dir = -cameraTrm.forward;
+        // Quaternion targetRotation = Quaternion.FromToRotation(fromDir, dir);
         // }
     }
+
+    public void SettingOnOff(bool value)
+    {
+        panel.SetActive(value);
+    }
+
 }
