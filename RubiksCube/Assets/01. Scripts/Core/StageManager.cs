@@ -67,27 +67,39 @@ public class StageManager : MonoBehaviour
         yield return new WaitForSeconds(1.75f);
 
         DEFINE.PlayerTrm.gameObject.SetActive(true);
-        GameObject.Find("HPPanel").GetComponent<HPPanel>().SetActive(true);
+        DEFINE.MainCanvas.gameObject.SetActive(true);
+        UIManager.Instance.HPPanel.SetActive(true);
+        // UIManager.Instance.InputPanel.gameObject.SetActive(true);
+        // UIManager.Instance.StatPanel.gameObject.SetActive(true);
+        // UIManager.Instance.MenuPanel.gameObject.SetActive(true);
     }
 
     public void StartGame()
     {
         if (immediatly)
         {
-            CubeCell[] cells = cube.SortIdexesOnCells();
-            for (int i = 0; i < 9; i++)
-            {
-                if (cells.Length <= i || cells[i] == null)
-                    continue;
-                enemyFactory.SpawnImmediately(30, cells[i].CellBiome, cells[i].CellIndex);
-            }
+            // CubeCell[] cells = cube.SortIdexesOnCells();
+            // for (int i = 0; i < 9; i++)
+            // {
+            //     if (cells.Length <= i || cells[i] == null)
+            //         continue;
+            //     enemyFactory.SpawnImmediately(30, cells[i].CellBiome, cells[i].CellIndex);
+            // }
 
-            GameObject.Find("HPPanel").GetComponent<HPPanel>().SetActive(true);
+            UIManager.Instance.HPPanel.SetActive(true);
+            // UIManager.Instance.InputPanel.gameObject.SetActive(true);
+            // UIManager.Instance.StatPanel.gameObject.SetActive(true);
+            // UIManager.Instance.MenuPanel.gameObject.SetActive(true);
 
             return;
         }
 
 
+        // UIManager.Instance.HPPanel.SetActive(false);
+        // UIManager.Instance.InputPanel.gameObject.SetActive(false);
+        // UIManager.Instance.StatPanel.gameObject.SetActive(false);
+        // UIManager.Instance.MenuPanel.gameObject.SetActive(false);
+        DEFINE.MainCanvas.gameObject.SetActive(false);
         DEFINE.PlayerTrm.gameObject.SetActive(false);
         DEFINE.PlayerTrm.position = new Vector3(-22.5f, 147.5f, 15f);
 

@@ -12,11 +12,12 @@ public class PlayerStat : MonoBehaviour
        foreach (StatData data in statDatas)
             SetStat(data.statType, data);
 
-        statPanel = DEFINE.MainCanvas.Find("StatPanel").GetComponent<StatPanel>();
     }
 
     private void Start()
     {
+        statPanel = UIManager.Instance.StatPanel;
+
         foreach(StatFlags stat in typeof(StatFlags).GetEnumValues())
             if(statDictionary.ContainsKey(stat))
                 statPanel?.DisplayStat(stat, statDictionary[stat].value);

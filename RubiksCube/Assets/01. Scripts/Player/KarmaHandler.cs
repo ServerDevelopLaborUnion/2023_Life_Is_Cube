@@ -5,14 +5,11 @@ public class KarmaHandler : MonoBehaviour
     private StatPanel statPanel = null;
     private int karma = 0;
 
-    private void Awake()
-    {
-        statPanel = DEFINE.MainCanvas.Find("StatPanel").GetComponent<StatPanel>();
-    }
-
     private void Start()
     {
-        karma = 0;
+        statPanel = UIManager.Instance.StatPanel;
+
+        karma = 100;
         statPanel?.DisplayKarma(karma);
     }
 
@@ -22,7 +19,7 @@ public class KarmaHandler : MonoBehaviour
             return false;
 
         karma -= amount;
-        statPanel?.DisplayKarma(amount);
+        statPanel?.DisplayKarma(karma);
 
         return true;
     }
@@ -30,6 +27,6 @@ public class KarmaHandler : MonoBehaviour
     public void AddKarma(int amount)
     {
         karma += amount;
-        statPanel?.DisplayKarma(amount);
+        statPanel?.DisplayKarma(karma);
     }
 }

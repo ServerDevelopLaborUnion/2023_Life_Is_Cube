@@ -1,4 +1,3 @@
-using System.Net;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,7 +8,7 @@ public class HPPanel : MonoBehaviour
     private Image slider = null;
     private TextMeshProUGUI hpText = null;
 
-    private bool active = false;
+    private bool active = true;
 
     private void Awake()
     {
@@ -20,7 +19,8 @@ public class HPPanel : MonoBehaviour
 
     private void Start()
     {
-        SetActive(false);
+        //SetActive(false);
+        //active = true;
     }
 
     private void FixedUpdate()

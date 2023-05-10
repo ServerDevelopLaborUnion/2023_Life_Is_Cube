@@ -18,6 +18,7 @@ public class AIBrain : PoolableMono
         states.ForEach(state => state.SetUp(transform));
 
         health = GetComponent<EnemyHealth>();
+        health?.Init();
     }
 
     private void Start()

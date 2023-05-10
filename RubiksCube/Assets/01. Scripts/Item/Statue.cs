@@ -26,10 +26,6 @@ public class Statue : MonoBehaviour, IInteractable
 
         if (karmaHandler.TryUseKarma(cost))
         {
-
-        }
-        else
-        {
             int randIdx = Random.Range(0, itemList.Count);
 
             if (randIdx >= itemList.Count)
@@ -40,6 +36,10 @@ public class Statue : MonoBehaviour, IInteractable
 
             item.transform.position = transform.position + Vector3.up * yFactor;
             item.PopAnimation(yFactor);
+        }
+        else
+        {
+            Debug.Log("돈없다");
         }
     }
 }

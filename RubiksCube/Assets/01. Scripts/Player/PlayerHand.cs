@@ -12,7 +12,12 @@ public class PlayerHand : MonoBehaviour
     private void Awake()
     {
         playerStat = GetComponent<PlayerStat>();
-        inventoryUI = DEFINE.MainCanvas.Find("InventoryPanel").GetComponent<InventoryUI>();
+    }
+
+    private void Start()
+    {
+        inventoryUI = UIManager.Instance.InventoryPanel.GetComponent<InventoryUI>();
+        
     }
 
     private void Update()

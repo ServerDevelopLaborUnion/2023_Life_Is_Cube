@@ -13,7 +13,6 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     private void Awake()
     {
         playerStat = GetComponent<PlayerStat>();
-        hpPanel = DEFINE.MainCanvas.Find("HPPanel")?.GetComponent<HPPanel>();
 
         //Debug.Log($"MaxHP : {MaxHP} \n(PlayerHealth Awake)");
         currentHP = MaxHP;
@@ -21,6 +20,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
     private void Start()
     {
+        hpPanel = UIManager.Instance.HPPanel;
         hpPanel?.SetHP(currentHP, MaxHP);
     }
 
