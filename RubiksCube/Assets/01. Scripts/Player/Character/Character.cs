@@ -2,11 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class Character : MonoBehaviour, IPointerDownHandler
 {
     [SerializeField] private string className;
     public List<StatData> stats;
+
+    [SerializeField] private Image icon;
+
     private CharacterSelectPanel panel;
 
     private void Awake()
