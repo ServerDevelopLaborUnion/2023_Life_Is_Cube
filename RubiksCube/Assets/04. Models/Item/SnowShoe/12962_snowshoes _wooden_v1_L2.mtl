@@ -1,0 +1,56 @@
+# 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
+# File Created: 18.01.2012 14:43:24
+
+newmtl snowshoes__wooden_steel
+	Ns 70.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.6118 0.6118 0.6118
+	Kd 0.6118 0.6118 0.6118
+	Ks 0.6750 0.6750 0.6750
+	Ke 0.0000 0.0000 0.0000
+
+newmtl snowshoes__wooden_fastening
+	Ns 15.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.9882 0.9882 0.9882
+	Kd 0.9882 0.9882 0.9882
+	Ks 0.1350 0.1350 0.1350
+	Ke 0.0000 0.0000 0.0000
+	map_Ka snowshoes_wooden_fastening_diffuse.jpg
+	map_Kd snowshoes_wooden_fastening_diffuse.jpg
+
+newmtl snowshoes__wooden_net
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 1.0000 1.0000 1.0000
+	Kd 1.0000 1.0000 1.0000
+	Ks 0.0900 0.0900 0.0900
+	Ke 0.0000 0.0000 0.0000
+	map_Ka snowshoes_wooden_net_diffuse.jpg
+	map_Kd snowshoes_wooden_net_diffuse.jpg
+
+newmtl snowshoes__wooden_frame
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 1.0000 1.0000 1.0000
+	Kd 1.0000 1.0000 1.0000
+	Ks 0.0900 0.0900 0.0900
+	Ke 0.0000 0.0000 0.0000
+	map_Ka snowshoes_wooden_frame_diffuse.jpg
+	map_Kd snowshoes_wooden_frame_diffuse.jpg
