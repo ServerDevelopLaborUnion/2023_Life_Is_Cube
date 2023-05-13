@@ -69,7 +69,7 @@ public class AIAttackState : AIState
     //공격
     private void AttackEvent()
     {
-        bool result = Physics.SphereCast(damageCaster.position - damageCaster.forward * attackRadius, attackRadius, damageCaster.forward, out RaycastHit hit);
+        bool result = Physics.SphereCast(damageCaster.position - damageCaster.forward * attackRadius, attackRadius, damageCaster.forward, out RaycastHit hit, attackRadius);
 
         if(result)
         {
