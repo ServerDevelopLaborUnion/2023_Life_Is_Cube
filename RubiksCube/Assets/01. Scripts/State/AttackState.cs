@@ -3,11 +3,10 @@ using UnityEngine;
 
 public class AttackState : State
 {
-    public override void OnStateEnter()
-    {
-        playerAnimator.ToggleAttack(true);
-        playerMovement.StopImmediatly();
+    private AIBrain targetEnemy = null;
 
+    private void Update()
+    {
         Collider[] enemies = Physics.OverlapSphere(transform.position, 100f, DEFINE.EnemyLayer);
         Transform target = null;
         float nearDistance = float.MaxValue;
@@ -22,9 +21,24 @@ public class AttackState : State
             }
         }
 
-        if (target != null)
+        AIBrain newTarget = target.GetComponent<AIBrain>();
+        if(newTarget != null && targetEnemy != newTarget)
         {
-            Vector3 lookTarget = target.position;
+            if(targetEnemy != null)
+                targetEnemy.IsFocused = false;
+            targetEnemy = newTarget;
+            targetEnemy.IsFocused = true;
+        }
+    }
+
+    public override void OnStateEnter()
+    {
+        playerAnimator.ToggleAttack(true);
+        playerMovement.StopImmediatly();
+
+        if (targetEnemy != null)
+        {
+            Vector3 lookTarget = targetEnemy.transform.position;
             //playerMovement.IsActiveRotate = false;
 
             if (lookTarget.sqrMagnitude <= 0)

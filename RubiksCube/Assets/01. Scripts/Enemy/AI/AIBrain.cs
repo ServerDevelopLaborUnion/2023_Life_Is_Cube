@@ -8,7 +8,17 @@ public class AIBrain : PoolableMono
     private Transform targetTrm;
     public Transform TargetTrm => targetTrm;
 
+    private GameObject focusBorder;
+
     private EnemyHealth health = null;
+
+    private bool isFocused = false;
+    public bool IsFocused {
+        set {
+            isFocused = value;
+            focusBorder?.SetActive(isFocused);
+        }
+    }
 
     private void Awake()
     {
@@ -17,8 +27,11 @@ public class AIBrain : PoolableMono
 
         states.ForEach(state => state.SetUp(transform));
 
+        focusBorder = transform.Find("FocusBorder").gameObject;
+
         health = GetComponent<EnemyHealth>();
         health?.Init();
+
     }
 
     private void Start()
