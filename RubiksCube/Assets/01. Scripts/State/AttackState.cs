@@ -21,7 +21,7 @@ public class AttackState : State
             }
         }
 
-        AIBrain newTarget = target.GetComponent<AIBrain>();
+        AIBrain newTarget = target?.GetComponent<AIBrain>();
         if(newTarget != null && targetEnemy != newTarget)
         {
             if(targetEnemy != null)

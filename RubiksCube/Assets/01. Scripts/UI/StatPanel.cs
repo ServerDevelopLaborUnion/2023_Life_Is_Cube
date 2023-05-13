@@ -1,40 +1,46 @@
 using UnityEngine;
 using TMPro;
 using System.Collections.Generic;
+using DG.Tweening;
 
 public class StatPanel : MonoBehaviour
 {
-    private TextMeshProUGUI karmaText;
+    [SerializeField] float activePosY = 40f;
+    [SerializeField] float enactivePosY = -360f;
+    
+    private RectTransform rectTrm = null;
+    private bool isActived;
 
-    private Dictionary<StatFlags, TextMeshProUGUI> statTextDictionary = new Dictionary<StatFlags, TextMeshProUGUI>();
+    private Dictionary<StatFlags, StatInfo> statInfoDictionary = new Dictionary<StatFlags, StatInfo>();
 
     private void Awake()
     {
+        rectTrm = transform.GetComponent<RectTransform>();
         Transform statPanel = DEFINE.MainCanvas.Find("StatPanel");
         
         foreach(StatFlags stat in typeof(StatFlags).GetEnumValues())
         {
-            TextMeshProUGUI statText = statPanel.Find(stat.ToString())?.Find("Text")?.GetComponent<TextMeshProUGUI>();
-            if(statText != null)
-                statTextDictionary.Add(stat, statText);
+            StatInfo statInfo = statPanel.Find(stat.ToString())?.GetComponent<StatInfo>();
+            if(statInfo != null)
+                statInfoDictionary.Add(stat, statInfo);
         }
-
-        karmaText = statPanel.Find("Karma/Text")?.GetComponent<TextMeshProUGUI>();
     }
 
-    public void DisplayKarma(int value)
+    public void DisplayStat(StatFlags stat, float currentValue, float maxValue)
     {
-        karmaText.SetText(value.ToString());
+        if(statInfoDictionary.ContainsKey(stat))
+            statInfoDictionary[stat]?.DisplayStat(currentValue, maxValue);
     }
 
-    public void DisplayStat(StatFlags stat, float value)
+    public void Slide()
     {
-        if(statTextDictionary.ContainsKey(stat))
-            statTextDictionary[stat]?.SetText(value.ToString());
-    }
+        Sequence seq = DOTween.Sequence().SetUpdate(true);
 
-    public void SetActiveToggle()
-    {
-        gameObject.SetActive(!gameObject.activeSelf);
+        seq.Append(rectTrm.DOAnchorPosY(isActived ? enactivePosY : activePosY, 0.2f).SetEase(Ease.Linear));
+        seq.AppendCallback(() => {
+
+            isActived = !isActived;
+            seq.Kill();
+        });
     }
 }
