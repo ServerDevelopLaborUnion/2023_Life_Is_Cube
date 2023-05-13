@@ -86,4 +86,17 @@ public class AIAttackState : AIState
         yield return new WaitForSeconds(delay);
         callback?.Invoke();
     }
+
+    #if UNITY_EDITOR
+    
+    private void OnDrawGizmosSelected()
+    {
+        if(damageCaster == null)
+            return;
+
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(damageCaster.position, attackRadius);
+    }
+    
+    #endif
 }
