@@ -78,15 +78,12 @@ public class Knife : Weapon
         //     }
         // }
 
-        bool result = Physics.SphereCast(damageCaster.position - (damageCaster.forward * detectRadius * 2), detectRadius, damageCaster.forward, out RaycastHit hit, int.MaxValue, EnemyLayer);
+        RaycastHit[] hits = Physics.SphereCastAll(damageCaster.position - (damageCaster.forward * detectRadius * 2), detectRadius, damageCaster.forward, detectRadius * 2, EnemyLayer);
 
-        if(result)
-        {
-            if(hit.collider.TryGetComponent<IDamageable>(out IDamageable id))
-            {
-                id.OnDamage(10f, hit.point, hit.normal);
-            }
-        }
+        foreach(RaycastHit hit in hits)
+            if(hit.point != Vector3.zero)
+                if(hit.collider.TryGetComponent<IDamageable>(out IDamageable id))
+                    id?.OnDamage(damage, hit.point, hit.normal);
     }
 
     private void Effect()
