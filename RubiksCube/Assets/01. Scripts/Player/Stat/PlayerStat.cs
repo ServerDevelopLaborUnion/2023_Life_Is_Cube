@@ -11,7 +11,6 @@ public class PlayerStat : MonoBehaviour
     {
        foreach (StatData data in statDatas)
             SetStat(data.statType, data);
-
     }
 
     private void Start()
@@ -20,7 +19,7 @@ public class PlayerStat : MonoBehaviour
 
         foreach(StatFlags stat in typeof(StatFlags).GetEnumValues())
             if(statDictionary.ContainsKey(stat))
-                statPanel?.DisplayStat(stat, statDictionary[stat].value);
+                statPanel?.DisplayStat(stat, statDictionary[stat].value, statDictionary[stat].maxValue);
     }
 
     public StatData GetStatData(StatFlags statType) => statDictionary[statType];
@@ -29,12 +28,12 @@ public class PlayerStat : MonoBehaviour
     {
         statDictionary[statType] = statDictionary[statType].ModifyStat(degree);
 
-        statPanel?.DisplayStat(statType, statDictionary[statType].value);
+        statPanel?.DisplayStat(statType, statDictionary[statType].value, statDictionary[statType].maxValue);
     }
     public void SetStat(StatFlags statType, float value)
     {
         statDictionary[statType] = statDictionary[statType].SetStat(value);
-        statPanel?.DisplayStat(statType, statDictionary[statType].value);
+        statPanel?.DisplayStat(statType, statDictionary[statType].value, statDictionary[statType].maxValue);
     }
 
     public void SetStat(StatFlags statType, StatData data)
@@ -46,6 +45,6 @@ public class PlayerStat : MonoBehaviour
 
         Debug.Log(statType + ", " + statDictionary[statType].value);
 
-        statPanel?.DisplayStat(statType, statDictionary[statType].value);
+        statPanel?.DisplayStat(statType, statDictionary[statType].value, statDictionary[statType].maxValue);
     }
 }

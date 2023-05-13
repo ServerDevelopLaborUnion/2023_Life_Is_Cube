@@ -9,6 +9,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     private float currentHP = 0f;
 
     private HPPanel hpPanel = null;
+    private StatPanel statPanel = null;
 
     private void Awake()
     {
@@ -21,7 +22,10 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     private void Start()
     {
         hpPanel = UIManager.Instance.HPPanel;
+        statPanel = UIManager.Instance.StatPanel;
+        
         hpPanel?.SetHP(currentHP, MaxHP);
+        statPanel?.DisplayStat(StatFlags.MaxHP, currentHP, MaxHP);
     }
 
     public void OnDamage(float damage, Vector3 point, Vector3 normal)
@@ -31,6 +35,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
         currentHP -= damage;
         hpPanel?.SetHP(currentHP, MaxHP);
+        statPanel?.DisplayStat(StatFlags.MaxHP, currentHP, MaxHP);
 
         if (currentHP <= 0f)
             OnDie();

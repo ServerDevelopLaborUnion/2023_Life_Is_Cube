@@ -64,4 +64,14 @@ public class UIManager
             return statPanel;
         }
     }
+
+    private KarmaPanel karmaPanel = null;
+    public KarmaPanel KarmaPanel {
+        get {
+            if(karmaPanel == null)
+                karmaPanel = DEFINE.MainCanvas.Find("KarmaPanel").GetComponent<KarmaPanel>();
+            
+            return karmaPanel;
+        }
+    }
 }

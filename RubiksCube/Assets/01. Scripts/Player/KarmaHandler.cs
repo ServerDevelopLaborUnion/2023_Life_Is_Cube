@@ -2,15 +2,15 @@ using UnityEngine;
 
 public class KarmaHandler : MonoBehaviour
 {
-    private StatPanel statPanel = null;
+    private KarmaPanel karmaPanel = null;
     private int karma = 0;
 
     private void Start()
     {
-        statPanel = UIManager.Instance.StatPanel;
+        karmaPanel = UIManager.Instance.KarmaPanel;
 
         karma = 100;
-        statPanel?.DisplayKarma(karma);
+        karmaPanel?.DisplayKarma(karma);
     }
 
     public bool TryUseKarma(int amount)
@@ -19,7 +19,7 @@ public class KarmaHandler : MonoBehaviour
             return false;
 
         karma -= amount;
-        statPanel?.DisplayKarma(karma);
+        karmaPanel?.DisplayKarma(karma);
 
         return true;
     }
@@ -27,6 +27,6 @@ public class KarmaHandler : MonoBehaviour
     public void AddKarma(int amount)
     {
         karma += amount;
-        statPanel?.DisplayKarma(karma);
+        karmaPanel?.DisplayKarma(karma);
     }
 }
