@@ -11,6 +11,7 @@ public class Knife : Weapon
     [Header("Effect")]
     [SerializeField] Transform effectPos = null;
     [SerializeField] EffectHandler effectPrefab = null;
+    [SerializeField] EffectHandler specialEffectPrefab = null;
 
     private Animator animator = null;
     private Transform playerTrm = null;
@@ -18,8 +19,10 @@ public class Knife : Weapon
     private readonly int onAttackHash = Animator.StringToHash("OnAttack");
     private readonly int onSpecialAttackHash = Animator.StringToHash("OnSpecialAttack");
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         animator = /*transform.Find("Model").*/GetComponent<Animator>();
         playerTrm = transform.root;
     }
@@ -51,7 +54,8 @@ public class Knife : Weapon
     //이거 해야됨
     public void OnSpecialAnimationEvent()
     {
-        Debug.LogWarning("이거 해야됨");
+        SpecialAttackCastingDamage();
+        SpecialAttackEffect();
     }
 
     public void OnSpecialAnimationEnd()
@@ -61,47 +65,52 @@ public class Knife : Weapon
 
     private void CastingDamage()
     {
-        //대미지 받아랏
-        // Collider[] detectedColliders = Physics.OverlapSphere(damageCaster.position, detectRadius, EnemyLayer);
-
-        // if(detectedColliders.Length <= 0)
-        //     return;
-        // Debug.Log("start attack");
-        // IDamageable id = null;
-        // foreach(Collider col in detectedColliders)
-        // {
-        //     if(col.TryGetComponent<IDamageable>(out id))
-        //     {
-        //         Vector3 normal = -(col.transform.position - playerTrm.position);
-        //         normal.y = 0;
-        //         id?.OnDamage(damage, Vector3.zero, normal);
-        //     }
-        // }
-
         RaycastHit[] hits = Physics.SphereCastAll(damageCaster.position - (damageCaster.forward * detectRadius * 2), detectRadius, damageCaster.forward, detectRadius * 2, EnemyLayer);
-
-        foreach(RaycastHit hit in hits)
-            if(hit.point != Vector3.zero)
-                if(hit.collider.TryGetComponent<IDamageable>(out IDamageable id))
+        foreach (RaycastHit hit in hits)
+            if (hit.point != Vector3.zero)
+                if (hit.collider.TryGetComponent<IDamageable>(out IDamageable id))
                     id?.OnDamage(damage, hit.point, hit.normal);
+    }
+
+    private void SpecialAttackCastingDamage()
+    {
+        Collider[] enemies = Physics.OverlapSphere(playerTrm.position, detectRadius * 3f, DEFINE.EnemyLayer);
+        foreach (Collider col in enemies)
+            if (col.TryGetComponent<IDamageable>(out IDamageable id))
+                id?.OnDamage(damage * 3f, col.transform.position, col.transform.position);
     }
 
     private void Effect()
     {
-        EffectHandler effect = PoolManager.Instance.Pop(effectPrefab.name) as EffectHandler;
+        EffectHandler effect = PoolManager.Instance.Pop(effectPrefab) as EffectHandler;
         effect.transform.position = effectPos.position;
         effect.transform.rotation = effectPos.rotation;
 
         effect?.PlayEffects();
     }
 
-    #if UNITY_EDITOR
-    
+    private void SpecialAttackEffect()
+    {
+        EffectHandler effect = PoolManager.Instance.Pop(specialEffectPrefab) as EffectHandler;
+        effect.transform.position = playerTrm.position;
+        effect.transform.rotation = playerTrm.rotation;
+
+        effect?.PlayEffects();
+    }
+
+#if UNITY_EDITOR
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(damageCaster.position, detectRadius);
+
+        if (playerTrm == null)
+            return;
+
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(playerTrm.position, detectRadius * 3f);
     }
 
-    #endif
+#endif
 }

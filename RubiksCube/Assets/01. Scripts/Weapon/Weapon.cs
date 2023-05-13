@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class Weapon : MonoBehaviour
 {
@@ -11,20 +12,28 @@ public abstract class Weapon : MonoBehaviour
     protected abstract void Attack();
     protected abstract void SpecialAttack();
 
+    private Image skillImage = null;
+
+    protected virtual void Awake()
+    {
+        skillImage = UIManager.Instance.InputPanel.Find("InteractButton/SpecialButton/FillImage").GetComponent<Image>();
+        Debug.Log(Time.time - latestSpecialAttackTime / specialAttackCooldown);
+    }
+
     public bool TryAttack()
     {
-        if(AbleToAttack())
+        if(AbleToAttack() == false)
             return false;
 
         Attack();
         latestAttackTime = Time.time;
-        
+
         return true;
     }
 
     public bool TrySpecialAttack()
     {
-        if(AbleToSpecialAttack())
+        if(AbleToSpecialAttack() == false)
             return false;
 
         SpecialAttack();
@@ -33,7 +42,13 @@ public abstract class Weapon : MonoBehaviour
         return true;
     }
 
+    private void Update()
+    {
+        if(skillImage != null && AbleToSpecialAttack() == false)
+            skillImage.fillAmount = ((Time.time - latestSpecialAttackTime) / specialAttackCooldown);
+    }
 
-    public bool AbleToAttack() => (Time.time - latestAttackTime < attackCooldown);
-    public bool AbleToSpecialAttack() => (Time.time - latestSpecialAttackTime < specialAttackCooldown);
+
+    public bool AbleToAttack() => (Time.time - latestAttackTime > attackCooldown);
+    public bool AbleToSpecialAttack() => (Time.time - latestSpecialAttackTime > specialAttackCooldown);
 }

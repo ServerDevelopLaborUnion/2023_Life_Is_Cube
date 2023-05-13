@@ -27,6 +27,7 @@ public class NormalState : State
     {
         playerInput.OnMovementKeyPressed -= MovementHandle;
         //playerInput.OnConsumeKeyPressed -= ConsumeHandle;
+        playerInput.OnInteractKeyPressed -= InteractHandle;
         playerInput.OnAttackKeyPressed -= AttackInputHandle;
         playerInput.OnSpecialAttackKeyPressed -= SpecialAttackInputHandle;
     }
