@@ -6,6 +6,9 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance = null;
 
     [SerializeField] List<PoolableMono> poolingList;
+    [SerializeField] List<KarmaColorInfo> karmaColors;
+    private Dictionary<BiomeFlags, Color> karmaColorDictionary;
+    public Dictionary<BiomeFlags, Color> KarmaColorDictionary => karmaColorDictionary;
 
     private void Awake()
     {
@@ -25,5 +28,12 @@ public class GameManager : MonoBehaviour
         TimeController.Instance = gameObject.AddComponent<TimeController>();
         SceneLoader.Instance = gameObject.AddComponent<SceneLoader>();
         StageManager.Instance = GetComponent<StageManager>();
+
+        karmaColorDictionary = new Dictionary<BiomeFlags, Color>();
+        foreach(KarmaColorInfo colorInfo in karmaColors)
+        {
+            if(karmaColorDictionary.ContainsKey(colorInfo.biome) == false)
+                karmaColorDictionary.Add(colorInfo.biome, colorInfo.karmaColor);
+        }
     }
 }

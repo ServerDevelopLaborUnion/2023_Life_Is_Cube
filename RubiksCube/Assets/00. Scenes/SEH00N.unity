@@ -1266,7 +1266,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &548407371
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2502,7 +2502,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &1082228775
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2676,7 +2676,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &1194768504
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3635,6 +3635,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1675608651}
   - component: {fileID: 1675608650}
+  - component: {fileID: 1675608652}
   m_Layer: 0
   m_Name: GameObject (1)
   m_TagString: Untagged
@@ -3649,7 +3650,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1675608649}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4984f83c5dfd7974cbea587e166c0e6c, type: 3}
   m_Name: 
@@ -3670,6 +3671,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1675608652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1675608649}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74689096a743a5d4491adda9aba8bd57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1803180656
 GameObject:
   m_ObjectHideFlags: 0
@@ -3686,7 +3699,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1803180657
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3701,6 +3714,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   poolingList:
   - {fileID: 6233713108122095868, guid: 542544a8b80f1d247a9b191abb19d3bd, type: 3}
+  - {fileID: 2248541509186462487, guid: ec6634a408242624c8b8ca2a6db64d25, type: 3}
 --- !u!4 &1803180658
 Transform:
   m_ObjectHideFlags: 0
