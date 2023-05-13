@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Biome: 1
   EnemyList:
-  - {fileID: 5363496000027121330, guid: b0c61fb223ef225418a8f05b89c8e262, type: 3}
+  - {fileID: 6494163273236662058, guid: 214c7e53c234394448c9da9621030f5b, type: 3}
