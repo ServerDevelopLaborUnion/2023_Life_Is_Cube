@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-
+// hihi hihi 
 public class Character : MonoBehaviour, IPointerDownHandler
 {
     [SerializeField] private string className;
