@@ -3,7 +3,17 @@ guid: c6ab6d875d243924ea988ed355bea628
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Turtle
+    second: {fileID: 2100000, guid: a0600fb72925a5f41acd9140f58ea833, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TurtleShell
+    second: {fileID: 2100000, guid: e8f638d34be3c5e49b2ac6a5677c4b5b, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
