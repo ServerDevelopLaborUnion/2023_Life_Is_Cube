@@ -5,7 +5,17 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
 {
-    public static SceneLoader Instance;
+    public static SceneLoader Instance = null;
+
+    private void Awake()
+    {
+        if (Instance != null)
+        {
+            Debug.Log("multiple SceneLoader instance is running");
+        }
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
 
     public void AddSceneAsync(string sceneName, Action callback = null)
         => StartCoroutine(AsyncSceneLoader(sceneName, LoadSceneMode.Additive, callback));

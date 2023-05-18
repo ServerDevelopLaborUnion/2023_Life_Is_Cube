@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class CharacterSelectPanel : MonoBehaviour
@@ -121,8 +123,9 @@ public class CharacterSelectPanel : MonoBehaviour
         SceneLoader.Instance.LoadSceneAsync("MapTest", () =>
         {
             Debug.Log(2);
-            PlayerStat playerStat = GameObject.Find("Player").GetComponent<PlayerStat>();
+            //PlayerStat playerStat = GameObject.Find("Player").GetComponent<PlayerStat>();
 
+            PlayerStat playerStat = DEFINE.PlayerTrm.GetComponent<PlayerStat>();
             Debug.Log(3);
 
             foreach (var item in current.stats)
