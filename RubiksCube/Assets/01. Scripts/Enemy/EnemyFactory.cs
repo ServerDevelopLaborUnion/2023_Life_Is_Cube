@@ -54,7 +54,7 @@ public class EnemyFactory : MonoBehaviour
         }
     }
 
-    public void SpawnImmediately(int cnt, BiomeFlags biome, int cellIdx)
+    public void SpawnAtOnce(int cnt, BiomeFlags biome, int cellIdx)
     {
         this.biome = biome;
         this.cellIdx = cellIdx;

@@ -44,16 +44,18 @@ public class Cube : MonoBehaviour
         yield return new WaitForSeconds(0.001f);
     }
 
-    public void GetCurrentCell()
+    public CubeCell GetCurrentCell()
     {
         if(Physics.Raycast(DEFINE.PlayerTrm.position, Vector3.down, out RaycastHit hit, 1000f, DEFINE.CellLayer))
         {
             currentCell = hit.collider.GetComponent<CubeCell>();
             Debug.Log(currentCell);
         }
+        
+        return currentCell;
     }
 
-    public CubeCell[] SortIdexesOnCells()
+    public CubeCell[] SortCellIndexes()
     {
         List<CubeCell> cells = new List<CubeCell>();
 
