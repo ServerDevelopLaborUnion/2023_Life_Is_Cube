@@ -24,7 +24,7 @@ public class KarmaHandler : MonoBehaviour
         return true;
     }
 
-    public void AddKarma(int amount)
+    public void AddKarma(int amount = 1)
     {
         karma += amount;
         karmaPanel?.DisplayKarma(karma);

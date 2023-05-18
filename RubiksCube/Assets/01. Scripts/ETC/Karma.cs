@@ -3,10 +3,14 @@ using UnityEngine;
 
 public class Karma : PoolableMono
 {
+    [SerializeField] float absorbingDuration = 3f;
+
     private MaterialPropertyBlock karmaMatPropBlock;
     private MaterialPropertyBlock borderMatPropBlock;
     private MeshRenderer karmaMeshRenderer;
     private MeshRenderer borderMeshRenderer;
+
+    private KarmaHandler playerKarmaHandler;
 
     private int emissionColorHash = Shader.PropertyToID("_EmissionColor");
 
@@ -20,6 +24,8 @@ public class Karma : PoolableMono
 
         borderMatPropBlock = new MaterialPropertyBlock();
         borderMeshRenderer.GetPropertyBlock(borderMatPropBlock);
+
+        playerKarmaHandler = DEFINE.PlayerTrm.GetComponent<KarmaHandler>();
     }
 
     public void SetColor(Color color)
@@ -33,7 +39,35 @@ public class Karma : PoolableMono
 
     public override void Reset()
     {
+        StopAllCoroutines();
+    }
 
+    public void Absorb(float delay) => StartCoroutine(AbsorbCoroutine(delay));
+
+    private IEnumerator AbsorbCoroutine(float delay)
+    {
+        float timer = 0f;
+        float theta = 0f;
+
+        yield return new WaitForSeconds(delay);
+        Vector3 startPosition = transform.position;
+
+        while(theta < 1f)
+        {
+            theta = timer / absorbingDuration;
+            transform.position = Vector3.Lerp(startPosition, DEFINE.PlayerTrm.position, EaseInCubic(theta));
+
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        playerKarmaHandler?.AddKarma();
+        PoolManager.Instance.Push(this);
+    }
+
+    private float EaseInCubic(float t)
+    {
+        return t * t * t;
     }
 
     public void PopAnimation(float popDistance, float popSpeed = 10f) => StartCoroutine(PopCoroutine(popDistance, popSpeed));

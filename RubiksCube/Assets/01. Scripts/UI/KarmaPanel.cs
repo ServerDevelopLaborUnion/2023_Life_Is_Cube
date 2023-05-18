@@ -7,7 +7,7 @@ public class KarmaPanel : MonoBehaviour
 
     private void Awake()
     {
-        karmaText = transform.Find("Karma/Text").GetComponent<TextMeshProUGUI>();
+        karmaText = transform.Find("BG/Text").GetComponent<TextMeshProUGUI>();
     }
 
     public void DisplayKarma(int value)
