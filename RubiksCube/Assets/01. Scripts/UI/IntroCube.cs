@@ -82,7 +82,7 @@ public class IntroCube : MonoBehaviour
                     {
                         case DirectionFlags.Up:
                             Debug.Log("Character SceneLoad");
-                            //SceneManager.LoadScene("JaeHee");
+                            SceneManager.LoadScene("JaeHee");
                             break;
                         case DirectionFlags.Left:
                             SettingOnOff(true);
