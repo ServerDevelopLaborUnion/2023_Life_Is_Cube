@@ -13,6 +13,8 @@ public class StageManager : MonoBehaviour
     private Cube cube;
     private EnemyFactory enemyFactory;
 
+    private bool stageChanged = false;
+
     private void Awake()
     {
         cube = GameObject.Find("Cube").GetComponent<Cube>();
@@ -23,6 +25,8 @@ public class StageManager : MonoBehaviour
     {
         StartGame();
     }
+
+    public Coroutine RotateDirecting() => StartCoroutine(RotateDirectingCoroutine());
 
     private IEnumerator RotateDirectingCoroutine()
     {
@@ -59,11 +63,20 @@ public class StageManager : MonoBehaviour
 
     private IEnumerator StartSequenceCoroutine()
     {
-        yield return StartCoroutine(RotateDirectingCoroutine());
+        yield return RotateDirecting();
 
-        cube.SortCellIndexes();
-        CubeCell currentCell = cube.GetCurrentCell();
-        enemyFactory.SpawnAtOnce(20, currentCell.CellBiome, currentCell.CellIndex);
+        SpawnEnemyIntoCurrentCell(20);
+    }
+
+    private IEnumerator UpdateStageCoroutine()
+    {
+        yield return RotateDirecting();
+
+        cube.SetActiveBridge(true);
+        yield return new WaitUntil(() => stageChanged);
+        
+        SpawnEnemyIntoCurrentCell(20);
+        cube.SetActiveBridge(false);
     }
 
     public void StartGame()
@@ -73,5 +86,12 @@ public class StageManager : MonoBehaviour
         DEFINE.PlayerTrm.position = new Vector3(-22.5f, 147.5f, 15f);
 
         StartCoroutine(StartSequenceCoroutine());
+    }
+
+    public void SpawnEnemyIntoCurrentCell(int count)
+    {
+        cube.SortCellIndexes();
+        CubeCell currentCell = cube.GetCurrentCell();
+        enemyFactory.SpawnAtOnce(count, currentCell.CellBiome, currentCell.CellIndex);
     }
 }

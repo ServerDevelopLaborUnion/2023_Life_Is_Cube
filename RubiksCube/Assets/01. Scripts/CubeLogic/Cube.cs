@@ -99,4 +99,9 @@ public class Cube : MonoBehaviour
         cells.Sort((a, b) => a.CellIndex - b.CellIndex);
         return cells.ToArray();
     }
+
+    public void SetActiveBridge(bool value)
+    {
+        bridge.SetActiveBridge(value);
+    }
 }
