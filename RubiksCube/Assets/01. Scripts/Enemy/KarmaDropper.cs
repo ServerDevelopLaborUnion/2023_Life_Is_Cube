@@ -25,6 +25,7 @@ public class KarmaDropper : MonoBehaviour
             karma.SetColor(GameManager.Instance.KarmaColorDictionary[biome]);
             karma.transform.position = transform.position + Vector3.up * 4f;
             karma.PopAnimation(3f, 5f);
+            karma.Absorb(2f);
         }
     }
 

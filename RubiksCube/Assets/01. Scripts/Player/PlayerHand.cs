@@ -7,6 +7,7 @@ public class PlayerHand : MonoBehaviour
     private List<ItemDataSO> itemDatas = new List<ItemDataSO>();
     private List<ItemEvent> itemEvents = new List<ItemEvent>();
 
+    private ItemInfoPanel itemInfoPanel = null;
     private InventoryUI inventoryUI = null;
 
     private void Awake()
@@ -17,7 +18,7 @@ public class PlayerHand : MonoBehaviour
     private void Start()
     {
         inventoryUI = UIManager.Instance.InventoryPanel.GetComponent<InventoryUI>();
-        
+        itemInfoPanel = UIManager.Instance.ItemInfoPanel;
     }
 
     private void Update()
@@ -28,6 +29,7 @@ public class PlayerHand : MonoBehaviour
     public void AddItem(ItemDataSO itemData, List<ItemEvent> itemEvents)
     {
         itemDatas.Add(itemData);
+        itemInfoPanel.Active(itemData);
 
         itemData.ItemStats.ForEach(s => { 
             playerStat.ModifyStat(s.statType, s.value); 

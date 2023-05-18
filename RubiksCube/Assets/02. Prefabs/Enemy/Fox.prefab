@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 715793592}
   - component: {fileID: 715793594}
   - component: {fileID: 715793593}
+  - component: {fileID: 7784481860524594593}
   m_Layer: 0
   m_Name: HitFeedback
   m_TagString: Untagged
@@ -59,6 +60,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitParticle: {fileID: 8353310960293978374, guid: dad6fceb7ebe82d468fe54cebeaffcc0, type: 3}
   effectPlayTime: 1
+--- !u!114 &7784481860524594593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 715793591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78242c7629407c142af97e8160293837, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meshRenderer: {fileID: 1733880113636259526}
+  blinkTime: 0.1
+  blinkCount: 2
 --- !u!1 &1090305074
 GameObject:
   m_ObjectHideFlags: 0
@@ -894,6 +910,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fedecbd1aa68924b816f15cb97e611a, type: 3}
+--- !u!137 &1733880113636259526 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 5936041138598338377, guid: 9fedecbd1aa68924b816f15cb97e611a, type: 3}
+  m_PrefabInstance: {fileID: 5363496000065726863}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8568168923047209219 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4361374554138886284, guid: 9fedecbd1aa68924b816f15cb97e611a, type: 3}

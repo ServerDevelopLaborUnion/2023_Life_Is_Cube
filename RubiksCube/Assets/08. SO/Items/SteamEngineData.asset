@@ -16,3 +16,7 @@ MonoBehaviour:
   - statType: 1
     value: 10
   ItemSprite: {fileID: 21300000, guid: 4482c25686e3f0c449ec4e33db8a4463, type: 3}
+  ItemName: "\uC99D\uAE30\uAE30\uAD00"
+  ItemDescription: "\uBB34\uC5B8\uAC00\uB97C \uBD88\uD0DC\uC6B0\uB294 \uB300\uAC00\uB85C
+    \uADF8 \uBB34\uC5C7\uBCF4\uB2E4 \uBE60\uB974\uAC8C \uB2EC\uB9B4 \uC218 \uC788\uC2B5\uB2C8\uB2E4.
+    \uCF5C\uB85D\uCF5C\uB85D."
