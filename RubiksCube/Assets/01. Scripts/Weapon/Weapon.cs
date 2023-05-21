@@ -17,7 +17,6 @@ public abstract class Weapon : MonoBehaviour
     protected virtual void Awake()
     {
         skillImage = UIManager.Instance.InputPanel.Find("InteractButton/SpecialButton/FillImage").GetComponent<Image>();
-        Debug.Log(Time.time - latestSpecialAttackTime / specialAttackCooldown);
     }
 
     public bool TryAttack()

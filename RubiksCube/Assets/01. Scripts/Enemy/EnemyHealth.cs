@@ -31,10 +31,10 @@ public class EnemyHealth : MonoBehaviour, IDamageable
 
         currentHP -= damage;
 
+        OnHitEvent?.Invoke();
+        
         if(currentHP <= 0f)
             OnDeadEvent?.Invoke();
-        
-        OnHitEvent?.Invoke();
     }
 
     public void Init()

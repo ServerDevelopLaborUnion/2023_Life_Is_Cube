@@ -73,7 +73,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   meshRenderer: {fileID: 1733880113636259526}
-  blinkTime: 0.1
+  blinkTime: 0.075
   blinkCount: 2
 --- !u!1 &1090305074
 GameObject:

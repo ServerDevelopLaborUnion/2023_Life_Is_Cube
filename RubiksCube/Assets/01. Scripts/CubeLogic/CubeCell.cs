@@ -13,14 +13,8 @@ public class CubeCell : MonoBehaviour
         cellIndex = idx;
     }
 
-    public void AddEnemy()
-    {
-
-    }
-
     public void ClearEnemy()
     {
         
     }
-
 }

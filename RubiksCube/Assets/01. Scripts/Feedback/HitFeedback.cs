@@ -15,7 +15,7 @@ public class HitFeedback : Feedback
     public override void CreateFeedback()
     {
         EffectHandler effect = PoolManager.Instance.Pop(hitParticle) as EffectHandler;
-        Debug.Log(aiActionData.HitPoint);
+        // Debug.Log(aiActionData.HitPoint);
         effect.transform.position = aiActionData.HitPoint;
         effect.transform.rotation = Quaternion.LookRotation(aiActionData.HitNormal);
 

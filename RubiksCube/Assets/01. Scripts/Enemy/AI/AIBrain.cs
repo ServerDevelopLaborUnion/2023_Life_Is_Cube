@@ -58,6 +58,7 @@ public class AIBrain : PoolableMono
 
     public void Release()
     {
+        StageManager.Instance.RemoveEnemy(this);
         PoolManager.Instance.Push(this);
     }
 }

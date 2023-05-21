@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +11,7 @@ public class StageManager : MonoBehaviour
 
     private Cube cube;
     private EnemyFactory enemyFactory;
+    private List<AIBrain> enemyList = new List<AIBrain>();
 
     private bool stageChanged = false;
 
@@ -30,6 +30,9 @@ public class StageManager : MonoBehaviour
 
     private IEnumerator RotateDirectingCoroutine()
     {
+        DEFINE.PlayerTrm.gameObject.SetActive(false);
+        DEFINE.PlayerTrm.position += Vector3.up * 3f;
+
         yield return new WaitForSeconds(startDelayTime / 10f);
 
         CameraManager.Instance.SetActiveCam(CameraManager.Instance.CmDirectingCam, true);
@@ -82,7 +85,6 @@ public class StageManager : MonoBehaviour
     public void StartGame()
     {
         DEFINE.MainCanvas.gameObject.SetActive(false);
-        DEFINE.PlayerTrm.gameObject.SetActive(false);
         DEFINE.PlayerTrm.position = new Vector3(-22.5f, 147.5f, 15f);
 
         StartCoroutine(StartSequenceCoroutine());
@@ -92,6 +94,21 @@ public class StageManager : MonoBehaviour
     {
         cube.SortCellIndexes();
         CubeCell currentCell = cube.GetCurrentCell();
-        enemyFactory.SpawnAtOnce(count, currentCell.CellBiome, currentCell.CellIndex);
+
+        for(int i = 0; i < count; i++)
+            enemyList.Add(enemyFactory.SpawnEnemy(currentCell.CellBiome, currentCell.CellIndex));
+    }
+
+    public void RemoveEnemy(AIBrain enemy)
+    {
+        enemyList.Remove(enemy);
+        Debug.Log("에너미 죽음");
+        Debug.Log($"남은 에너미 : {enemyList.Count}");
+        
+        if(enemyList.Count <= 0)
+        {
+            //스테이지 끝남
+            Debug.Log("스테이지 끝남");
+        }
     }
 }
