@@ -1,9 +1,14 @@
-using System;
 using UnityEngine;
 
 public class AttackState : State
 {
     private AIBrain targetEnemy = null;
+    private Transform focusBorder = null;
+    
+    private void Awake()
+    {
+        focusBorder = transform.parent.Find("FocusBorder");
+    }
 
     private void Update()
     {
@@ -29,6 +34,17 @@ public class AttackState : State
             targetEnemy = newTarget;
             targetEnemy.IsFocused = true;
         }
+
+        if(targetEnemy != null)
+        {
+            focusBorder.gameObject.SetActive(true);
+
+            Vector3 dir = targetEnemy.transform.position - transform.position;
+            dir.y = 0;
+            focusBorder.rotation = Quaternion.LookRotation(dir, Vector3.up) * Quaternion.Euler(90f, 0, 0);
+        }
+        else
+            focusBorder.gameObject.SetActive(false);
     }
 
     public override void OnStateEnter()
