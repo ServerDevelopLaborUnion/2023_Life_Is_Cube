@@ -29,6 +29,11 @@ public class StateHandler : MonoBehaviour
         ChangeState(StateFlags.Normal);
     }
 
+    private void OnDisable()
+    {
+        ChangeState(StateFlags.Normal);
+    }
+
     public void ChangeState(StateFlags targetState)
     {
         if(stateDictionary.ContainsKey(targetState) == false)

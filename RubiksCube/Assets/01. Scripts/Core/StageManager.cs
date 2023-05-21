@@ -14,6 +14,7 @@ public class StageManager : MonoBehaviour
     private List<AIBrain> enemyList = new List<AIBrain>();
 
     private bool stageChanged = false;
+    public bool StageChanged { get => stageChanged; set => stageChanged = value; }
 
     private void Awake()
     {
@@ -30,6 +31,7 @@ public class StageManager : MonoBehaviour
 
     private IEnumerator RotateDirectingCoroutine()
     {
+        DEFINE.MainCanvas.gameObject.SetActive(false);
         DEFINE.PlayerTrm.gameObject.SetActive(false);
         DEFINE.PlayerTrm.position += Vector3.up * 3f;
 
@@ -64,22 +66,16 @@ public class StageManager : MonoBehaviour
         UIManager.Instance.HPPanel.SetActive(true);
     }
 
-    private IEnumerator StartSequenceCoroutine()
-    {
-        yield return RotateDirecting();
-
-        SpawnEnemyIntoCurrentCell(20);
-    }
-
-    private IEnumerator UpdateStageCoroutine()
+    private IEnumerator StageEndSequence()
     {
         yield return RotateDirecting();
 
         cube.SetActiveBridge(true);
+
         yield return new WaitUntil(() => stageChanged);
-        
-        SpawnEnemyIntoCurrentCell(20);
-        cube.SetActiveBridge(false);
+
+        stageChanged = false;
+        StartStage();
     }
 
     public void StartGame()
@@ -87,7 +83,20 @@ public class StageManager : MonoBehaviour
         DEFINE.MainCanvas.gameObject.SetActive(false);
         DEFINE.PlayerTrm.position = new Vector3(-22.5f, 147.5f, 15f);
 
-        StartCoroutine(StartSequenceCoroutine());
+        stageChanged = true;
+
+        EndStage();
+    }
+
+    public void EndStage()
+    {
+        StartCoroutine(StageEndSequence());
+    }
+
+    public void StartStage()
+    {
+        SpawnEnemyIntoCurrentCell(1);
+        cube.SetActiveBridge(false);
     }
 
     public void SpawnEnemyIntoCurrentCell(int count)
@@ -95,20 +104,15 @@ public class StageManager : MonoBehaviour
         cube.SortCellIndexes();
         CubeCell currentCell = cube.GetCurrentCell();
 
-        for(int i = 0; i < count; i++)
+        for (int i = 0; i < count; i++)
             enemyList.Add(enemyFactory.SpawnEnemy(currentCell.CellBiome, currentCell.CellIndex));
     }
 
     public void RemoveEnemy(AIBrain enemy)
     {
         enemyList.Remove(enemy);
-        Debug.Log("에너미 죽음");
-        Debug.Log($"남은 에너미 : {enemyList.Count}");
-        
-        if(enemyList.Count <= 0)
-        {
-            //스테이지 끝남
-            Debug.Log("스테이지 끝남");
-        }
+
+        if (enemyList.Count <= 0)
+            EndStage();
     }
 }

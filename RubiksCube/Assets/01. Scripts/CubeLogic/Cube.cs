@@ -8,7 +8,7 @@ public class Cube : MonoBehaviour
 
     private Dictionary<DirectionFlags, CubeAxis> cubeAxesDictionary;
     private CubeCell currentCell = null;
-    private Bridge bridge = null;
+    private BridgeHandler bridges = null;
 
     private void Awake()
     {
@@ -27,7 +27,7 @@ public class Cube : MonoBehaviour
             cubeAxesDictionary.Add(axis.AxisInfo, axis);
         });
 
-        bridge = transform.Find("Bridges").GetComponent<Bridge>();
+        bridges = transform.Find("Bridges").GetComponent<BridgeHandler>();
     }
 
     public CubeAxis GetCubeAxis(DirectionFlags axis) => cubeAxesDictionary[axis];
@@ -102,6 +102,6 @@ public class Cube : MonoBehaviour
 
     public void SetActiveBridge(bool value)
     {
-        bridge.SetActiveBridge(value);
+        bridges.SetActiveBridge(value);
     }
 }

@@ -38,10 +38,10 @@ public class PlayerMovement : MonoBehaviour
         if (IsActiveMove)
             CalculateSpeed();
 
-        if (characterController.isGrounded == false)
-            verticalVelocity = gravity * gravityScale * Time.fixedDeltaTime;
+        if (characterController.isGrounded)
+            verticalVelocity = gravity * gravityScale * 0.3f * Time.fixedDeltaTime;
         else
-            verticalVelocity = gravity * 0.3f * Time.fixedDeltaTime;
+            verticalVelocity = gravity * gravityScale * Time.fixedDeltaTime;
 
         Vector3 move = movementVelocity + verticalVelocity * Vector3.up;
         characterController.Move(move);

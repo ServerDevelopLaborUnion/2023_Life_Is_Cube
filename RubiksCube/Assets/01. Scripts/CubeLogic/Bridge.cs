@@ -1,24 +1,20 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Bridge : MonoBehaviour
 {
-    private List<Transform> bridges;
-    private GameObject innerConfiner;
+    private BridgeHandler bridgeHandler;
 
     private void Awake()
     {
-        innerConfiner = transform.parent.Find("InnerConfiner").gameObject;
-        
-        bridges = new List<Transform>();
-        for(int i = 0; i < transform.childCount; i++)
-            bridges.Add(transform.GetChild(i));
+        bridgeHandler = transform.parent.GetComponent<BridgeHandler>();
     }
 
-    public void SetActiveBridge(bool value)
+    private void OnTriggerExit(Collider other)
     {
-        //bridges.ForEach(b => b.gameObject.SetActive(true));
-        gameObject.SetActive(value);
-        innerConfiner.SetActive(!value);
+        if(other.gameObject.CompareTag("Player") == false)
+            return;
+
+        Debug.Log("Trying to Change Stage");
+        bridgeHandler.TryChangeStage();
     }
 }
