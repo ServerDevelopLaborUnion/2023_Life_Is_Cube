@@ -1,17 +1,23 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
+
 // hihi hihi 
 public class Character : MonoBehaviour, IPointerDownHandler
 {
-    [SerializeField] private string className;
+    [Header("Class Name")]
+    public string className = string.Empty;
     public List<StatData> stats;
 
-    [SerializeField] private Image icon;
+    [Header("Icons")]
+    public Sprite classIcon = null;
+    public Sprite skillIcon = null;
 
-    private CharacterSelectPanel panel;
+    [Header("Skill")]
+    public string skillName = string.Empty;
+    public string skillDescription = string.Empty;
+
+    public CharacterSelectPanel panel = null;
 
     private void Awake()
     {
