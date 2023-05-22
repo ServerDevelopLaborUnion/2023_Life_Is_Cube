@@ -22,9 +22,9 @@ public class GameManager : MonoBehaviour
         PoolManager.Instance = new PoolManager();
         poolingList.ForEach(p => PoolManager.Instance.CreatePool(p, transform));
 
-        CameraManager.Instance = new CameraManager();
         UIManager.Instance = new UIManager();
 
+        CameraManager.Instance = gameObject.AddComponent<CameraManager>();
         TimeController.Instance = gameObject.AddComponent<TimeController>();
         StageManager.Instance = GetComponent<StageManager>();
 
