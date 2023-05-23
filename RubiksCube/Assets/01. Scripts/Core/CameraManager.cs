@@ -16,7 +16,7 @@ public class CameraManager : MonoBehaviour
 
     private CinemachineBasicMultiChannelPerlin mainCamPerlin;
 
-    public CameraManager()
+    private void Awake()
     {
         cmMainCam = GameObject.Find("CmMainCam")?.GetComponent<CinemachineVirtualCamera>();
         cmMapCam = GameObject.Find("CmMapCam")?.GetComponent<CinemachineVirtualCamera>();
