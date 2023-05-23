@@ -6,8 +6,16 @@ public class StageManager : MonoBehaviour
 {
     public static StageManager Instance = null;
 
+    [SerializeField] List<DirectionFlagList> ignoreAxes;
+
     [SerializeField] int rotateCount = 15;
     [SerializeField] float startDelayTime = 1.8f;
+
+    public int RotateCount
+    {
+        get => rotateCount;
+        set => rotateCount = value;
+    }
 
     private Cube cube;
     private EnemyFactory enemyFactory;
@@ -29,6 +37,26 @@ public class StageManager : MonoBehaviour
 
     public Coroutine RotateDirecting() => StartCoroutine(RotateDirectingCoroutine());
 
+    private IEnumerator RotateCoroutine(int cnt)
+    {
+        cube.SortCellIndexes();
+        int currentCell = cube.GetCurrentCell().CellIndex;
+
+        for (int i = 0; i < cnt;)
+        {
+            int axis = Random.Range(0, (int)DirectionFlags.End);
+
+            if (ignoreAxes.Count > currentCell)
+            {
+                if (ignoreAxes[currentCell].flags.Contains((DirectionFlags)axis) == false)
+                {
+                    i++;
+                    yield return cube.RotateAroundAxis((DirectionFlags)axis, Random.Range(0, 2) == 0);
+                }
+            }
+        }
+    }
+
     private IEnumerator RotateDirectingCoroutine()
     {
         DEFINE.MainCanvas.gameObject.SetActive(false);
@@ -42,11 +70,7 @@ public class StageManager : MonoBehaviour
 
         yield return new WaitForSeconds(startDelayTime);
 
-        for (int i = 0; i < rotateCount; i++)
-        {
-            int axis = Random.Range(0, (int)DirectionFlags.End);
-            yield return cube.RotateAroundAxis((DirectionFlags)axis, Random.Range(0, 2) == 0);
-        }
+        yield return StartCoroutine(RotateCoroutine(rotateCount));
 
         yield return new WaitForSeconds(0.5f);
 
@@ -91,8 +115,8 @@ public class StageManager : MonoBehaviour
     public void EndStage()
     {
         StartCoroutine(StageEndSequence());
-    }
 
+    }
     public void StartStage()
     {
         SpawnEnemyIntoCurrentCell(1);

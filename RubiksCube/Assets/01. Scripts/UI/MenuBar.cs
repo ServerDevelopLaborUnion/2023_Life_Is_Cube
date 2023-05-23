@@ -11,6 +11,7 @@ public class MenuBar : MonoBehaviour
 
     private RectTransform rectTrm = null;
     private GameObject blockPanel = null;
+    private GameObject backScreen = null;
     private Button slideButton = null;
 
     private bool isActived = false;
@@ -21,6 +22,7 @@ public class MenuBar : MonoBehaviour
         rectTrm = GetComponent<RectTransform>();
         slideButton = transform.Find("SlideButton").GetComponent<Button>();
         blockPanel = transform.Find("BlockPanel").gameObject;
+        backScreen = transform.Find("BackScreen").gameObject;
 
         isActived = false;
         onTweening = false;
@@ -53,6 +55,7 @@ public class MenuBar : MonoBehaviour
         seq.AppendCallback(() => {
             onTweening = false;
             slideButton.interactable = true;
+            backScreen.SetActive(!isActived);
 
             isActived = !isActived;
             seq.Kill();
