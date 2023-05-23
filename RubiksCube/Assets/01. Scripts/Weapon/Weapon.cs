@@ -43,7 +43,7 @@ public abstract class Weapon : MonoBehaviour
 
     private void Update()
     {
-        if(skillImage != null && AbleToSpecialAttack() == false)
+        if(skillImage != null)
             skillImage.fillAmount = ((Time.time - latestSpecialAttackTime) / specialAttackCooldown);
     }
 
