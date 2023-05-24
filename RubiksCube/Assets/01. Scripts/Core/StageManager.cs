@@ -117,6 +117,7 @@ public class StageManager : MonoBehaviour
         StartCoroutine(StageEndSequence());
 
     }
+    
     public void StartStage()
     {
         SpawnEnemyIntoCurrentCell(1);
