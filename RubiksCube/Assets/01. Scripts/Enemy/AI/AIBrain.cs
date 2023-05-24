@@ -20,6 +20,8 @@ public class AIBrain : PoolableMono
         }
     }
 
+    public bool IsDead { get; set; }
+
     private void Awake()
     {
         List<AIState> states = new List<AIState>();
@@ -54,6 +56,7 @@ public class AIBrain : PoolableMono
     public override void Reset()
     {
         health?.Init();
+        IsDead = false;
     }
 
     public void Release()

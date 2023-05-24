@@ -35,7 +35,7 @@ public class AttackState : State
             targetEnemy.IsFocused = true;
         }
 
-        if(targetEnemy != null)
+        if(targetEnemy != null && targetEnemy.IsDead == false)
         {
             focusBorder.gameObject.SetActive(true);
 
