@@ -7,6 +7,8 @@ public class Cube : MonoBehaviour
     [SerializeField] float rotateDuration = 1f;
 
     private Dictionary<DirectionFlags, CubeAxis> cubeAxesDictionary;
+    private List<CubeCell> activatedCells;
+    public List<CubeCell> ActivatedCells => activatedCells;
     private CubeCell currentCell = null;
     private BridgeHandler bridges = null;
 
@@ -57,7 +59,7 @@ public class Cube : MonoBehaviour
 
     public CubeCell[] SortCellIndexes()
     {
-        List<CubeCell> cells = new List<CubeCell>();
+        activatedCells = new List<CubeCell>();
 
         CubeAxis topAxis = cubeAxesDictionary[DirectionFlags.Up];
         topAxis.SetBlocksOfAxis();
@@ -80,7 +82,7 @@ public class Cube : MonoBehaviour
                     else 
                         cell?.ModifyCellIndex(i);
                     
-                    cells.Add(cell);
+                    activatedCells.Add(cell);
                 }
             }
         }
@@ -90,14 +92,14 @@ public class Cube : MonoBehaviour
             if (hit.transform.TryGetComponent<CubeCell>(out cell))
             {
                 cell?.ModifyCellIndex(4);
-                cells.Add(cell);
+                activatedCells.Add(cell);
             }
         }
 
         topAxis.UnsetBlocksOfAxis();
 
-        cells.Sort((a, b) => a.CellIndex - b.CellIndex);
-        return cells.ToArray();
+        activatedCells.Sort((a, b) => a.CellIndex - b.CellIndex);
+        return activatedCells.ToArray();
     }
 
     public void SetActiveBridge(bool value)
