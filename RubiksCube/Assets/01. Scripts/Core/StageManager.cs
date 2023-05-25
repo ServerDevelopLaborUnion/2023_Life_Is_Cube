@@ -55,6 +55,16 @@ public class StageManager : MonoBehaviour
                 }
             }
         }
+
+        for(int i = 0; i < cube.ActivatedCells.Count; i++)
+        {
+            Vector3[] pushOrders = cube.ActivatedCells[i].CheckNeighborCell();
+
+            foreach(Vector3 dir in pushOrders)
+                cube.ActivatedCells[i].SetToEliteStage(1f, dir);
+        }
+
+        yield return new WaitForSeconds(1f);
     }
 
     private IEnumerator RotateDirectingCoroutine()
@@ -115,7 +125,6 @@ public class StageManager : MonoBehaviour
     public void EndStage()
     {
         StartCoroutine(StageEndSequence());
-
     }
     
     public void StartStage()

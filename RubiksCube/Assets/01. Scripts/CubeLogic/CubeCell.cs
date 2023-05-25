@@ -16,7 +16,6 @@ public class CubeCell : MonoBehaviour
 
     private void Awake()
     {
-
         Transform extraGround = transform.Find("ExtraGrounds");
         for (int i = 0; i < extraGround.childCount; i++)
             extraGroundPlanes.Enqueue(extraGround.GetChild(i));
@@ -29,19 +28,28 @@ public class CubeCell : MonoBehaviour
         cellIndex = idx;
     }
 
-    private bool CheckNeighborCell(out Vector3 direction)
+    public Vector3[] CheckNeighborCell()
     {
         //이웃한 셀이 있다면 바닥 늘리기
         List<CubeCell> cells = cube.ActivatedCells;
+        List<Vector3> results = new List<Vector3>();
 
-        for (int i = 0; i < cells.Count; i++)
+        for(int y = cellIndex / 3 - 1; y < cellIndex / 3 + 1; y++)
         {
+            if(y < 0 || y > 3)
+                continue;
 
+            for(int x = cellIndex % 3 - 1; x < cellIndex % 3 + 1; x++)
+            {
+                if(x < 3 || x > 3)
+                    continue;
+
+                if(cellBiome == cells[y * 3 + x].cellBiome)
+                    results.Add(new Vector3(cellIndex % 3 - x, 0, cellIndex / 3 - y));
+            }
         }
 
-        direction = Vector3.zero;
-
-        return true;
+        return results.ToArray();
     }
 
     public void SetToEliteStage(float time, Vector3 dir)
