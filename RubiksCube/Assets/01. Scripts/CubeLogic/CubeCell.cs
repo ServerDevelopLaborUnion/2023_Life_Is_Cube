@@ -7,8 +7,8 @@ public class CubeCell : MonoBehaviour
     [SerializeField] BiomeFlags cellBiome;
     public BiomeFlags CellBiome => cellBiome;
 
-    private Queue<Transform> extraGroundPlanes = null;
-    private Queue<Transform> usedGroundPlanes = null;
+    private Queue<Transform> extraGroundPlanes = new Queue<Transform>();
+    private Queue<Transform> usedGroundPlanes = new Queue<Transform>();
     private Cube cube = null;
 
     private int cellIndex = 0;
@@ -34,21 +34,28 @@ public class CubeCell : MonoBehaviour
         List<CubeCell> cells = cube.ActivatedCells;
         List<Vector3> results = new List<Vector3>();
 
-        for(int y = cellIndex / 3 - 1; y < cellIndex / 3 + 1; y++)
+        for (int y = cellIndex / 3 - 1; y <= cellIndex / 3 + 1; y++)
         {
-            if(y < 0 || y > 3)
+            if (y < 0 || y > 2)
                 continue;
 
-            for(int x = cellIndex % 3 - 1; x < cellIndex % 3 + 1; x++)
+            for (int x = cellIndex % 3 - 1; x <= cellIndex % 3 + 1; x++)
             {
-                if(x < 3 || x > 3)
+                if (x < 0 || x > 2)
                     continue;
 
-                if(cellBiome == cells[y * 3 + x].cellBiome)
-                    results.Add(new Vector3(cellIndex % 3 - x, 0, cellIndex / 3 - y));
+                if(y * 3 + x == cellIndex)
+                    continue;
+
+                if(new Vector2Int(y - cellIndex / 3, x - cellIndex % 3).magnitude > 1)
+                    continue;
+
+                if (cellBiome == cells[y * 3 + x].cellBiome)
+                    results.Add(new Vector3(x - cellIndex % 3, 0, -(y - cellIndex / 3)));
             }
         }
 
+        Debug.Log(gameObject.name + " " + results.Count);
         return results.ToArray();
     }
 
@@ -62,7 +69,7 @@ public class CubeCell : MonoBehaviour
 
     public void ClearEliteStage(float time)
     {
-        while(usedGroundPlanes.Count > 0)
+        while (usedGroundPlanes.Count > 0)
         {
             Transform trm = usedGroundPlanes.Dequeue();
             ResetExtraGrounds(time, trm);
@@ -73,7 +80,7 @@ public class CubeCell : MonoBehaviour
 
     private void ResetExtraGrounds(float time, Transform trm)
     {
-        StartCoroutine(PushExtraGroundCoroutine(time, trm, -trm.position));
+        StartCoroutine(PushExtraGroundCoroutine(time, trm, -trm.localPosition));
     }
 
     private IEnumerator PushExtraGroundCoroutine(float time, Transform trm, Vector3 amount)
@@ -81,18 +88,18 @@ public class CubeCell : MonoBehaviour
         float timer = 0f;
         float theta = 0f;
 
-        Vector3 startPos = trm.position;
-        Vector3 endPos = startPos + amount;
+        Vector3 startPos = trm.localPosition;
+        Vector3 endPos = startPos + trm.InverseTransformDirection(amount);
 
         while (theta < 1f)
         {
             theta = timer / time;
-            trm.position = Vector3.Lerp(startPos, endPos, theta);
+            trm.localPosition = Vector3.Lerp(startPos, endPos, theta);
 
             timer += Time.deltaTime;
             yield return null;
         }
 
-        trm.position = endPos;
+        trm.localPosition = endPos;
     }
 }

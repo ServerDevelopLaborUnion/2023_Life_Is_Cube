@@ -43,8 +43,6 @@ public class PlayerStat : MonoBehaviour
         else
             statDictionary[statType] = data;
 
-        Debug.Log(statType + ", " + statDictionary[statType].value);
-
         statPanel?.DisplayStat(statType, statDictionary[statType].value, statDictionary[statType].maxValue);
     }
 }
