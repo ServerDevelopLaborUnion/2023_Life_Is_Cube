@@ -34,7 +34,7 @@ public class CubeAxis : MonoBehaviour
         for(int i = 0; i < 8; ++i)
         {
             ray.direction = Quaternion.AngleAxis(45f * i, upward) * Quaternion.AngleAxis(-45, upward) * forward; // upward 축의 왼쪽 위부터 돌릴 거임
-            // Debug.DrawLine(transform.position, transform.position + Quaternion.AngleAxis(45f * i, upward) * forward * 1000f, Color.green, 0.1f);
+            // Debug.DrawLine(transform.positions, transform.position + Quaternion.AngleAxis(45f * i, upward) * forward * 1000f, Color.green, Time.deltaTime);
             
             if (Physics.Raycast(ray, out hit, CubeLayer))
                 hit.transform.SetParent(childTrm);
@@ -71,7 +71,6 @@ public class CubeAxis : MonoBehaviour
         }
 
         transform.rotation = endRotation;
-        UnsetBlocksOfAxis();
     }
 
     // #if UNITY_EDITOR

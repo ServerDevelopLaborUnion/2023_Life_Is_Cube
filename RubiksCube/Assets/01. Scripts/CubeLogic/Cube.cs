@@ -42,15 +42,21 @@ public class Cube : MonoBehaviour
     private IEnumerator RotateAroundAxisCoroutine(DirectionFlags axis, bool clockWise = true)
     {
         cubeAxesDictionary[axis].SetBlocksOfAxis();
-        yield return cubeAxesDictionary[axis].Rotate(rotateDuration, clockWise);
-        yield return new WaitForSeconds(0.01f);
+        if (cubeAxesDictionary[axis].ChildTrm.childCount != 8)
+            yield return null;
+        else
+            yield return cubeAxesDictionary[axis].Rotate(rotateDuration, clockWise);
+
+        yield return null;
+        cubeAxesDictionary[axis].UnsetBlocksOfAxis();
+        //yield return new WaitForSeconds(0.001f);
     }
 
     public CubeCell GetCurrentCell()
     {
-        if(Physics.Raycast(DEFINE.PlayerTrm.position, Vector3.down, out RaycastHit hit, 1000f, DEFINE.CellLayer))
+        if (Physics.Raycast(DEFINE.PlayerTrm.position, Vector3.down, out RaycastHit hit, 1000f, DEFINE.CellLayer))
             currentCell = hit.collider.GetComponent<CubeCell>();
-        
+
         return currentCell;
     }
 
@@ -70,15 +76,15 @@ public class Cube : MonoBehaviour
             {
                 if (hit.transform.TryGetComponent<CubeCell>(out cell))
                 {
-                    if(i == 3)
+                    if (i == 3)
                         cell?.ModifyCellIndex(5);
-                    else if(i == 7)
+                    else if (i == 7)
                         cell?.ModifyCellIndex(3);
-                    else if(3 < i && i < 7) //4 or 5 or 6
+                    else if (3 < i && i < 7) //4 or 5 or 6
                         cell?.ModifyCellIndex(12 - i);
-                    else 
+                    else
                         cell?.ModifyCellIndex(i);
-                    
+
                     activatedCells.Add(cell);
                 }
             }

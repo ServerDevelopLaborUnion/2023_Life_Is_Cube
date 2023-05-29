@@ -8,14 +8,8 @@ public class StageManager : MonoBehaviour
 
     [SerializeField] List<DirectionFlagList> ignoreAxes;
 
-    [SerializeField] int rotateCount = 15;
+    [field : SerializeField] public int RotateCount { get; set; }
     [SerializeField] float startDelayTime = 1.8f;
-
-    public int RotateCount
-    {
-        get => rotateCount;
-        set => rotateCount = value;
-    }
 
     private Cube cube;
     private EnemyFactory enemyFactory;
@@ -23,6 +17,9 @@ public class StageManager : MonoBehaviour
 
     private bool stageChanged = false;
     public bool StageChanged { get => stageChanged; set => stageChanged = value; }
+    
+    [SerializeField] int midBossTrigger = 3;
+    private int stageProgress = 0;
 
     private void Awake()
     {
@@ -58,17 +55,15 @@ public class StageManager : MonoBehaviour
 
         cube.SortCellIndexes();
 
-        for(int i = 0; i < cube.ActivatedCells.Count; i++)
-        {
-            Vector3[] pushOrders = cube.ActivatedCells[i].CheckNeighborCell();
+        // for(int i = 0; i < cube.ActivatedCells.Count; i++)
+        // {
+        //     Vector3[] pushOrders = cube.ActivatedCells[i].CheckNeighborCell();
 
-            foreach(Vector3 dir in pushOrders)
-                cube.ActivatedCells[i].SetToEliteStage(1f, 0.025f * dir);
-        }
+        //     foreach(Vector3 dir in pushOrders)
+        //         cube.ActivatedCells[i].SetToEliteStage(1f, 0.025f * dir);
+        // }
 
-        yield return new WaitForSeconds(1f);
-
-        Debug.Break();
+        // yield return new WaitForSeconds(1f);
     }
 
     private IEnumerator RotateDirectingCoroutine()
@@ -84,7 +79,7 @@ public class StageManager : MonoBehaviour
 
         yield return new WaitForSeconds(startDelayTime);
 
-        yield return StartCoroutine(RotateCoroutine(rotateCount));
+        yield return StartCoroutine(RotateCoroutine(RotateCount));
 
         yield return new WaitForSeconds(0.5f);
 
@@ -104,7 +99,7 @@ public class StageManager : MonoBehaviour
         UIManager.Instance.HPPanel.SetActive(true);
     }
 
-    private IEnumerator StageEndSequence()
+    private IEnumerator PrepareNewStageSequence()
     {
         yield return RotateDirecting();
 
@@ -113,6 +108,13 @@ public class StageManager : MonoBehaviour
         yield return new WaitUntil(() => stageChanged);
 
         stageChanged = false;
+        StartStage();
+    }
+
+    private IEnumerator PrepareMidBossStageSequence()
+    {
+        yield return null;
+        //한 면 맞추기
         StartStage();
     }
 
@@ -128,7 +130,11 @@ public class StageManager : MonoBehaviour
 
     public void EndStage()
     {
-        StartCoroutine(StageEndSequence());
+        stageProgress++;
+        if(stageProgress % midBossTrigger == 0)
+            StartCoroutine(PrepareMidBossStageSequence());
+        else
+            StartCoroutine(PrepareNewStageSequence());
     }
     
     public void StartStage()
