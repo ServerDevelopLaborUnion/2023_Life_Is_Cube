@@ -11,18 +11,15 @@ public class Knife : Weapon
     [Header("Effect")]
     [SerializeField] Transform effectPos = null;
     [SerializeField] EffectHandler effectPrefab = null;
-    [SerializeField] EffectHandler specialEffectPrefab = null;
 
     private Animator animator = null;
     private Transform playerTrm = null;
 
     private readonly int onAttackHash = Animator.StringToHash("OnAttack");
-    private readonly int onSpecialAttackHash = Animator.StringToHash("OnSpecialAttack");
 
     protected override void Awake()
     {
         base.Awake();
-
         animator = /*transform.Find("Model").*/GetComponent<Animator>();
         playerTrm = transform.root;
     }
@@ -31,11 +28,6 @@ public class Knife : Weapon
     {
         //검 휘두르기 시작
         animator.SetBool(onAttackHash, true);
-    }
-
-    protected override void SpecialAttack()
-    {
-        animator.SetBool(onSpecialAttackHash, true);
     }
 
     public void OnAnimationEvent()
@@ -52,17 +44,6 @@ public class Knife : Weapon
     }
 
     //이거 해야됨
-    public void OnSpecialAnimationEvent()
-    {
-        SpecialAttackCastingDamage();
-        SpecialAttackEffect();
-    }
-
-    public void OnSpecialAnimationEnd()
-    {
-        animator.SetBool(onSpecialAttackHash, false);
-    }
-
     private void CastingDamage()
     {
         RaycastHit[] hits = Physics.SphereCastAll(damageCaster.position - (damageCaster.forward * detectRadius * 2), detectRadius, damageCaster.forward, detectRadius * 2, EnemyLayer);
@@ -70,14 +51,6 @@ public class Knife : Weapon
             if (hit.point != Vector3.zero)
                 if (hit.collider.TryGetComponent<IDamageable>(out IDamageable id))
                     id?.OnDamage(damage, hit.point, hit.normal);
-    }
-
-    private void SpecialAttackCastingDamage()
-    {
-        Collider[] enemies = Physics.OverlapSphere(playerTrm.position, detectRadius * 3f, DEFINE.EnemyLayer);
-        foreach (Collider col in enemies)
-            if (col.TryGetComponent<IDamageable>(out IDamageable id))
-                id?.OnDamage(damage * 3f, col.transform.position, col.transform.position);
     }
 
     private void Effect()
@@ -89,17 +62,8 @@ public class Knife : Weapon
         effect?.PlayEffects();
     }
 
-    private void SpecialAttackEffect()
-    {
-        EffectHandler effect = PoolManager.Instance.Pop(specialEffectPrefab) as EffectHandler;
-        effect.transform.position = playerTrm.position;
-        effect.transform.rotation = playerTrm.rotation;
-
-        effect?.PlayEffects();
-    }
-
 #if UNITY_EDITOR
-
+    // 얘는 안나누고 냅뒀음
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.green;

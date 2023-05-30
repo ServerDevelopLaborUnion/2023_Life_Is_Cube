@@ -20,7 +20,7 @@ public class NormalState : State
         playerInput.OnInteractKeyPressed += InteractHandle;
         //playerInput.OnConsumeKeyPressed += ConsumeHandle;
         playerInput.OnAttackKeyPressed += AttackInputHandle;
-        playerInput.OnSpecialAttackKeyPressed += SpecialAttackInputHandle;
+        //playerInput.OnSpecialAttackKeyPressed += SpecialAttackInputHandle;
     }
 
     public override void OnStateExit()
@@ -29,7 +29,7 @@ public class NormalState : State
         //playerInput.OnConsumeKeyPressed -= ConsumeHandle;
         playerInput.OnInteractKeyPressed -= InteractHandle;
         playerInput.OnAttackKeyPressed -= AttackInputHandle;
-        playerInput.OnSpecialAttackKeyPressed -= SpecialAttackInputHandle;
+        //playerInput.OnSpecialAttackKeyPressed -= SpecialAttackInputHandle;
     }
 
     public override void StateUpdate()
@@ -70,11 +70,5 @@ public class NormalState : State
     {
         if(weaponHandler.TryActiveWeapon())
             stateHandler.ChangeState(StateFlags.Attack);
-    }
-
-    private void SpecialAttackInputHandle()
-    {
-        if(weaponHandler.TryActiveSpecialAttack())
-            stateHandler.ChangeState(StateFlags.SpecialAttack);
     }
 }
