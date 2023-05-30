@@ -8,23 +8,31 @@ public class StageManager : MonoBehaviour
 
     [SerializeField] List<DirectionFlagList> ignoreAxes;
 
-    [field : SerializeField] public int RotateCount { get; set; }
+    [field: SerializeField] public int RotateCount { get; set; }
     [SerializeField] float startDelayTime = 1.8f;
 
     private Cube cube;
     private EnemyFactory enemyFactory;
     private List<AIBrain> enemyList = new List<AIBrain>();
+    private Transform preparedCubes = null;
 
     private bool stageChanged = false;
     public bool StageChanged { get => stageChanged; set => stageChanged = value; }
-    
+
     [SerializeField] int midBossTrigger = 3;
     private int stageProgress = 0;
+
+    #region 테스트
+    private ParticleSystem midBossParticle;
+    #endregion
 
     private void Awake()
     {
         cube = GameObject.Find("Cube").GetComponent<Cube>();
+        preparedCubes = GameObject.Find("PreparedCubes").transform;
         enemyFactory = cube.GetComponent<EnemyFactory>();
+
+        midBossParticle = GameObject.Find("MidBossParticle").GetComponent<ParticleSystem>();
     }
 
     private void Start()
@@ -54,16 +62,6 @@ public class StageManager : MonoBehaviour
         }
 
         cube.SortCellIndexes();
-
-        // for(int i = 0; i < cube.ActivatedCells.Count; i++)
-        // {
-        //     Vector3[] pushOrders = cube.ActivatedCells[i].CheckNeighborCell();
-
-        //     foreach(Vector3 dir in pushOrders)
-        //         cube.ActivatedCells[i].SetToEliteStage(1f, 0.025f * dir);
-        // }
-
-        // yield return new WaitForSeconds(1f);
     }
 
     private IEnumerator RotateDirectingCoroutine()
@@ -99,6 +97,86 @@ public class StageManager : MonoBehaviour
         UIManager.Instance.HPPanel.SetActive(true);
     }
 
+    #region Mid-Boss
+
+    private IEnumerator MidBossDirectingBegin()
+    {
+        DEFINE.MainCanvas.gameObject.SetActive(false);
+        DEFINE.PlayerTrm.gameObject.SetActive(false);
+        DEFINE.PlayerTrm.position += Vector3.up * 3f;
+
+        yield return new WaitForSeconds(startDelayTime / 10f);
+
+        CameraManager.Instance.SetActiveCam(CameraManager.Instance.CmDirectingCam, true);
+        CameraManager.Instance.SetProjection(false);
+
+        yield return new WaitForSeconds(startDelayTime);
+
+        midBossParticle.Simulate(0);
+        midBossParticle.Play();
+
+        yield return StartCoroutine(RotateCoroutine(RotateCount));
+    }
+
+    private IEnumerator MidBossDirectingMid()
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        CameraManager.Instance.SetActiveCam(CameraManager.Instance.CmDirectingCam, false);
+        CameraManager.Instance.SetActiveCam(CameraManager.Instance.CmMapCam, true);
+        CameraManager.Instance.SetProjection(true);
+
+        yield return new WaitForSeconds(1.8f);
+
+        CameraManager.Instance.SetActiveCam(CameraManager.Instance.CmMapCam, false);
+        CameraManager.Instance.SetActiveCam(CameraManager.Instance.CmMainCam, true);
+
+        yield return new WaitForSeconds(1.75f);
+
+        CameraManager.Instance.SetProjection(false);
+        CameraManager.Instance.SetActiveCam(CameraManager.Instance.CmMainCam, false);
+        CameraManager.Instance.SetActiveCam(CameraManager.Instance.CmMidBossCam, true);
+        CameraManager.Instance.CmMidBossCam.gameObject.SetActive(true);
+
+        yield return new WaitForSeconds(5f);
+    }
+
+    private IEnumerator MidBossDirectingEnd()
+    {
+        CameraManager.Instance.SetActiveCam(CameraManager.Instance.CmMidBossCam, false);
+        CameraManager.Instance.SetActiveCam(CameraManager.Instance.CmMainCam, true);
+
+        yield return new WaitForSeconds(1.5f);
+
+        CameraManager.Instance.CmMidBossCam.gameObject.SetActive(false);
+
+        CameraManager.Instance.SetProjection(true);
+
+        DEFINE.PlayerTrm.gameObject.SetActive(true);
+        DEFINE.MainCanvas.gameObject.SetActive(true);
+        UIManager.Instance.HPPanel.SetActive(true);
+    }
+
+    private IEnumerator PrepareMidBossStageSequence()
+    {
+        yield return StartCoroutine(MidBossDirectingBegin());
+
+        cube.gameObject.SetActive(false);
+        preparedCubes.Find("DesertCube").gameObject.SetActive(true);
+
+        //한면만 맞춰진 프리팹 꺼내기
+
+        yield return StartCoroutine(MidBossDirectingMid());
+
+        //적 꺼내기
+
+        yield return StartCoroutine(MidBossDirectingEnd());
+
+        preparedCubes.Find("DesertCube/DesertMidBoss").GetComponent<AIBrain>().enabled = true;
+    }
+
+    #endregion
+
     private IEnumerator PrepareNewStageSequence()
     {
         yield return RotateDirecting();
@@ -108,13 +186,6 @@ public class StageManager : MonoBehaviour
         yield return new WaitUntil(() => stageChanged);
 
         stageChanged = false;
-        StartStage();
-    }
-
-    private IEnumerator PrepareMidBossStageSequence()
-    {
-        yield return null;
-        //한 면 맞추기
         StartStage();
     }
 
@@ -131,12 +202,20 @@ public class StageManager : MonoBehaviour
     public void EndStage()
     {
         stageProgress++;
-        if(stageProgress % midBossTrigger == 0)
+        if (stageProgress % (midBossTrigger + 1) == 0)
             StartCoroutine(PrepareMidBossStageSequence());
         else
             StartCoroutine(PrepareNewStageSequence());
     }
-    
+
+    public void EndMidBossStage()
+    {
+        preparedCubes.Find("DesertCube").gameObject.SetActive(false);
+        cube.gameObject.SetActive(true);
+
+        EndStage();
+    }
+
     public void StartStage()
     {
         SpawnEnemyIntoCurrentCell(1);

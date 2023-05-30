@@ -21,6 +21,11 @@ public class BridgeHandler : MonoBehaviour
         cube = transform.parent.GetComponent<Cube>();
     }
 
+    private void Start()
+    {
+        gameObject.SetActive(false);
+    }
+
     public void SetActiveBridge(bool value)
     {
         //bridges.ForEach(b => b.gameObject.SetActive(true));

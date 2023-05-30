@@ -13,14 +13,18 @@ public class CameraManager : MonoBehaviour
     public CinemachineVirtualCamera CmMapCam => cmMapCam;
     private CinemachineVirtualCamera cmDirectingCam = null;
     public CinemachineVirtualCamera CmDirectingCam => cmDirectingCam;
+    private CinemachineVirtualCamera cmMidBossCam = null;
+    public CinemachineVirtualCamera CmMidBossCam => cmMidBossCam;
 
     private CinemachineBasicMultiChannelPerlin mainCamPerlin;
 
     private void Awake()
     {
-        cmMainCam = GameObject.Find("CmMainCam")?.GetComponent<CinemachineVirtualCamera>();
-        cmMapCam = GameObject.Find("CmMapCam")?.GetComponent<CinemachineVirtualCamera>();
-        cmDirectingCam = GameObject.Find("CmDirectingCam")?.GetComponent<CinemachineVirtualCamera>();
+        Transform cmCams = GameObject.Find("CmCams").transform;
+        cmMainCam = cmCams.Find("CmMainCam")?.GetComponent<CinemachineVirtualCamera>();
+        cmMapCam = cmCams.Find("CmMapCam")?.GetComponent<CinemachineVirtualCamera>();
+        cmDirectingCam = cmCams.Find("CmDirectingCam")?.GetComponent<CinemachineVirtualCamera>();
+        cmMidBossCam = cmCams.Find("CmMidBossCam")?.GetComponent<CinemachineVirtualCamera>();
 
         mainCamPerlin = cmMainCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
     }
