@@ -604,14 +604,14 @@ AnimationClip:
   - time: 0.36666667
     functionName: OnSpecialAnimationEvent
     data: 
-    objectReferenceParameter: {fileID: 0}
+    objectReferenceParameter: {fileID: 11500000, guid: b07dbe9afc4349e4babca50d576ae73d, type: 3}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
   - time: 0.7
     functionName: OnSpecialAnimationEnd
     data: 
-    objectReferenceParameter: {fileID: 0}
+    objectReferenceParameter: {fileID: 11500000, guid: b07dbe9afc4349e4babca50d576ae73d, type: 3}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0

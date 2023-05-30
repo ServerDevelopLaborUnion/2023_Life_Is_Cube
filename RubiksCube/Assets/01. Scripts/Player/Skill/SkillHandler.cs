@@ -15,6 +15,7 @@ public class SkillHandler : MonoBehaviour
 
     public void SetSkill(int idx)
     {
+        Debug.Log("SetSkill");
         currentSkill = skills[idx];
     }
 }

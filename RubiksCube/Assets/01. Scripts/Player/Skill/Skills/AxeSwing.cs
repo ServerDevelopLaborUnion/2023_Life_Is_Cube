@@ -12,8 +12,8 @@ public class AxeSwing : Skill
     [SerializeField] Transform effectPos = null;
     [SerializeField] EffectHandler specialEffectPrefab = null;
 
-
-    private Animator animator = null;
+    //바꾸기
+    public Animator animator = null;
     private Transform playerTrm = null;
 
     private readonly int onSpecialAttackHash = Animator.StringToHash("OnSpecialAttack");
@@ -21,7 +21,8 @@ public class AxeSwing : Skill
     protected override void Awake()
     {
         base.Awake();
-        animator = /*transform.Find("Model").*/GetComponent<Animator>();
+        // 나중에 추가 해야함
+        //animator = /*transform.Find("Model").*/GetComponent<Animator>(); 
         playerTrm = transform.root;
     }
 

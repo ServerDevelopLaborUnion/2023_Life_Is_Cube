@@ -5,12 +5,14 @@ using static DEFINE;
 public class NormalState : State
 {
     private WeaponHandler weaponHandler = null;
+    private SkillHandler skillHandler = null;
 
     public override void SetUp(Transform root)
     {
         base.SetUp(root);
-
+       
         weaponHandler = root.GetComponent<WeaponHandler>();
+        skillHandler = root.GetComponent<SkillHandler>();
     }
 
     public override void OnStateEnter()
@@ -20,7 +22,7 @@ public class NormalState : State
         playerInput.OnInteractKeyPressed += InteractHandle;
         //playerInput.OnConsumeKeyPressed += ConsumeHandle;
         playerInput.OnAttackKeyPressed += AttackInputHandle;
-        //playerInput.OnSpecialAttackKeyPressed += SpecialAttackInputHandle;
+        playerInput.OnSpecialAttackKeyPressed += SpecialAttackInputHandle;
     }
 
     public override void OnStateExit()
@@ -29,7 +31,7 @@ public class NormalState : State
         //playerInput.OnConsumeKeyPressed -= ConsumeHandle;
         playerInput.OnInteractKeyPressed -= InteractHandle;
         playerInput.OnAttackKeyPressed -= AttackInputHandle;
-        //playerInput.OnSpecialAttackKeyPressed -= SpecialAttackInputHandle;
+        playerInput.OnSpecialAttackKeyPressed -= SpecialAttackInputHandle;
     }
 
     public override void StateUpdate()
@@ -70,5 +72,11 @@ public class NormalState : State
     {
         if(weaponHandler.TryActiveWeapon())
             stateHandler.ChangeState(StateFlags.Attack);
+    }
+
+    private void SpecialAttackInputHandle()
+    {
+        if (skillHandler.TrySkill())
+            stateHandler.ChangeState(StateFlags.SpecialAttack);
     }
 }
