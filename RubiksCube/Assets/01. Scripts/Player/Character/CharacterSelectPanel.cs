@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -77,7 +78,7 @@ public class CharacterSelectPanel : MonoBehaviour
         current = characters[++idx];
         ChangeCurrent();
     }
-    
+
     /// <summary>
     /// 왼쪽 화살표 눌렀을때 이전직업
     /// </summary>
@@ -118,20 +119,17 @@ public class CharacterSelectPanel : MonoBehaviour
 
     public void GameStart()
     {
-        Debug.Log(1);
         //MapTest => 실제 인게임 씬이름으로 변경하기
         SceneLoader.Instance.LoadSceneAsync("MapTest", () =>
         {
-            Debug.Log(2);
-            //PlayerStat playerStat = GameObject.Find("Player").GetComponent<PlayerStat>();
-
             PlayerStat playerStat = DEFINE.PlayerTrm.GetComponent<PlayerStat>();
-            Debug.Log(3);
 
             foreach (var item in current.stats)
             {
                 playerStat.SetStat(item.statType, item);
             }
+            // 인덱스로 넘겨주면 거기 리스트 순서대로 들어갈거임
+            DEFINE.PlayerTrm.GetComponent<SkillHandler>().SetSkill(idx);
         });
     }
 }

@@ -1,8 +1,11 @@
-using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class WeaponHandler : MonoBehaviour
 {
+    [Header("!직업 선택창 순서랑 맞추기!")]
+    [SerializeField] List<Weapon> skills = new List<Weapon>();
+
     [SerializeField] Weapon currentWeapon = null;
 
     public bool TryActiveWeapon()
@@ -10,13 +13,8 @@ public class WeaponHandler : MonoBehaviour
         return currentWeapon.TryAttack();
     }
 
-    public bool TryActiveSpecialAttack()
+    public void SetWeapon(int idx)
     {
-        return currentWeapon.TrySpecialAttack();
-    }
-
-    public void SetWeapon(Weapon weapon)
-    {
-        currentWeapon = weapon;
+        currentWeapon = skills[idx];
     }
 }

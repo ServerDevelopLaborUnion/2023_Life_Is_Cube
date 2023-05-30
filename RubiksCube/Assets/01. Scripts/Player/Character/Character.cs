@@ -17,7 +17,7 @@ public class Character : MonoBehaviour, IPointerDownHandler
     public string skillName = string.Empty;
     public string skillDescription = string.Empty;
 
-    public CharacterSelectPanel panel = null;
+    [HideInInspector] public CharacterSelectPanel panel = null;
 
     private void Awake()
     {
