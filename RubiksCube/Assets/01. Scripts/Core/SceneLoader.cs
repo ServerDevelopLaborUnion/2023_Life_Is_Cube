@@ -11,6 +11,7 @@ public class SceneLoader : MonoBehaviour
     {
         if (Instance != null)
         {
+            Destroy(Instance.transform.gameObject);
             Debug.Log("multiple SceneLoader instance is running");
         }
         Instance = this;

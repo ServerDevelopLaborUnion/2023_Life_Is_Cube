@@ -10,7 +10,7 @@ public abstract class Weapon : MonoBehaviour
 
     protected virtual void Awake()
     {
-
+         
     }
 
     public bool TryAttack()
