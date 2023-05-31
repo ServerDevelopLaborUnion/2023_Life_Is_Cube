@@ -19,5 +19,20 @@ public class PreparedCube : MonoBehaviour
         }
     }
 
-    public MidBossCube GetPreparedCube(BiomeFlags biome) => preparedCubeMap[biome];
+    public bool TryGetPreparedCube(BiomeFlags biome, out MidBossCube preCube)
+    {
+        preCube = null;
+
+        if(preparedCubeMap.ContainsKey(biome))
+            return false;
+
+        preCube = preparedCubeMap[biome];
+        return true;            
+    }
+
+    public void RemoveCube(BiomeFlags biome)
+    {
+        if(preparedCubeMap.ContainsKey(biome))
+            preparedCubeMap.Remove(biome);
+    }
 }
