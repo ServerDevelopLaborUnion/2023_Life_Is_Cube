@@ -132,4 +132,9 @@ public class CharacterSelectPanel : MonoBehaviour
             DEFINE.PlayerTrm.GetComponent<SkillHandler>().SetSkill(idx);
         });
     }
+
+    public void BackButtonClick()
+    {
+        SceneManager.LoadScene("TitleScene");
+    }
 }
