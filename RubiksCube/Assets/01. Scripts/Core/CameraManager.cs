@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System;
 using System.Collections;
 using Cinemachine;
@@ -7,29 +8,47 @@ public class CameraManager : MonoBehaviour
 {
     public static CameraManager Instance;
 
-    private CinemachineVirtualCamera cmMainCam = null;
-    public CinemachineVirtualCamera CmMainCam => cmMainCam;
-    private CinemachineVirtualCamera cmMapCam = null;
-    public CinemachineVirtualCamera CmMapCam => cmMapCam;
-    private CinemachineVirtualCamera cmDirectingCam = null;
-    public CinemachineVirtualCamera CmDirectingCam => cmDirectingCam;
-    private CinemachineVirtualCamera cmMidBossCam = null;
-    public CinemachineVirtualCamera CmMidBossCam => cmMidBossCam;
+    private CinemachineVirtualCamera activedCam = null;
+    private Dictionary<CameraType, CinemachineVirtualCamera> cmCamMap = null;
 
     private CinemachineBasicMultiChannelPerlin mainCamPerlin;
 
     private void Awake()
     {
-        Transform cmCams = GameObject.Find("CmCams").transform;
-        cmMainCam = cmCams.Find("CmMainCam")?.GetComponent<CinemachineVirtualCamera>();
-        cmMapCam = cmCams.Find("CmMapCam")?.GetComponent<CinemachineVirtualCamera>();
-        cmDirectingCam = cmCams.Find("CmDirectingCam")?.GetComponent<CinemachineVirtualCamera>();
-        cmMidBossCam = cmCams.Find("CmMidBossCam")?.GetComponent<CinemachineVirtualCamera>();
+        Transform cmCamsTrm = GameObject.Find("CmCams").transform;
+        cmCamMap = new Dictionary<CameraType, CinemachineVirtualCamera>();
 
-        mainCamPerlin = cmMainCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+        foreach (CameraType type in typeof(CameraType).GetEnumValues())
+        {
+            if (cmCamMap.ContainsKey(type))
+                continue;
+
+            CinemachineVirtualCamera cmCam = cmCamsTrm.Find($"Cm{type.ToString()}")?.GetComponent<CinemachineVirtualCamera>();
+            if (cmCam == null)
+                continue;
+
+            cmCam.m_Priority = 0;
+            cmCamMap.Add(type, cmCam);
+        }
+
+        mainCamPerlin = cmCamMap[CameraType.MainCam].GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+        ActiveCamera(CameraType.MainCam);
     }
 
-    public void SetActiveCam(CinemachineVirtualCamera cam, bool value) => cam.m_Priority = (value ? 15 : 5);
+    public void ActiveCamera(CameraType type)
+    {
+        if (activedCam != null)
+            activedCam.m_Priority = 5;
+
+        if (cmCamMap.ContainsKey(type) == false)
+            return;
+
+        activedCam = cmCamMap[type];
+        activedCam.m_Priority = 15;
+    }
+
+    public CinemachineVirtualCamera GetCamera(CameraType type) => cmCamMap[type];
+
     public void SetProjection(bool isOrtho) => DEFINE.MainCam.orthographic = isOrtho;
 
     /// <param name="time">시간</param>

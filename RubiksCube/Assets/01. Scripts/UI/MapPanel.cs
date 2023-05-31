@@ -12,7 +12,7 @@ public class MapPanel : MonoBehaviour
 
     public void AppearMap()
     {
-        CameraManager.Instance.SetActiveCam(CameraManager.Instance.CmMapCam, !isActived);
+        CameraManager.Instance.ActiveCamera(isActived ? CameraType.MainCam : CameraType.MapCam);
         UIManager.Instance.InputPanel.gameObject.SetActive(isActived);
         exitButton.SetActive(!isActived);
 
