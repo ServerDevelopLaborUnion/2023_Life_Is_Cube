@@ -31,11 +31,11 @@ public class CubeAxis : MonoBehaviour
         Ray ray = new Ray(transform.position, forward);
         RaycastHit hit;
 
-        for(int i = 0; i < 8; ++i)
+        for (int i = 0; i < 8; ++i)
         {
             ray.direction = Quaternion.AngleAxis(45f * i, upward) * Quaternion.AngleAxis(-45, upward) * forward; // upward 축의 왼쪽 위부터 돌릴 거임
-            // Debug.DrawLine(transform.positions, transform.position + Quaternion.AngleAxis(45f * i, upward) * forward * 1000f, Color.green, Time.deltaTime);
-            
+                                                                                                                 // Debug.DrawLine(transform.positions, transform.position + Quaternion.AngleAxis(45f * i, upward) * forward * 1000f, Color.green, Time.deltaTime);
+
             if (Physics.Raycast(ray, out hit, CubeLayer))
                 hit.transform.SetParent(childTrm);
         }
@@ -45,7 +45,7 @@ public class CubeAxis : MonoBehaviour
 
     public void UnsetBlocksOfAxis()
     {
-        while(childTrm.childCount > 0)
+        while (childTrm.childCount > 0)
             childTrm.GetChild(0).SetParent(transform.parent);
     }
 
@@ -61,16 +61,27 @@ public class CubeAxis : MonoBehaviour
         float timer = 0f;
         float theta = 0f;
 
-        while(timer < rotateDuration)
+        while (timer < rotateDuration)
         {
             theta = timer / rotateDuration;
-            transform.rotation = Quaternion.Lerp(startRotation, endRotation, theta);
+            // transform.rotation = Quaternion.Lerp(startRotation, endRotation, EaseInOutCube(theta));
+            transform.rotation = Quaternion.Lerp(startRotation, endRotation, EaseInExpo(theta));
 
             timer += Time.deltaTime;
             yield return null;
         }
 
         transform.rotation = endRotation;
+    }
+
+    private float EaseInOutCube(float t)
+    {
+        return t < 0.5f ? 4f * t * t * t : 1f - Mathf.Pow(-2f * t + 2f, 3f) / 2f;
+    }
+
+    private float EaseInExpo(float t)
+    {
+        return t == 0f ? 0f : t == 1f ? 1f : t < 0.5f ? Mathf.Pow(2f, 20f * t - 10f) / 2f : (2f - Mathf.Pow(2f, -20f * t + 10f)) / 2f;
     }
 
     // #if UNITY_EDITOR
@@ -86,7 +97,7 @@ public class CubeAxis : MonoBehaviour
     //         return;
 
     //     Gizmos.color = Color.red;
-        
+
     //     for (int i = 0; i < 8; ++i)
     //         Gizmos.DrawLine(transform.position, transform.position + Quaternion.AngleAxis(45f * i, upward) * forward * 10000f);
 

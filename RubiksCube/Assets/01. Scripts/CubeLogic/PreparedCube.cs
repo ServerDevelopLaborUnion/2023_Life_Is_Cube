@@ -14,8 +14,10 @@ public class PreparedCube : MonoBehaviour
             if(preparedCubeMap.ContainsKey(biome))
                 continue;
 
-            if(transform.Find($"{biome.ToString()}Cube").TryGetComponent(out MidBossCube cube))
-                preparedCubeMap.Add(biome, cube);
+            Transform cubeTrm = transform.Find($"{biome.ToString()}Cube");
+            if(cubeTrm != null)
+                if(cubeTrm.TryGetComponent(out MidBossCube cube))
+                    preparedCubeMap.Add(biome, cube);
         }
     }
 
