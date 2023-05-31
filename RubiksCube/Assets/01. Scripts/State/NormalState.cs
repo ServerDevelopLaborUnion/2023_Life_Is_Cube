@@ -1,4 +1,5 @@
 using System;
+using UnityEditor.Build.Player;
 using UnityEngine;
 using static DEFINE;
 
@@ -23,6 +24,7 @@ public class NormalState : State
         //playerInput.OnConsumeKeyPressed += ConsumeHandle;
         playerInput.OnAttackKeyPressed += AttackInputHandle;
         playerInput.OnSpecialAttackKeyPressed += SpecialAttackInputHandle;
+        playerInput.OnRollingKeyPressed -= RollingInputHandle;
     }
 
     public override void OnStateExit()
@@ -32,10 +34,12 @@ public class NormalState : State
         playerInput.OnInteractKeyPressed -= InteractHandle;
         playerInput.OnAttackKeyPressed -= AttackInputHandle;
         playerInput.OnSpecialAttackKeyPressed -= SpecialAttackInputHandle;
+        playerInput.OnRollingKeyPressed -= RollingInputHandle;
     }
 
     public override void StateUpdate()
     {
+
     }
 
     private void InteractHandle()
@@ -58,11 +62,6 @@ public class NormalState : State
             ii?.OnInteract(stateHandler.transform);
     }
 
-    private void ConsumeHandle()
-    {
-        stateHandler.ChangeState(StateFlags.Consuming);
-    }
-
     private void MovementHandle(Vector3 input)
     {
         playerMovement.SetMovementDirection(input);
@@ -78,5 +77,10 @@ public class NormalState : State
     {
         if (skillHandler.TrySkill())
             stateHandler.ChangeState(StateFlags.SpecialAttack);
+    }
+
+    private void RollingInputHandle(Vector3 dir)
+    {
+        
     }
 }

@@ -6,6 +6,7 @@ public class PlayerInput : MonoBehaviour
     [SerializeField] LayerMask detectLayer;
 
     public event Action<Vector3> OnMovementKeyPressed = null;
+    public event Action<Vector3> OnRollingKeyPressed = null;
     public event Action OnConsumeKeyPressed = null;
     public event Action OnAttackKeyPressed = null;
     public event Action OnInteractKeyPressed = null;
@@ -25,9 +26,14 @@ public class PlayerInput : MonoBehaviour
         OnMovementKeyPressed?.Invoke(dir);
     }
 
+    public void RollingInput()
+    {
+
+    }
+
     private void ConsumeInput()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
             OnConsumeKeyPressed?.Invoke();
     }
 

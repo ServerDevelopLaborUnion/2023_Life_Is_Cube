@@ -20,6 +20,8 @@ public class JoyStick : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     private bool onDragged = false;
     public bool OnDragged => onDragged;
 
+    public Vector3 lastDir = Vector3.forward;
+
     private void Start()
     {
         center = transform.position;
@@ -56,6 +58,7 @@ public class JoyStick : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        lastDir = GetJoyStickValue();
         onDragged = false;
         OnDragEnd?.Invoke();;
     }
