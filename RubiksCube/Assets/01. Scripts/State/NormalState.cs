@@ -8,6 +8,7 @@ public class NormalState : State
     private WeaponHandler weaponHandler = null;
     private SkillHandler skillHandler = null;
 
+
     public override void SetUp(Transform root)
     {
         base.SetUp(root);
@@ -24,7 +25,7 @@ public class NormalState : State
         //playerInput.OnConsumeKeyPressed += ConsumeHandle;
         playerInput.OnAttackKeyPressed += AttackInputHandle;
         playerInput.OnSpecialAttackKeyPressed += SpecialAttackInputHandle;
-        playerInput.OnRollingKeyPressed -= RollingInputHandle;
+        playerInput.OnRollingKeyPressed += RollingInputHandle;
     }
 
     public override void OnStateExit()
@@ -79,8 +80,9 @@ public class NormalState : State
             stateHandler.ChangeState(StateFlags.SpecialAttack);
     }
 
-    private void RollingInputHandle(Vector3 dir)
+    private void RollingInputHandle()
     {
-        
+        Debug.Log("Change state to Rolling");
+        stateHandler.ChangeState(StateFlags.Rolling);
     }
 }

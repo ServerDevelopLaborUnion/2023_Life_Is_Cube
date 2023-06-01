@@ -5,23 +5,33 @@ using static DEFINE;
 
 public class RollingState : State
 {
-    public override void SetUp(Transform root)
-    {
-        base.SetUp(root);
-    }
-
     public override void OnStateEnter()
     {
-        throw new System.NotImplementedException();
-    }
-
-    public override void OnStateExit()
-    {
-        throw new System.NotImplementedException();
+        playerAnimator.ToggleRolling(true);
+        playerMovement.StopImmediatly();
+        playerAnimator.OnAnimationEndTrigger += OnAnimationEndHandle;
+        // 무적
+        // 못움직이게, 공격 못하게
+        Vector3 dir = new Vector3(joyStick.lastDir.x, 0, joyStick.lastDir.y);
+        playerMovement.SetMovementDirection(dir);
     }
 
     public override void StateUpdate()
     {
-        throw new System.NotImplementedException();
+
+    }
+
+    public override void OnStateExit()
+    {
+        playerAnimator.ToggleRolling(false);
+
+        //playerMovement.IsActiveRotate = true;
+
+        playerAnimator.OnAnimationEndTrigger -= OnAnimationEndHandle;
+    }
+
+    private void OnAnimationEndHandle()
+    {
+        stateHandler.ChangeState(StateFlags.Normal);
     }
 }
