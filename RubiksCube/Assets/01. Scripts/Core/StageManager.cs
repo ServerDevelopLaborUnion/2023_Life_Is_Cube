@@ -63,11 +63,11 @@ public class StageManager : MonoBehaviour
         }
 
         cube.SortCellIndexes();
-        for(int i = 0; i < cube.ActivatedCells.Count; i++)
+        for (int i = 0; i < cube.ActivatedCells.Count; i++)
         {
             Vector3[] pushOrders = cube.ActivatedCells[i].CheckNeighborCell();
 
-            foreach(Vector3 dir in pushOrders)
+            foreach (Vector3 dir in pushOrders)
             {
                 cube.CubeConfiner.SetActiveCollider(i, dir.normalized, false);
                 cube.ActivatedCells[i].SetToEliteStage(1f, 0.025f * dir);
@@ -170,7 +170,7 @@ public class StageManager : MonoBehaviour
 
         BiomeFlags randBiome = (BiomeFlags)Random.Range(0, (int)BiomeFlags.End);
         MidBossCube midBossCube = null;
-        while(preparedCube.TryGetPreparedCube(randBiome, out midBossCube) == false)
+        while (preparedCube.TryGetPreparedCube(randBiome, out midBossCube) == false)
             randBiome = (BiomeFlags)Random.Range(0, (int)BiomeFlags.End);
 
         midBossCube.SetActive(true);
@@ -208,6 +208,13 @@ public class StageManager : MonoBehaviour
 
     public void EndStage()
     {
+        if(cube.ActivatedCells != null && cube.ActivatedCells.Count > 0)
+        {
+            Debug.Log("asd");
+            for (int i = 0; i < cube.ActivatedCells.Count; i++)
+                cube.ActivatedCells[i].ClearEliteStage(1f);
+        }
+
         stageProgress++;
         if (stageProgress % (midBossTrigger + 1) == 0)
             StartCoroutine(PrepareMidBossStageSequence());

@@ -4,7 +4,8 @@ using UnityEngine;
 public class CubeConfiner : MonoBehaviour
 {
     private List<Dictionary<DirectionFlags, Collider>> colliderMapList;
-    private Dictionary<Vector3, DirectionFlags> directionMap = new Dictionary<Vector3, DirectionFlags>() {
+    private Dictionary<Vector3, DirectionFlags> directionMap = new Dictionary<Vector3, DirectionFlags>()
+    {
         [Vector3.right] = DirectionFlags.Right,
         [Vector3.left] = DirectionFlags.Left,
         [Vector3.forward] = DirectionFlags.Up,
@@ -17,16 +18,16 @@ public class CubeConfiner : MonoBehaviour
         cube = transform.parent.GetComponent<Cube>();
 
         colliderMapList = new List<Dictionary<DirectionFlags, Collider>>();
-        for(int i = 0; i < 9; i++)
+        for (int i = 0; i < 9; i++)
         {
             colliderMapList.Add(new Dictionary<DirectionFlags, Collider>());
             Transform colliderContainer = transform.Find($"Colliders{i}");
-            
-            foreach(DirectionFlags dirType in typeof(DirectionFlags).GetEnumValues())
+
+            foreach (DirectionFlags dirType in typeof(DirectionFlags).GetEnumValues())
             {
                 Transform colliderTrm = colliderContainer.Find($"Collider{dirType.ToString()}");
-                if(colliderTrm != null)
-                    if(colliderTrm.TryGetComponent(out Collider collider))
+                if (colliderTrm != null)
+                    if (colliderTrm.TryGetComponent(out Collider collider))
                         colliderMapList[i].Add(dirType, collider);
             }
         }
@@ -34,18 +35,20 @@ public class CubeConfiner : MonoBehaviour
 
     public void SetActiveCollider(int i, Vector3 dir, bool active)
     {
-        if(directionMap.ContainsKey(dir) == false)
+        Debug.Log($"{i}, {dir}");
+        if (directionMap.ContainsKey(dir) == false)
             return;
 
+        // Debug.Log($"{i}, {dir} : Founded");
         SetActiveCollider(i, directionMap[dir], active);
     }
 
     public void SetActiveCollider(int i, DirectionFlags dirType, bool active)
     {
-        if(colliderMapList.Count < i)
+        if (colliderMapList.Count < i)
             return;
 
-        if(colliderMapList[i].ContainsKey(dirType) == false)
+        if (colliderMapList[i].ContainsKey(dirType) == false)
             return;
 
         colliderMapList[i][dirType]?.gameObject.SetActive(active);

@@ -55,7 +55,7 @@ public class CubeCell : MonoBehaviour
             }
         }
 
-        Debug.Log(gameObject.name + " " + results.Count);
+//        Debug.Log(gameObject.name + " " + results.Count);
         return results.ToArray();
     }
 
@@ -75,9 +75,11 @@ public class CubeCell : MonoBehaviour
             ResetExtraGrounds(time, trm);
 
             extraGroundPlanes.Enqueue(trm);
+            
+            cube.CubeConfiner.SetActiveCollider(CellIndex, trm.TransformDirection(trm.localPosition.normalized), true);
+            //Debug.Log($"{CellIndex}, {trm.TransformDirection(trm.localPosition.normalized)}");
         }
 
-        cube.CubeConfiner.SetActiveCollider(CellIndex, transform.position.Round(), true);
     }
 
     private void ResetExtraGrounds(float time, Transform trm)
