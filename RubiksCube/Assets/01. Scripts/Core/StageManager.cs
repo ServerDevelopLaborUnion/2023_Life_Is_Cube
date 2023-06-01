@@ -97,7 +97,6 @@ public class StageManager : MonoBehaviour
         yield return new WaitForSeconds(1.75f);
 
         SetActiveUI(true);
-        //UIManager.Instance.HPPanel.SetActive(true);
     }
 
     #region Mid-Boss
@@ -151,7 +150,6 @@ public class StageManager : MonoBehaviour
         CameraManager.Instance.SetProjection(true);
 
         SetActiveUI(true);
-        //UIManager.Instance.HPPanel.SetActive(true);
     }
 
     private IEnumerator PrepareMidBossStageSequence()
@@ -161,13 +159,17 @@ public class StageManager : MonoBehaviour
         cube.gameObject.SetActive(false);
 
         BiomeFlags randBiome = (BiomeFlags)Random.Range(0, (int)BiomeFlags.End);
-        preparedCube.GetPreparedCube(randBiome).SetActive(true);
+        MidBossCube midBossCube = null;
+        while(preparedCube.TryGetPreparedCube(randBiome, out midBossCube) == false)
+            randBiome = (BiomeFlags)Random.Range(0, (int)BiomeFlags.End);
+
+        midBossCube.SetActive(true);
 
         yield return StartCoroutine(MidBossDirectingMid());
 
         yield return StartCoroutine(MidBossDirectingEnd());
 
-        preparedCube.GetPreparedCube(randBiome).ActiveBoss(true);
+        midBossCube.ActiveBoss(true);
     }
 
     #endregion

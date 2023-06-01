@@ -45,11 +45,11 @@ public class Cube : MonoBehaviour
         if (cubeAxesDictionary[axis].ChildTrm.childCount != 8)
             yield return null;
         else
-            yield return cubeAxesDictionary[axis].Rotate(rotateDuration, clockWise);
+            yield return cubeAxesDictionary[axis].Rotate(Random.Range(rotateDuration - 0.09f, rotateDuration + 0.1f), clockWise);
 
         yield return null;
         cubeAxesDictionary[axis].UnsetBlocksOfAxis();
-        //yield return new WaitForSeconds(0.001f);
+        // yield return new WaitForSeconds(0.0f);
     }
 
     public CubeCell GetCurrentCell()
