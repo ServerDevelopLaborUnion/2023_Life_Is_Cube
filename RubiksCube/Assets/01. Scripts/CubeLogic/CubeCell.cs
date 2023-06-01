@@ -76,6 +76,8 @@ public class CubeCell : MonoBehaviour
 
             extraGroundPlanes.Enqueue(trm);
         }
+
+        cube.CubeConfiner.SetActiveCollider(CellIndex, transform.position.Round(), true);
     }
 
     private void ResetExtraGrounds(float time, Transform trm)

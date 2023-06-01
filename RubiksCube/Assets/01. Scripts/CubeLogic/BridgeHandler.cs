@@ -12,7 +12,7 @@ public class BridgeHandler : MonoBehaviour
 
     private void Awake()
     {
-        innerConfiner = transform.parent.Find("InnerConfiner").gameObject;
+        innerConfiner = transform.parent.Find("CubeConfiner").gameObject;
         
         bridges = new List<Transform>();
         for(int i = 0; i < transform.childCount; i++)

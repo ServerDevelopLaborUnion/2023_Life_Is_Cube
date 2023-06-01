@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class DEFINE
+public static class DEFINE
 {
     public const int EnemyLayer = 1 << 7;
     public const int CubeLayer = 1 << 8;
@@ -38,4 +38,6 @@ public class DEFINE
             return mainCanvas;
         }
     }
+
+    public static Vector3 Round(this Vector3 vec) => new Vector3(Mathf.Round(vec.x), Mathf.Round(vec.y), Mathf.Round(vec.z));
 }

@@ -9,8 +9,11 @@ public class Cube : MonoBehaviour
     private Dictionary<DirectionFlags, CubeAxis> cubeAxesDictionary;
     private List<CubeCell> activatedCells;
     public List<CubeCell> ActivatedCells => activatedCells;
+
     private CubeCell currentCell = null;
     private BridgeHandler bridges = null;
+    private CubeConfiner cubeConfiner = null;
+    public CubeConfiner CubeConfiner => cubeConfiner;
 
     private void Awake()
     {
@@ -30,6 +33,7 @@ public class Cube : MonoBehaviour
         });
 
         bridges = transform.Find("Bridges").GetComponent<BridgeHandler>();
+        cubeConfiner = transform.Find("CubeConfiner").GetComponent<CubeConfiner>();
     }
 
     public CubeAxis GetCubeAxis(DirectionFlags axis) => cubeAxesDictionary[axis];
