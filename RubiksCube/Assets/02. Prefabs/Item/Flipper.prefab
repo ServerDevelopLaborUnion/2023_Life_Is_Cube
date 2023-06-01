@@ -120,7 +120,7 @@ Light:
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 1
+  m_BounceIntensity: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
@@ -160,7 +160,8 @@ GameObject:
   - component: {fileID: 2089792297534010309}
   - component: {fileID: 2089792297534010311}
   - component: {fileID: 2089792297534010310}
-  m_Layer: 0
+  - component: {fileID: 1259330564}
+  m_Layer: 10
   m_Name: Flipper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -222,6 +223,26 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.8615751, y: 0.37391663, z: 2.3180237}
   m_Center: {x: 0.011856556, y: 0.16286469, z: 0.65901184}
+--- !u!95 &1259330564
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2089792297534010427}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7c9dcd738c8619c4b82ecf17c55e3f8c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1 &2089792297961255102
 GameObject:
   m_ObjectHideFlags: 0
@@ -309,7 +330,7 @@ Light:
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 1
+  m_BounceIntensity: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
@@ -390,7 +411,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7109926371099085723, guid: 805fd2a4d25d6814e98946868b697ba8, type: 3}
       propertyPath: m_Name
-      value: Flipper
+      value: Model
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 805fd2a4d25d6814e98946868b697ba8, type: 3}

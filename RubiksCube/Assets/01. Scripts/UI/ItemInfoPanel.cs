@@ -38,6 +38,9 @@ public class ItemInfoPanel : MonoBehaviour
         nameText.SetText(itemData.ItemName);
         descriptionText.SetText(itemData.ItemDescription);
 
+        rectTrm.DOKill();
+        StopAllCoroutines();
+
         Active();
     }
 
@@ -49,6 +52,10 @@ public class ItemInfoPanel : MonoBehaviour
 
         isActived = true;
 
+        Vector3 pos = rectTrm.position;
+        pos.y = enactivePosY;
+        rectTrm.position = pos;
+        
         seq.Append(rectTrm.DOAnchorPosY(activePosY, tweeningDuration).SetEase(Ease.OutQuart));
         seq.AppendCallback(() => {
             seq.Kill();
