@@ -83,8 +83,8 @@ public class CubeCell : MonoBehaviour
             extraGroundPlanes.Enqueue(trm);
             
             cube.CubeConfiner.SetActiveCollider(CellIndex, (trm.position - trm.parent.position).normalized, true);
-            Debug.Log($"{CellIndex}, {(trm.position - trm.parent.position).normalized}");
-            Debug.Break();
+            // Debug.Log($"{CellIndex}, {(trm.position - trm.parent.position).normalized}");
+            // Debug.Break();
         }
 
         neighborCells.Clear();
@@ -93,7 +93,9 @@ public class CubeCell : MonoBehaviour
 
     private void ResetExtraGrounds(float time, Transform trm)
     {
-        StartCoroutine(PushExtraGroundCoroutine(time, trm, -trm.localPosition));
+        Debug.Break();
+        // Debug.Log(0.025f * (-trm.localPosition).normalized);
+        StartCoroutine(PushExtraGroundCoroutine(time, trm, 0.025f * (-trm.localPosition).normalized));
     }
 
     private IEnumerator PushExtraGroundCoroutine(float time, Transform trm, Vector3 amount)

@@ -27,6 +27,11 @@ public class ItemInfoPanel : MonoBehaviour
         descriptionText = transform.Find("DescriptionText").GetComponent<TMP_Text>();
     }
 
+    private void OnEnable()
+    {
+        SlideDown(0f);
+    }
+
     private void OnDisable()
     {
         StopAllCoroutines();

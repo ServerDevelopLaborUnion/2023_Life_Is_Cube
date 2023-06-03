@@ -58,6 +58,7 @@ public class Cube : MonoBehaviour
 
     public CubeCell GetCurrentCell()
     {
+        Debug.DrawLine(DEFINE.PlayerTrm.position, DEFINE.PlayerTrm.position + Vector3.down * 1000f, Color.red, 1f);
         if (Physics.Raycast(DEFINE.PlayerTrm.position, Vector3.down, out RaycastHit hit, 1000f, DEFINE.CellLayer))
             currentCell = hit.collider.GetComponent<CubeCell>();
 
