@@ -20,7 +20,11 @@ public class CharacterSelectPanel : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] private GameObject infoPanel;
+    [SerializeField] private Button rightButton;
+    [SerializeField] private Button leftButton;
 
+    [SerializeField] private GameObject rightLock;
+    [SerializeField] private GameObject leftLock;
     #region Slider Group
     private Slider hp;
     private Slider speed;
@@ -115,6 +119,16 @@ public class CharacterSelectPanel : MonoBehaviour
 
         skillTitle.text = current.skillName;
         description.text = current.skillDescription;
+
+
+        bool right = (idx == characters.Count - 1);
+        bool left = (idx == 0);
+        
+        rightButton.interactable = !right;
+        leftButton.interactable = !left;
+        
+        rightLock.SetActive(right);
+        leftLock.SetActive(left);
     }
 
     public void GameStart()
