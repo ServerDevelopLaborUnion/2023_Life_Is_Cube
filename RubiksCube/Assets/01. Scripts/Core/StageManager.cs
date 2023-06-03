@@ -19,6 +19,8 @@ public class StageManager : MonoBehaviour
     private Transform preparedCubes = null;
 
     private List<AIBrain> enemyList = new List<AIBrain>();
+    private List<CubeCell> neighbors = new List<CubeCell>();
+    public List<CubeCell> Neighbors => neighbors;
 
     private bool stageChanged = false;
     public bool StageChanged { get => stageChanged; set => stageChanged = value; }
@@ -42,6 +44,18 @@ public class StageManager : MonoBehaviour
     private void Start()
     {
         StartGame();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.LeftControl))
+        {
+            if (Input.GetKeyDown(KeyCode.D))
+            {
+                while (enemyList.Count > 0)
+                    enemyList[0].GetComponent<IDamageable>().OnDamage(100000f, Vector3.zero, Vector3.zero);
+            }
+        }
     }
 
     public Coroutine RotateDirecting() => StartCoroutine(RotateDirectingCoroutine());
@@ -73,9 +87,13 @@ public class StageManager : MonoBehaviour
             foreach (Vector3 dir in pushOrders)
             {
                 cube.CubeConfiner.SetActiveCollider(i, dir.normalized, false);
+                cube.Bridges.SetActiveBridge(i, dir.normalized, false);
                 cube.ActivatedCells[i].SetToEliteStage(1f, 0.025f * dir);
             }
         }
+
+        CubeCell currentCell = cube.GetCurrentCell();
+        FindAllNeighbors(currentCell);
     }
 
     private void SetActiveUI(bool active)
@@ -191,7 +209,7 @@ public class StageManager : MonoBehaviour
     {
         yield return RotateDirecting();
 
-        cube.SetActiveBridge(true);
+        cube.Bridges.SetActiveBridge(true);
 
         yield return new WaitUntil(() => stageChanged);
 
@@ -211,12 +229,16 @@ public class StageManager : MonoBehaviour
 
     public void EndStage()
     {
+        cube.Bridges.CurrentCellIdx = cube.GetCurrentCell().CellIndex;
+
         if (cube.ActivatedCells != null && cube.ActivatedCells.Count > 0)
         {
             Debug.Log("asd");
             for (int i = 0; i < cube.ActivatedCells.Count; i++)
                 cube.ActivatedCells[i].ClearEliteStage(1f);
         }
+
+        cube.Bridges.ClearBridgeActive();
 
         stageProgress++;
         if (stageProgress % (midBossTrigger + 1) == 0)
@@ -235,24 +257,30 @@ public class StageManager : MonoBehaviour
 
     public void StartStage()
     {
-        CubeCell currentCell = cube.GetCurrentCell();
+        //CubeCell currentCell = cube.GetCurrentCell();
 
         //SpawnEnemy(currentCell, 1);
 
-        List<CubeCell> neighbors = new List<CubeCell>();
-        List<CubeCell> newNeighbors = new List<CubeCell>();
-
-        newNeighbors = CheckNeighbors(neighbors, currentCell.NeighborCells);
-        while(newNeighbors.Count > 0)
-            newNeighbors = CheckNeighbors(neighbors, newNeighbors);
-
-        if(neighbors.Count <= 0)
-            neighbors.Add(currentCell);
+        CubeCell currentCell = cube.GetCurrentCell();
+        FindAllNeighbors(currentCell);
 
         foreach (CubeCell neighborCell in neighbors)
             SpawnEnemy(neighborCell, 1);
 
-        cube.SetActiveBridge(false);
+        cube.Bridges.SetActiveBridge(false);
+    }
+
+    private void FindAllNeighbors(CubeCell currentCell)
+    {
+        neighbors.Clear();
+        List<CubeCell> newNeighbors = new List<CubeCell>();
+
+        newNeighbors = CheckNeighbors(neighbors, currentCell.NeighborCells);
+        while (newNeighbors.Count > 0)
+            newNeighbors = CheckNeighbors(neighbors, newNeighbors);
+
+        if (neighbors.Count <= 0)
+            neighbors.Add(currentCell);
     }
 
     private List<CubeCell> CheckNeighbors(List<CubeCell> neighbors, List<CubeCell> newNeighbors)

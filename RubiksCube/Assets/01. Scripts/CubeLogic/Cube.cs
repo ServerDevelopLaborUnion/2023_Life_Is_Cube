@@ -11,7 +11,10 @@ public class Cube : MonoBehaviour
     public List<CubeCell> ActivatedCells => activatedCells;
 
     private CubeCell currentCell = null;
+
     private BridgeHandler bridges = null;
+    public BridgeHandler Bridges => bridges;
+    
     private CubeConfiner cubeConfiner = null;
     public CubeConfiner CubeConfiner => cubeConfiner;
 
@@ -58,7 +61,8 @@ public class Cube : MonoBehaviour
 
     public CubeCell GetCurrentCell()
     {
-        Debug.DrawLine(DEFINE.PlayerTrm.position, DEFINE.PlayerTrm.position + Vector3.down * 1000f, Color.red, 1f);
+        // Debug.Break();
+        // Debug.DrawLine(DEFINE.PlayerTrm.position + Vector3.up * 10f, DEFINE.PlayerTrm.position + Vector3.down * 1000f, Color.red, 1f);
         if (Physics.Raycast(DEFINE.PlayerTrm.position, Vector3.down, out RaycastHit hit, 1000f, DEFINE.CellLayer))
             currentCell = hit.collider.GetComponent<CubeCell>();
 
@@ -108,10 +112,5 @@ public class Cube : MonoBehaviour
 
         activatedCells.Sort((a, b) => a.CellIndex - b.CellIndex);
         return activatedCells.ToArray();
-    }
-
-    public void SetActiveBridge(bool value)
-    {
-        bridges.SetActiveBridge(value);
     }
 }

@@ -6,7 +6,7 @@ public class Bridge : MonoBehaviour
 
     private void Awake()
     {
-        bridgeHandler = transform.parent.GetComponent<BridgeHandler>();
+        bridgeHandler = transform.parent.parent.GetComponent<BridgeHandler>();
     }
 
     private void OnTriggerExit(Collider other)

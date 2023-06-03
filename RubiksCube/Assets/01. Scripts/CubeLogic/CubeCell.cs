@@ -93,9 +93,9 @@ public class CubeCell : MonoBehaviour
 
     private void ResetExtraGrounds(float time, Transform trm)
     {
-        Debug.Break();
+        // Debug.Break();
         // Debug.Log(0.025f * (-trm.localPosition).normalized);
-        StartCoroutine(PushExtraGroundCoroutine(time, trm, 0.025f * (-trm.localPosition).normalized));
+        StartCoroutine(PushExtraGroundCoroutine(time, trm, trm.TransformDirection(0.025f * (-trm.localPosition).normalized)));
     }
 
     private IEnumerator PushExtraGroundCoroutine(float time, Transform trm, Vector3 amount)
@@ -105,6 +105,9 @@ public class CubeCell : MonoBehaviour
 
         Vector3 startPos = trm.localPosition;
         Vector3 endPos = startPos + trm.InverseTransformDirection(amount);
+        // Debug.Break();
+        // Debug.Log(amount);
+        // Debug.Log(endPos);
 
         while (theta < 1f)
         {
