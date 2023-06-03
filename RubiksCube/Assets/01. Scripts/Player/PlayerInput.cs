@@ -17,6 +17,7 @@ public class PlayerInput : MonoBehaviour
         //ConsumeInput();
 
         //AttackInput();
+        MovementInput_Dev();
     }
 
     public void MovementInput(Vector2 input)
@@ -24,6 +25,17 @@ public class PlayerInput : MonoBehaviour
         Vector3 dir = new Vector3(input.x, 0, input.y);
 
         OnMovementKeyPressed?.Invoke(dir);
+    }
+
+    public void MovementInput_Dev()
+    {
+        float x = Input.GetAxisRaw("Horizontal");
+        float y = Input.GetAxisRaw("Vertical");
+        
+        Vector3 input = new Vector3(x, 0, y);
+        
+        if(input.sqrMagnitude > 0)
+            OnMovementKeyPressed?.Invoke(input);
     }
 
     public void RollingInput()

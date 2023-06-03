@@ -35,7 +35,7 @@ public class CubeConfiner : MonoBehaviour
 
     public void SetActiveCollider(int i, Vector3 dir, bool active)
     {
-        Debug.Log($"{i}, {dir}");
+        //Debug.Log($"{i}, {dir}");
         if (directionMap.ContainsKey(dir) == false)
             return;
 

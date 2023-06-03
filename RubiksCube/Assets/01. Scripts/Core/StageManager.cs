@@ -243,9 +243,11 @@ public class StageManager : MonoBehaviour
         List<CubeCell> newNeighbors = new List<CubeCell>();
 
         newNeighbors = CheckNeighbors(neighbors, currentCell.NeighborCells);
-        newNeighbors = CheckNeighbors(neighbors, newNeighbors);
-        newNeighbors = CheckNeighbors(neighbors, newNeighbors);
-        CheckNeighbors(neighbors, newNeighbors);
+        while(newNeighbors.Count > 0)
+            newNeighbors = CheckNeighbors(neighbors, newNeighbors);
+
+        if(neighbors.Count <= 0)
+            neighbors.Add(currentCell);
 
         foreach (CubeCell neighborCell in neighbors)
             SpawnEnemy(neighborCell, 1);

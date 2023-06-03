@@ -82,8 +82,9 @@ public class CubeCell : MonoBehaviour
 
             extraGroundPlanes.Enqueue(trm);
             
-            cube.CubeConfiner.SetActiveCollider(CellIndex, trm.TransformDirection(trm.localPosition.normalized), true);
-            //Debug.Log($"{CellIndex}, {trm.TransformDirection(trm.localPosition.normalized)}");
+            cube.CubeConfiner.SetActiveCollider(CellIndex, (trm.position - trm.parent.position).normalized, true);
+            Debug.Log($"{CellIndex}, {(trm.position - trm.parent.position).normalized}");
+            Debug.Break();
         }
 
         neighborCells.Clear();
