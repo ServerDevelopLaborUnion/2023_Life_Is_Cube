@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class StageManager : MonoBehaviour
@@ -14,7 +15,9 @@ public class StageManager : MonoBehaviour
     private Cube cube;
     private PreparedCube preparedCube;
     private EnemyFactory enemyFactory;
+
     private Transform preparedCubes = null;
+
     private List<AIBrain> enemyList = new List<AIBrain>();
 
     private bool stageChanged = false;
@@ -46,15 +49,15 @@ public class StageManager : MonoBehaviour
     private IEnumerator RotateCoroutine(int cnt)
     {
         cube.SortCellIndexes();
-        int currentCell = cube.GetCurrentCell().CellIndex;
+        int currentCellIdx = cube.GetCurrentCell().CellIndex;
 
         for (int i = 0; i < cnt;)
         {
             int axis = Random.Range(0, (int)DirectionFlags.End);
 
-            if (ignoreAxes.Count > currentCell)
+            if (ignoreAxes.Count > currentCellIdx)
             {
-                if (ignoreAxes[currentCell].flags.Contains((DirectionFlags)axis) == false)
+                if (ignoreAxes[currentCellIdx].flags.Contains((DirectionFlags)axis) == false)
                 {
                     i++;
                     yield return cube.RotateAroundAxis((DirectionFlags)axis, Random.Range(0, 2) == 0);
@@ -208,7 +211,7 @@ public class StageManager : MonoBehaviour
 
     public void EndStage()
     {
-        if(cube.ActivatedCells != null && cube.ActivatedCells.Count > 0)
+        if (cube.ActivatedCells != null && cube.ActivatedCells.Count > 0)
         {
             Debug.Log("asd");
             for (int i = 0; i < cube.ActivatedCells.Count; i++)
@@ -232,17 +235,47 @@ public class StageManager : MonoBehaviour
 
     public void StartStage()
     {
-        SpawnEnemyIntoCurrentCell(1);
+        CubeCell currentCell = cube.GetCurrentCell();
+
+        //SpawnEnemy(currentCell, 1);
+
+        List<CubeCell> neighbors = new List<CubeCell>();
+        List<CubeCell> newNeighbors = new List<CubeCell>();
+
+        newNeighbors = CheckNeighbors(neighbors, currentCell.NeighborCells);
+        newNeighbors = CheckNeighbors(neighbors, newNeighbors);
+        newNeighbors = CheckNeighbors(neighbors, newNeighbors);
+        CheckNeighbors(neighbors, newNeighbors);
+
+        foreach (CubeCell neighborCell in neighbors)
+            SpawnEnemy(neighborCell, 1);
+
         cube.SetActiveBridge(false);
     }
 
-    public void SpawnEnemyIntoCurrentCell(int count)
+    private List<CubeCell> CheckNeighbors(List<CubeCell> neighbors, List<CubeCell> newNeighbors)
     {
-        cube.SortCellIndexes();
-        CubeCell currentCell = cube.GetCurrentCell();
+        List<CubeCell> tempNeighbors = new List<CubeCell>();
 
+        for (int i = 0; i < newNeighbors.Count; i++)
+        {
+            foreach (CubeCell cell in newNeighbors[i].NeighborCells)
+            {
+                if (neighbors.Contains(cell) == false)
+                {
+                    tempNeighbors.Add(cell);
+                    neighbors.Add(cell);
+                }
+            }
+        }
+
+        return tempNeighbors;
+    }
+
+    public void SpawnEnemy(CubeCell cell, int count)
+    {
         for (int i = 0; i < count; i++)
-            enemyList.Add(enemyFactory.SpawnEnemy(currentCell.CellBiome, currentCell.CellIndex));
+            enemyList.Add(enemyFactory.SpawnEnemy(cell.CellBiome, cell.CellIndex));
     }
 
     public void RemoveEnemy(AIBrain enemy)

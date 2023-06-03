@@ -7,6 +7,9 @@ public class CubeCell : MonoBehaviour
     [SerializeField] BiomeFlags cellBiome;
     public BiomeFlags CellBiome => cellBiome;
 
+    private List<CubeCell> neighborCells = new List<CubeCell>();
+    public List<CubeCell> NeighborCells => neighborCells;
+
     private Queue<Transform> extraGroundPlanes = new Queue<Transform>();
     private Queue<Transform> usedGroundPlanes = new Queue<Transform>();
     private Cube cube = null;
@@ -51,7 +54,10 @@ public class CubeCell : MonoBehaviour
                     continue;
 
                 if (cellBiome == cells[y * 3 + x].cellBiome)
+                {
+                    neighborCells.Add(cells[y * 3 + x]);
                     results.Add(new Vector3(x - cellIndex % 3, 0, -(y - cellIndex / 3)));
+                }
             }
         }
 
@@ -79,6 +85,8 @@ public class CubeCell : MonoBehaviour
             cube.CubeConfiner.SetActiveCollider(CellIndex, trm.TransformDirection(trm.localPosition.normalized), true);
             //Debug.Log($"{CellIndex}, {trm.TransformDirection(trm.localPosition.normalized)}");
         }
+
+        neighborCells.Clear();
 
     }
 
