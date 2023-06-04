@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class StageManager : MonoBehaviour
@@ -14,6 +15,8 @@ public class StageManager : MonoBehaviour
     private Cube cube;
     private PreparedCube preparedCube;
     private EnemyFactory enemyFactory;
+
+    private Transform preparedCubes = null;
 
     private List<AIBrain> enemyList = new List<AIBrain>();
     private List<CubeCell> neighbors = new List<CubeCell>();
@@ -141,11 +144,10 @@ public class StageManager : MonoBehaviour
 
         yield return new WaitForSeconds(startDelayTime);
 
-        // midBossParticle.Simulate(0);
-        // midBossParticle.Play();
+        midBossParticle.Simulate(0);
+        midBossParticle.Play();
 
-        // yield return StartCoroutine(RotateCoroutine(RotateCount));
-        yield return cube.ReleaseCube();
+        yield return StartCoroutine(RotateCoroutine(RotateCount));
     }
 
     private IEnumerator MidBossDirectingMid()
@@ -187,8 +189,7 @@ public class StageManager : MonoBehaviour
 
         cube.gameObject.SetActive(false);
 
-        // BiomeFlags randBiome = (BiomeFlags)Random.Range(0, (int)BiomeFlags.End);
-        BiomeFlags randBiome = BiomeFlags.Desert;
+        BiomeFlags randBiome = (BiomeFlags)Random.Range(0, (int)BiomeFlags.End);
         MidBossCube midBossCube = null;
         while (preparedCube.TryGetPreparedCube(randBiome, out midBossCube) == false)
             randBiome = (BiomeFlags)Random.Range(0, (int)BiomeFlags.End);
@@ -232,6 +233,7 @@ public class StageManager : MonoBehaviour
 
         if (cube.ActivatedCells != null && cube.ActivatedCells.Count > 0)
         {
+            Debug.Log("asd");
             for (int i = 0; i < cube.ActivatedCells.Count; i++)
                 cube.ActivatedCells[i].ClearEliteStage(1f);
         }
@@ -247,7 +249,7 @@ public class StageManager : MonoBehaviour
 
     public void EndMidBossStage()
     {
-        preparedCube.RemoveCube(preparedCube.ActivedCubeBiome);
+        preparedCubes.Find("DesertCube").gameObject.SetActive(false);
         cube.gameObject.SetActive(true);
 
         EndStage();
@@ -311,11 +313,6 @@ public class StageManager : MonoBehaviour
         enemyList.Remove(enemy);
 
         if (enemyList.Count <= 0)
-        {
-            // if (stageProgress % (midBossTrigger + 1) == 0)
-            //     EndMidBossStage();
-            // else 
-                EndStage();
-        }
+            EndStage();
     }
 }

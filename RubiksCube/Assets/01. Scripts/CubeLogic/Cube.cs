@@ -7,7 +7,6 @@ public class Cube : MonoBehaviour
     [SerializeField] float rotateDuration = 1f;
 
     private Dictionary<DirectionFlags, CubeAxis> cubeAxesDictionary;
-    private Stack<CubeRotateInfo> rotateInfoStack;
     private List<CubeCell> activatedCells;
     public List<CubeCell> ActivatedCells => activatedCells;
 
@@ -21,8 +20,6 @@ public class Cube : MonoBehaviour
 
     private void Awake()
     {
-        rotateInfoStack = new Stack<CubeRotateInfo>();
-        
         List<CubeAxis> cubeAxes = new List<CubeAxis>();
         transform.GetComponentsInChildren<CubeAxis>(cubeAxes);
 
@@ -44,38 +41,22 @@ public class Cube : MonoBehaviour
 
     public CubeAxis GetCubeAxis(DirectionFlags axis) => cubeAxesDictionary[axis];
 
-    public Coroutine RotateAroundAxis(DirectionFlags axis, bool clockWise = true, bool isStorage = true) 
-        => StartCoroutine(RotateAroundAxisCoroutine(axis, clockWise, isStorage));
+    public Coroutine RotateAroundAxis(DirectionFlags axis, bool clockWise = true)
+    {
+        return StartCoroutine(RotateAroundAxisCoroutine(axis, clockWise));
+    }
 
-    private IEnumerator RotateAroundAxisCoroutine(DirectionFlags axis, bool clockWise, bool isStorage)
+    private IEnumerator RotateAroundAxisCoroutine(DirectionFlags axis, bool clockWise = true)
     {
         cubeAxesDictionary[axis].SetBlocksOfAxis();
         if (cubeAxesDictionary[axis].ChildTrm.childCount != 8)
-        {
             yield return null;
-        }
         else
-        {
             yield return cubeAxesDictionary[axis].Rotate(Random.Range(rotateDuration - 0.09f, rotateDuration + 0.1f), clockWise);
-            if(isStorage)
-                rotateInfoStack.Push(new CubeRotateInfo(axis, clockWise));
-        }
 
         yield return null;
         cubeAxesDictionary[axis].UnsetBlocksOfAxis();
         // yield return new WaitForSeconds(0.0f);
-    }
-
-    public Coroutine ReleaseCube()
-        => StartCoroutine(ReleaseCubeCoroutine());
-
-    private IEnumerator ReleaseCubeCoroutine()
-    {
-        while(rotateInfoStack.Count > 0)
-        {
-            CubeRotateInfo rotateInfo = rotateInfoStack.Pop();   
-            yield return RotateAroundAxis(rotateInfo.axis, !rotateInfo.clockWise, false);
-        }
     }
 
     public CubeCell GetCurrentCell()
