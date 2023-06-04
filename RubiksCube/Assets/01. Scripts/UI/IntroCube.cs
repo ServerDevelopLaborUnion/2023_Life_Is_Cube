@@ -133,7 +133,7 @@ public class IntroCube : MonoBehaviour
         // }
     }
 
-    #region UI °ü·Ã ÇÔ¼öµé
+    #region UI ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½ï¿½ï¿½
 
     public void SettingOnOff(bool value)
     {
@@ -147,7 +147,7 @@ public class IntroCube : MonoBehaviour
 
     public void Quit()
     {
-        Debug.Log("Application.Quit() È£Ãâ");
+        Debug.Log("Application.Quit() È£ï¿½ï¿½");
         Application.Quit();
     }
     #endregion
