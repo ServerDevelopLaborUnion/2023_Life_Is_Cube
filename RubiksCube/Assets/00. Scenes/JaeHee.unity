@@ -925,7 +925,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.9058824, g: 0.29411766, b: 0.23137257, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1145,10 +1145,9 @@ MonoBehaviour:
   classIcon: {fileID: 21300000, guid: 2c1c9dd5d4e50554d965180f94593e15, type: 3}
   skillIcon: {fileID: 21300000, guid: da55a81e02fc1b941954d72991cd7abf, type: 3}
   skillName: "\uB09C\uACA9"
-  skillDescription: "\uCE90\uB9AD\uD130\uAC00 3\uCD08\uAC04 \uD68C\uC804\uD558\uBA70
-    \uB3C4\uB07C\uB97C \uD718\uB450\uB985\uB2C8\uB2E4. \uCE90\uB9AD\uD130\uC640 \uADFC\uC811\uD55C
-    \uBAAC\uC2A4\uD130\uB4E4\uC740 \uBAA8\uB450 \uBC00\uB824\uB098\uBA70 \uB370\uBBF8\uC9C0\uB97C
-    \uC785\uC2B5\uB2C8\uB2E4."
+  skillDescription: "\uCE90\uB9AD\uD130\uAC00 \uD68C\uC804\uD558\uBA70 \uB3C4\uB07C\uB97C
+    \uD718\uB450\uB985\uB2C8\uB2E4. \uB3C4\uB07C\uC5D0 \uB9DE\uC740 \uC801\uB4E4\uC5D0\uAC8C
+    \uB300\uBBF8\uC9C0\uB97C \uC785\uD799\uB2C8\uB2E4."
   panel: {fileID: 0}
 --- !u!1 &236882341
 GameObject:
@@ -3721,7 +3720,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.32156864, g: 0.53333336, b: 0.227451, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5144,7 +5143,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.9960785, g: 0.8000001, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
