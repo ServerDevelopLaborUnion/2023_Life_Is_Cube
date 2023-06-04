@@ -54,6 +54,7 @@ public class JoyStick : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
             Vector3 normalFactor = GetJoyStickValue();
             transform.position = center + normalFactor * maxDistance;
         }
+        lastDir = GetJoyStickValue();
     }
 
     public void OnEndDrag(PointerEventData eventData)
