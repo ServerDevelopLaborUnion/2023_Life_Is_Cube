@@ -17,7 +17,9 @@ public class PlayerInput : MonoBehaviour
         //ConsumeInput();
 
         //AttackInput();
+        #if UNITY_EDITOR
         MovementInput_Dev();
+        #endif
     }
 
     public void MovementInput(Vector2 input)
