@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using UnityEngine;
 
 public class AttackState : State
@@ -49,22 +51,25 @@ public class AttackState : State
 
     public override void OnStateEnter()
     {
-        playerAnimator.ToggleAttack(true);
         playerMovement.StopImmediatly();
 
-        if (targetEnemy != null)
-        {
-            Vector3 lookTarget = targetEnemy.transform.position;
-            //playerMovement.IsActiveRotate = false;
+        StartCoroutine(DelayCoroutine(0.05f, () => {
+            playerAnimator.ToggleAttack(true);
 
-            if (lookTarget.sqrMagnitude <= 0)
-                lookTarget = transform.forward + transform.position;
+            if (targetEnemy != null)
+            {
+                Vector3 lookTarget = targetEnemy.transform.position;
+                //playerMovement.IsActiveRotate = false;
 
-            playerMovement.SetRotationImmediatly(lookTarget);
-        }
+                if (lookTarget.sqrMagnitude <= 0)
+                    lookTarget = transform.forward + transform.position;
 
+                playerMovement.SetRotationImmediatly(lookTarget);
+            }
 
-        playerAnimator.OnAnimationEndTrigger += OnAnimationEndHandle;
+            playerAnimator.OnAnimationEndTrigger += OnAnimationEndHandle;
+        }));
+
     }
 
     public override void StateUpdate()
@@ -82,6 +87,15 @@ public class AttackState : State
     private void OnAnimationEndHandle()
     {
         playerAnimator.ToggleAttack(false);
-        stateHandler.ChangeState(StateFlags.Normal);
+
+        StartCoroutine(DelayCoroutine(0.15f, () => {
+            stateHandler.ChangeState(StateFlags.Normal);
+        }));
+    }
+
+    private IEnumerator DelayCoroutine(float delay, Action callback = null)
+    {
+        yield return new WaitForSeconds(delay);
+        callback?.Invoke();
     }
 }

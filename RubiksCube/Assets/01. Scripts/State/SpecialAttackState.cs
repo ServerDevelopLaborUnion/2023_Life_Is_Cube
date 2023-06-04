@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class SpecialAttackState : State
@@ -36,6 +37,13 @@ public class SpecialAttackState : State
     private void OnAnimationEndHandle()
     {
         playerAnimator.ToggleAttack(false);
-        stateHandler.ChangeState(StateFlags.Normal);
+
+        StartCoroutine(DelayCoroutine(0.15f, () => stateHandler.ChangeState(StateFlags.Normal)));
+    }
+
+    private IEnumerator DelayCoroutine(float delay, Action callback = null)
+    {
+        yield return new WaitForSeconds(delay);
+        callback?.Invoke();
     }
 }

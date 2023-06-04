@@ -64,7 +64,7 @@ public class NormalState : State
     {
         Collider[] detectedColliders = Physics.OverlapSphere(transform.position, InteractRadius, InteractableLayer);
 
-        float nearestDistance = 0f, tempDistance = 0f;
+        float nearestDistance = float.MaxValue, tempDistance = 0f;
         int nearestIndex = 0;
         for (int i = 0; i < detectedColliders.Length; ++i)
         {
@@ -76,8 +76,9 @@ public class NormalState : State
             }
         }
 
-        if (detectedColliders[nearestIndex].TryGetComponent<IInteractable>(out IInteractable ii))
-            ii?.OnInteract(stateHandler.transform);
+        if(detectedColliders.Length >= nearestIndex - 1 && detectedColliders[nearestIndex] != null)
+            if (detectedColliders[nearestIndex].TryGetComponent<IInteractable>(out IInteractable ii))
+                ii?.OnInteract(stateHandler.transform);
     }
 
     private void MovementHandle(Vector3 input)

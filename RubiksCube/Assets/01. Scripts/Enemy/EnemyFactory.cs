@@ -22,7 +22,7 @@ public class EnemyFactory : MonoBehaviour
     {
         enemyDictionary = new Dictionary<BiomeFlags, List<AIBrain>>();
 
-        foreach(EnemySpawnDataSO data in spawnDatas)
+        foreach (EnemySpawnDataSO data in spawnDatas)
             enemyDictionary.Add(data.Biome, data.EnemyList);
     }
 
@@ -55,6 +55,34 @@ public class EnemyFactory : MonoBehaviour
     //     }
     // }
 
+    #if UNITY_EDITOR
+
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.LeftControl))
+        {
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                for (int i = 0; i < 9; i++)
+                {
+                    for(int j = 0; j < 1000; j++)
+                    {
+                        float xFactor = i % 3 * cellSize;
+                        float zFactor = i / 3 * cellSize;
+                        float xPos = Random.Range(minPos.x + xFactor + positionFactor+ 5f, maxPos.x + xFactor - positionFactor- 5f);
+                        float zPos = Random.Range(minPos.z - zFactor + positionFactor+ 5f, maxPos.z - zFactor - positionFactor- 5f);
+
+                        Vector3 pos = new Vector3(xPos, 147, zPos);
+
+                        Debug.DrawLine(pos + Vector3.up * 10f, pos + Vector3.down * 10f, Color.red, 10f);
+                    }
+                }
+            }
+        }
+    }
+
+    #endif
+
     public AIBrain SpawnEnemy(BiomeFlags biome, int cellIdx)
     {
         int randIdx = Random.Range(0, enemyDictionary[biome].Count);
@@ -62,9 +90,10 @@ public class EnemyFactory : MonoBehaviour
 
         float xFactor = cellIdx % 3 * cellSize;
         float zFactor = cellIdx / 3 * cellSize;
-        float xPos = Random.Range(minPos.x + xFactor + positionFactor, maxPos.x + xFactor - positionFactor);
-        float zPos = Random.Range(minPos.z - zFactor + positionFactor, maxPos.z - zFactor - positionFactor);
+        float xPos = Random.Range(minPos.x + xFactor + positionFactor + 5f, maxPos.x + xFactor - positionFactor - 5f);
+        float zPos = Random.Range(minPos.z - zFactor + positionFactor + 5f, maxPos.z - zFactor - positionFactor - 5f);
         enemy.transform.position = new Vector3(xPos, minPos.y, zPos);
+        Debug.DrawLine(enemy.transform.position + Vector3.up * 1000f, enemy.transform.position + Vector3.down * 1000f, Color.red, 10f);
 
         enemy.Init();
 
