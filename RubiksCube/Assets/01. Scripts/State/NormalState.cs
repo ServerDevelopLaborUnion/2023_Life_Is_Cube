@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.InteropServices;
 using UnityEditor.Build.Player;
 using UnityEngine;
 using static DEFINE;
@@ -76,8 +77,13 @@ public class NormalState : State
 
     private void SpecialAttackInputHandle()
     {
-        if (skillHandler.TrySkill())
+        if (skillHandler.TrySkill1())
             stateHandler.ChangeState(StateFlags.SpecialAttack);
+    }
+
+    private void SpecialAttack2InuptHandle()
+    {
+        
     }
 
     private void RollingInputHandle()

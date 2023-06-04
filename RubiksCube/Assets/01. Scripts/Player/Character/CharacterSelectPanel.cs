@@ -129,7 +129,8 @@ public class CharacterSelectPanel : MonoBehaviour
                 playerStat.SetStat(item.statType, item);
             }
             // 인덱스로 넘겨주면 거기 리스트 순서대로 들어갈거임
-            DEFINE.PlayerTrm.GetComponent<SkillHandler>().SetSkill(idx);
+            // +스킬2도 세팅하기
+            DEFINE.PlayerTrm.GetComponent<SkillHandler>().SetSkill(idx, 1);
         });
     }
 

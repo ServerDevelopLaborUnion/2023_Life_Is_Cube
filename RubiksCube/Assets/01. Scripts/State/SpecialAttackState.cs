@@ -22,6 +22,7 @@ public class SpecialAttackState : State
 
     public override void StateUpdate()
     {
+
     }
 
     public override void OnStateExit()
