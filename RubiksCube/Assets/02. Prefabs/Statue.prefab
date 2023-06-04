@@ -60,7 +60,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 125028c78971bd74bade49bc2d2628db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemList: []
+  itemList:
+  - {fileID: 2089792297534010309, guid: d6174a5affef7fe4a9234396350219ed, type: 3}
+  - {fileID: 1830591206461978189, guid: 37275fdfb0360ec4c884854a88e656a6, type: 3}
+  - {fileID: 2331165063540675544, guid: 04a03c48098a81d4e9c507741f7aacfc, type: 3}
+  - {fileID: 4497398090193653198, guid: 19398d50dcec30d489a12170955bdb27, type: 3}
+  - {fileID: 7856706598737923927, guid: afc016a352303024099686bf7c439607, type: 3}
+  - {fileID: 6233713108122095868, guid: 542544a8b80f1d247a9b191abb19d3bd, type: 3}
   yFactor: 5
 --- !u!1 &2100834945187718287
 GameObject:
