@@ -4,6 +4,9 @@ using UnityEngine;
 public class PreparedCube : MonoBehaviour
 {
     private Dictionary<BiomeFlags, MidBossCube> preparedCubeMap = null;
+    
+    private BiomeFlags activedCubeBiome;
+    public BiomeFlags ActivedCubeBiome => activedCubeBiome;
 
     private void Awake()
     {
@@ -25,7 +28,7 @@ public class PreparedCube : MonoBehaviour
     {
         preCube = null;
 
-        if(preparedCubeMap.ContainsKey(biome))
+        if(preparedCubeMap.ContainsKey(biome) == false)
             return false;
 
         preCube = preparedCubeMap[biome];
@@ -35,6 +38,10 @@ public class PreparedCube : MonoBehaviour
     public void RemoveCube(BiomeFlags biome)
     {
         if(preparedCubeMap.ContainsKey(biome))
+        {
+            MidBossCube cube = preparedCubeMap[biome];
             preparedCubeMap.Remove(biome);
+            Destroy(cube.gameObject);
+        }
     }
 }

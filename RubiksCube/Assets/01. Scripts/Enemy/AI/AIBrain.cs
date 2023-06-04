@@ -11,6 +11,7 @@ public class AIBrain : PoolableMono
     private GameObject focusBorder;
 
     private EnemyHealth health = null;
+    public EnemyHealth Health => health;
 
     private bool isFocused = false;
     public bool IsFocused {
