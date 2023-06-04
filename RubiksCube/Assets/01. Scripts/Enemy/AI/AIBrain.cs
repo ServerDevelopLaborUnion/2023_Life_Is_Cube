@@ -13,6 +13,8 @@ public class AIBrain : PoolableMono
     private EnemyHealth health = null;
     public EnemyHealth Health => health;
 
+    private NavMovement navMovement;
+
     private bool isFocused = false;
     public bool IsFocused {
         set {
@@ -35,6 +37,7 @@ public class AIBrain : PoolableMono
         health = GetComponent<EnemyHealth>();
         health?.Init();
 
+        navMovement = GetComponent<NavMovement>();
     }
 
     private void Start()
@@ -58,6 +61,11 @@ public class AIBrain : PoolableMono
     {
         health?.Init();
         IsDead = false;
+    }
+
+    public void Init()
+    {
+        navMovement.NavAgent.enabled = true;
     }
 
     public void Release()

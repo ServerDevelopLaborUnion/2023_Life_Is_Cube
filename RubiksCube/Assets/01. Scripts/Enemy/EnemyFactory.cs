@@ -66,6 +66,8 @@ public class EnemyFactory : MonoBehaviour
         float zPos = Random.Range(minPos.z - zFactor + positionFactor, maxPos.z - zFactor - positionFactor);
         enemy.transform.position = new Vector3(xPos, minPos.y, zPos);
 
+        enemy.Init();
+
         return enemy;
     }
 

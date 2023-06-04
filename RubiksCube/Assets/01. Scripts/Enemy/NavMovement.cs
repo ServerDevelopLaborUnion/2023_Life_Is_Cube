@@ -4,6 +4,8 @@ using UnityEngine.AI;
 public class NavMovement : MonoBehaviour
 {
     private NavMeshAgent navAgent = null;
+    public NavMeshAgent NavAgent => navAgent;
+
     private AnimatorHandler agentAnimator = null;
 
     private void Awake()
