@@ -35,14 +35,15 @@ public class CubeCell : MonoBehaviour
     {
         //이웃한 셀이 있다면 바닥 늘리기
         List<CubeCell> cells = cube.ActivatedCells;
-        List<Vector3> results = new List<Vector3>();
+        List<Vector3> resultsX = new List<Vector3>();
+        List<Vector3> resultsZ = new List<Vector3>();
 
-        for (int y = cellIndex / 3 - 1; y <= cellIndex / 3 + 1; y++)
+        for (int y = cellIndex / 3 - 2; y <= cellIndex / 3 + 2; y++)
         {
             if (y < 0 || y > 2)
                 continue;
 
-            for (int x = cellIndex % 3 - 1; x <= cellIndex % 3 + 1; x++)
+            for (int x = cellIndex % 3 - 2; x <= cellIndex % 3 + 2; x++)
             {
                 if (x < 0 || x > 2)
                     continue;
@@ -50,18 +51,38 @@ public class CubeCell : MonoBehaviour
                 if(y * 3 + x == cellIndex)
                     continue;
 
-                if(new Vector2Int(y - cellIndex / 3, x - cellIndex % 3).magnitude > 1)
+                // if (new Vector2(y - cellIndex / 3, x - cellIndex % 3 ).magnitude > 1)
+                if(y - cellIndex / 3 != 0 &&  x - cellIndex % 3 != 0)
                     continue;
 
                 if (cellBiome == cells[y * 3 + x].cellBiome)
                 {
                     neighborCells.Add(cells[y * 3 + x]);
-                    results.Add(new Vector3(x - cellIndex % 3, 0, -(y - cellIndex / 3)));
+                    Vector3 dir = new Vector3(x - cellIndex % 3, 0, -(y - cellIndex / 3)).normalized;
+
+                    // Debug.Log($"{cellIndex} : {dir}");
+
+                    if(dir.x != 0)
+                        resultsX.Add(dir);
+                    else if(dir.z != 0)
+                        resultsZ.Add(dir);
+                    // results.Add(new Vector3(x - cellIndex % 3, 0, -(y - cellIndex / 3)));
                 }
             }
         }
 
-//        Debug.Log(gameObject.name + " " + results.Count);
+        List<Vector3> results = new List<Vector3>();
+        
+        if(resultsX.Count >= 2)
+            for(int i = 0; i < resultsX.Count; i++)
+                if(results.Contains(resultsX[i]) == false)
+                    results.Add(resultsX[i]);
+
+        if(resultsZ.Count >= 2)
+            for(int i = 0; i < resultsZ.Count; i++)
+                if(results.Contains(resultsZ[i]) == false)
+                    results.Add(resultsZ[i]);
+
         return results.ToArray();
     }
 
