@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using static DEFINE;
 
 public class NormalState : State
@@ -6,11 +7,27 @@ public class NormalState : State
     private WeaponHandler weaponHandler = null;
     private SkillHandler skillHandler = null;
 
+    public float rollingCooldown = 0.1f;
+    public float latestRollingTime = 0f;
+
+
+    private Image rollingImage;
+
+    private void Start()
+    {
+        rollingImage = UIManager.Instance.InputPanel.Find("InteractButton/Roll/FillImage").GetComponent<Image>();
+    }
+
+    private void Update()
+    {
+        if (rollingImage != null)
+            rollingImage.fillAmount = ((Time.time - latestRollingTime) / rollingCooldown);
+    }
 
     public override void SetUp(Transform root)
     {
         base.SetUp(root);
-       
+
         weaponHandler = root.GetComponent<WeaponHandler>();
         skillHandler = root.GetComponent<SkillHandler>();
     }
@@ -23,6 +40,7 @@ public class NormalState : State
         //playerInput.OnConsumeKeyPressed += ConsumeHandle;
         playerInput.OnAttackKeyPressed += AttackInputHandle;
         playerInput.OnSpecialAttackKeyPressed += SpecialAttackInputHandle;
+        playerInput.OnSpecialAttack2KeyPressed += SpecialAttack2InuptHandle;
         playerInput.OnRollingKeyPressed += RollingInputHandle;
     }
 
@@ -33,6 +51,7 @@ public class NormalState : State
         playerInput.OnInteractKeyPressed -= InteractHandle;
         playerInput.OnAttackKeyPressed -= AttackInputHandle;
         playerInput.OnSpecialAttackKeyPressed -= SpecialAttackInputHandle;
+        playerInput.OnSpecialAttack2KeyPressed -= SpecialAttack2InuptHandle;
         playerInput.OnRollingKeyPressed -= RollingInputHandle;
     }
 
@@ -47,17 +66,17 @@ public class NormalState : State
 
         float nearestDistance = 0f, tempDistance = 0f;
         int nearestIndex = 0;
-        for(int i = 0; i < detectedColliders.Length; ++ i)
+        for (int i = 0; i < detectedColliders.Length; ++i)
         {
             tempDistance = (detectedColliders[i].transform.position - transform.position).magnitude;
-            if(tempDistance < nearestDistance)
+            if (tempDistance < nearestDistance)
             {
                 nearestDistance = tempDistance;
                 nearestIndex = i;
             }
         }
 
-        if(detectedColliders[nearestIndex].TryGetComponent<IInteractable>(out IInteractable ii))
+        if (detectedColliders[nearestIndex].TryGetComponent<IInteractable>(out IInteractable ii))
             ii?.OnInteract(stateHandler.transform);
     }
 
@@ -68,7 +87,7 @@ public class NormalState : State
 
     private void AttackInputHandle()
     {
-        if(weaponHandler.TryActiveWeapon())
+        if (weaponHandler.TryActiveWeapon())
             stateHandler.ChangeState(StateFlags.Attack);
     }
 
@@ -80,12 +99,29 @@ public class NormalState : State
 
     private void SpecialAttack2InuptHandle()
     {
-        
+        if (skillHandler.TrySkill2())
+            stateHandler.ChangeState(StateFlags.SpecialAttack2);
+
     }
 
     private void RollingInputHandle()
     {
         Debug.Log("Change state to Rolling");
-        stateHandler.ChangeState(StateFlags.Rolling);
+        if (TryRolling())
+        {
+            stateHandler.ChangeState(StateFlags.Rolling);
+        }
+
     }
+
+    public bool TryRolling()
+    {
+        if (AbleToRolling() == false)
+            return false;
+
+        latestRollingTime = Time.time;
+
+        return true;
+    }
+    public bool AbleToRolling() => (Time.time - latestRollingTime > rollingCooldown);
 }

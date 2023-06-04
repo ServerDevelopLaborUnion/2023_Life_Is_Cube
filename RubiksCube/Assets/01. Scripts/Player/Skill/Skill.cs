@@ -3,8 +3,8 @@ using UnityEngine;
     
 public abstract class Skill : MonoBehaviour
 {
-    [SerializeField] protected float specialAttackCooldown = 0.1f;
-    protected float latestSpecialAttackTime = 0f;
+    public float specialAttackCooldown = 0.1f;
+    public float latestSpecialAttackTime = 0f;
     protected abstract void SpecialAttack();
 
 
