@@ -9822,6 +9822,8 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Camera_tA92CC927D7439999BC82DBEDC0AA45B470F9E
 IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR void Vector3__ctor_m376936E6B999EF1ECBE57D990A386303E2283DE0_inline (Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* __this, float ___0_x, float ___1_y, float ___2_z, const RuntimeMethod* method) ;
 // System.Void UnityEngine.Debug::LogWarning(System.Object)
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Debug_LogWarning_m33EF1B897E0C7C6FF538989610BFAFFEF4628CA9 (RuntimeObject* ___0_message, const RuntimeMethod* method) ;
+// System.Void UnityEngine.Application::set_targetFrameRate(System.Int32)
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Application_set_targetFrameRate_mB90EEA60DAE55CD71C38D4B7DFDBE2B34EA6B46F (int32_t ___0_value, const RuntimeMethod* method) ;
 // UnityEngine.GameObject UnityEngine.Component::get_gameObject()
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR GameObject_t76FEDD663AB33C991A9C9A23129337651094216F* Component_get_gameObject_m57AEFBB14DB39EC476F740BA000E170355DE691B (Component_t39FBE53E5EFCF4409111FB22C15FF73717632EC3* __this, const RuntimeMethod* method) ;
 // System.Void UnityEngine.Object::DontDestroyOnLoad(UnityEngine.Object)
@@ -11364,8 +11366,6 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void HPPanel_SetHP_mC44E19BC9B8E3C3386AC111D7
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void StatPanel_DisplayStat_mC0DD0AE1E13C8B512D2EFF56AAFE64F97BD350F5 (StatPanel_t2BCFEBCB13765477B1E8CFAAA54E78E1DB34663E* __this, int32_t ___0_stat, float ___1_currentValue, float ___2_maxValue, const RuntimeMethod* method) ;
 // System.Void PlayerHealth::OnDie()
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void PlayerHealth_OnDie_m5E7C29E3C416BEFA982C521793FDFE539FE5EBDE (PlayerHealth_tE7421738BA48E6A6C90760303B818641DDFAE263* __this, const RuntimeMethod* method) ;
-// System.Void PlayerInput::MovementInput_Dev()
-IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void PlayerInput_MovementInput_Dev_m132FBCA54F211D5966E6D2E17D21EF8F460D296A (PlayerInput_tBE96AF5A43484D32C39A7F108EE081D6425059EE* __this, const RuntimeMethod* method) ;
 // System.Void System.Action`1<UnityEngine.Vector3>::Invoke(T)
 inline void Action_1_Invoke_m211AB6C2AA7326F6BFC8338EC888360A219AFF41_inline (Action_1_t2EDB30EAB747FDF563DD6410FC76AF861A09A0C2* __this, Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2 ___0_obj, const RuntimeMethod* method)
 {
@@ -12658,6 +12658,8 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void GameManager_Awake_m4B6E8E2AF58C95C9A2A0C
 
 IL_0018:
 	{
+		// Application.targetFrameRate = 60;
+		Application_set_targetFrameRate_mB90EEA60DAE55CD71C38D4B7DFDBE2B34EA6B46F(((int32_t)60), NULL);
 		// Instance = this;
 		((GameManager_tFE129A0017AF5BBD30FDCD4403B9CCEAE064C6B6_StaticFields*)il2cpp_codegen_static_fields_for(GameManager_tFE129A0017AF5BBD30FDCD4403B9CCEAE064C6B6_il2cpp_TypeInfo_var))->___Instance_4 = __this;
 		Il2CppCodeGenWriteBarrier((void**)(&((GameManager_tFE129A0017AF5BBD30FDCD4403B9CCEAE064C6B6_StaticFields*)il2cpp_codegen_static_fields_for(GameManager_tFE129A0017AF5BBD30FDCD4403B9CCEAE064C6B6_il2cpp_TypeInfo_var))->___Instance_4), (void*)__this);
@@ -12723,7 +12725,7 @@ IL_0018:
 		auto __finallyBlock = il2cpp::utils::Finally([&]
 		{
 
-FINALLY_00d5:
+FINALLY_00dc:
 			{// begin finally (depth: 1)
 				Enumerator_Dispose_m6FE959FAD79906436F4F132A584072EB6EAF4D2E((&V_0), Enumerator_Dispose_m6FE959FAD79906436F4F132A584072EB6EAF4D2E_RuntimeMethod_var);
 				return;
@@ -12732,10 +12734,10 @@ FINALLY_00d5:
 		try
 		{// begin try (depth: 1)
 			{
-				goto IL_00ca_1;
+				goto IL_00d1_1;
 			}
 
-IL_0098_1:
+IL_009f_1:
 			{
 				// foreach(KarmaColorInfo colorInfo in karmaColors)
 				KarmaColorInfo_t50C27A30007B467ACA9164715F8DF121CBBC2194 L_15;
@@ -12750,7 +12752,7 @@ IL_0098_1:
 				L_19 = Dictionary_2_ContainsKey_m5F0EB93726BE72839D2AF94A8D098DBE8BC8E691(L_16, L_18, Dictionary_2_ContainsKey_m5F0EB93726BE72839D2AF94A8D098DBE8BC8E691_RuntimeMethod_var);
 				if (L_19)
 				{
-					goto IL_00ca_1;
+					goto IL_00d1_1;
 				}
 			}
 			{
@@ -12764,18 +12766,18 @@ IL_0098_1:
 				Dictionary_2_Add_m621E2894977C69FB6E74FFDB4E11B9963FD3BE42(L_20, L_22, L_24, Dictionary_2_Add_m621E2894977C69FB6E74FFDB4E11B9963FD3BE42_RuntimeMethod_var);
 			}
 
-IL_00ca_1:
+IL_00d1_1:
 			{
 				// foreach(KarmaColorInfo colorInfo in karmaColors)
 				bool L_25;
 				L_25 = Enumerator_MoveNext_mC38264BF4A927D8D62B8588B9A58B15267ACBA86((&V_0), Enumerator_MoveNext_mC38264BF4A927D8D62B8588B9A58B15267ACBA86_RuntimeMethod_var);
 				if (L_25)
 				{
-					goto IL_0098_1;
+					goto IL_009f_1;
 				}
 			}
 			{
-				goto IL_00e3;
+				goto IL_00ea;
 			}
 		}// end try (depth: 1)
 		catch(Il2CppExceptionWrapper& e)
@@ -12784,7 +12786,7 @@ IL_00ca_1:
 		}
 	}
 
-IL_00e3:
+IL_00ea:
 	{
 		// }
 		return;
@@ -28275,8 +28277,6 @@ IL_0007:
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void PlayerInput_Update_m14D8C785B78BF2B56136439760751770928442BA (PlayerInput_tBE96AF5A43484D32C39A7F108EE081D6425059EE* __this, const RuntimeMethod* method) 
 {
 	{
-		// MovementInput_Dev();
-		PlayerInput_MovementInput_Dev_m132FBCA54F211D5966E6D2E17D21EF8F460D296A(__this, NULL);
 		// }
 		return;
 	}
