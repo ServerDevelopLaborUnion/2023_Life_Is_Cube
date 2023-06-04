@@ -11,6 +11,7 @@ public class PlayerInput : MonoBehaviour
     public event Action OnAttackKeyPressed = null;
     public event Action OnInteractKeyPressed = null;
     public event Action OnSpecialAttackKeyPressed = null;
+    public event Action OnSpecialAttack2KeyPressed = null;
 
     private void Update()
     {
@@ -60,6 +61,11 @@ public class PlayerInput : MonoBehaviour
     public void SpecialAttackInput()
     {
         OnSpecialAttackKeyPressed?.Invoke();
+    }
+
+    public void SpecialAttack2Input()
+    {
+        OnSpecialAttack2KeyPressed?.Invoke();
     }
 
     public void InteractInput()
