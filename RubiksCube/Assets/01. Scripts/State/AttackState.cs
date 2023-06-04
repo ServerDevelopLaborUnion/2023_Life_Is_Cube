@@ -12,7 +12,7 @@ public class AttackState : State
 
     private void Update()
     {
-        Collider[] enemies = Physics.OverlapSphere(transform.position, 100f, DEFINE.EnemyLayer);
+        Collider[] enemies = Physics.OverlapSphere(transform.position, 10000f, DEFINE.EnemyLayer);
         Transform target = null;
         float nearDistance = float.MaxValue;
 
@@ -73,7 +73,6 @@ public class AttackState : State
 
     public override void OnStateExit()
     {
-        playerAnimator.ToggleAttack(false);
 
         //playerMovement.IsActiveRotate = true;
 
@@ -82,6 +81,7 @@ public class AttackState : State
 
     private void OnAnimationEndHandle()
     {
+        playerAnimator.ToggleAttack(false);
         stateHandler.ChangeState(StateFlags.Normal);
     }
 }

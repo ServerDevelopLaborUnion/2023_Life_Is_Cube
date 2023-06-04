@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class SkillHandler : MonoBehaviour
 {
-    [Header("!Á÷¾÷ ¼±ÅÃÃ¢ ¼ø¼­¶û ¸ÂÃß±â!")]
+    [Header("!ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã¢ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ß±ï¿½!")]
     [SerializeField] List<Skill> skills = new List<Skill>();
 
     [SerializeField] private Skill skill1;
