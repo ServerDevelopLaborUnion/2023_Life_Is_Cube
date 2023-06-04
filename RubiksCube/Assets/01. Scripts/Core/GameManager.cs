@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        Application.targetFrameRate = 60;
+
         Instance = this;
         DontDestroyOnLoad(gameObject);
         PoolManager.Instance = new PoolManager();
