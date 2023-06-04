@@ -35,6 +35,7 @@ public class CubeCell : MonoBehaviour
     {
         //이웃한 셀이 있다면 바닥 늘리기
         List<CubeCell> cells = cube.ActivatedCells;
+        Dictionary<Vector3, int> cellIdxMap = new Dictionary<Vector3, int>();
         List<Vector3> resultsX = new List<Vector3>();
         List<Vector3> resultsZ = new List<Vector3>();
 
@@ -48,40 +49,60 @@ public class CubeCell : MonoBehaviour
                 if (x < 0 || x > 2)
                     continue;
 
-                if(y * 3 + x == cellIndex)
+                if (y * 3 + x == cellIndex)
                     continue;
 
                 // if (new Vector2(y - cellIndex / 3, x - cellIndex % 3 ).magnitude > 1)
-                if(y - cellIndex / 3 != 0 &&  x - cellIndex % 3 != 0)
+                if (y - cellIndex / 3 != 0 && x - cellIndex % 3 != 0)
                     continue;
 
                 if (cellBiome == cells[y * 3 + x].cellBiome)
                 {
-                    neighborCells.Add(cells[y * 3 + x]);
-                    Vector3 dir = new Vector3(x - cellIndex % 3, 0, -(y - cellIndex / 3)).normalized;
+                    Vector3 dir = new Vector3(x - cellIndex % 3, 0, -(y - cellIndex / 3));
 
                     // Debug.Log($"{cellIndex} : {dir}");
+                    //neighborCells.Add(cells[y * 3 + x]);
 
-                    if(dir.x != 0)
+                    if (dir.x != 0)
+                    {
                         resultsX.Add(dir);
-                    else if(dir.z != 0)
+                        cellIdxMap.Add(dir, y * 3 + x);
+                    }
+                    else if (dir.z != 0)
+                    {
                         resultsZ.Add(dir);
+                        cellIdxMap.Add(dir, y * 3 + x);
+                    }
                     // results.Add(new Vector3(x - cellIndex % 3, 0, -(y - cellIndex / 3)));
                 }
             }
         }
 
         List<Vector3> results = new List<Vector3>();
-        
-        if(resultsX.Count >= 2)
-            for(int i = 0; i < resultsX.Count; i++)
-                if(results.Contains(resultsX[i]) == false)
-                    results.Add(resultsX[i]);
 
-        if(resultsZ.Count >= 2)
-            for(int i = 0; i < resultsZ.Count; i++)
-                if(results.Contains(resultsZ[i]) == false)
-                    results.Add(resultsZ[i]);
+        if (resultsX.Count >= 2)
+        {
+            for (int i = 0; i < resultsX.Count; i++)
+            {
+                if (results.Contains(resultsX[i].normalized) == false)
+                {
+                    results.Add(resultsX[i].normalized);
+                    neighborCells.Add(cells[cellIdxMap[resultsX[i]]]);
+                }
+            }
+        }
+
+        if (resultsZ.Count >= 2)
+        {
+            for (int i = 0; i < resultsZ.Count; i++)
+            {
+                if (results.Contains(resultsZ[i].normalized) == false)
+                {
+                    results.Add(resultsZ[i].normalized);
+                    neighborCells.Add(cells[cellIdxMap[resultsZ[i]]]);
+                }
+            }
+        }
 
         return results.ToArray();
     }
@@ -102,7 +123,7 @@ public class CubeCell : MonoBehaviour
             ResetExtraGrounds(time, trm);
 
             extraGroundPlanes.Enqueue(trm);
-            
+
             cube.CubeConfiner.SetActiveCollider(CellIndex, (trm.position - trm.parent.position).normalized, true);
             // Debug.Log($"{CellIndex}, {(trm.position - trm.parent.position).normalized}");
             // Debug.Break();
