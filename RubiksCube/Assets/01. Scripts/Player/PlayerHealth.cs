@@ -43,6 +43,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
     private void OnDie()
     {
+        SceneLoader.Instance.LoadSceneAsync("TitleScene");
     }
 
     public void Init()
