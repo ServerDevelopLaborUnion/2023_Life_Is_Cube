@@ -20,7 +20,7 @@ public class TSnowBall : MonoBehaviour
         if (collision.gameObject.name == "Idle")
         {
             collision.transform.SetParent(transform.GetChild(0));
-            collision.transform.localPosition = new Vector3(3.78f, 4.69f, 0);
+            collision.transform.localPosition = new Vector3(3.78f, 6f, 0);
             collision.transform.eulerAngles = new Vector3(180, -73, 0);
             collision.transform.GetComponent<CapsuleCollider>().enabled = false;
         }
