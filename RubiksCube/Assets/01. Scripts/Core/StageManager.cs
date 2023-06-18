@@ -9,6 +9,7 @@ public class StageManager : MonoBehaviour
     [SerializeField] List<DirectionFlagList> ignoreAxes;
 
     [field: SerializeField] public int RotateCount { get; set; }
+    [SerializeField] int enemyCount = 3;
     [SerializeField] float startDelayTime = 1.8f;
 
     private Cube cube;
@@ -263,7 +264,7 @@ public class StageManager : MonoBehaviour
         FindAllNeighbors(currentCell);
 
         foreach (CubeCell neighborCell in neighbors)
-            SpawnEnemy(neighborCell, 1);
+            SpawnEnemy(neighborCell, enemyCount);
 
         cube.Bridges.SetActiveBridge(false);
     }
