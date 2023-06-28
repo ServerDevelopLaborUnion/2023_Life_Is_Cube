@@ -6,6 +6,7 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     public UnityEvent OnHitEvent = null;
     public UnityEvent OnDeadEvent = null;
 
+
     [SerializeField] float maxHP = 40f;
     private float currentHP = 0f;
 
