@@ -16,7 +16,9 @@ public class FeedbackHandler : MonoBehaviour
         FinishFeedback();
 
         foreach(Feedback f in feedbackList)
+        {
             f.CreateFeedback();
+        }
     }
 
     public void FinishFeedback()

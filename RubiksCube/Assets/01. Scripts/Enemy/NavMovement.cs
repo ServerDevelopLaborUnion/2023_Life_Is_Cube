@@ -26,7 +26,9 @@ public class NavMovement : MonoBehaviour
 
     public bool IsArrived()
     {
-        if(navAgent.pathPending == false && navAgent.remainingDistance <= navAgent.stoppingDistance + 0.5f)
+        if (navAgent.enabled == false) return false;
+
+        if (navAgent.pathPending == false && navAgent.remainingDistance <= navAgent.stoppingDistance + 0.5f)
             return true;
         else
             return false;
@@ -34,18 +36,18 @@ public class NavMovement : MonoBehaviour
 
     public void StopImmediately() => navAgent.SetDestination(transform.position);
     public void MoveToTarget(Vector3 targetPos) => navAgent.SetDestination(targetPos);
-    
-    #if UNITY_EDITOR
+
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
-        if(UnityEditor.Selection.activeGameObject != gameObject)
+        if (UnityEditor.Selection.activeGameObject != gameObject)
             return;
 
-        if(navAgent == null)
+        if (navAgent == null)
             return;
 
         Gizmos.color = Color.green;
         Gizmos.DrawLine(transform.position, navAgent.destination);
     }
-    #endif
+#endif
 }
