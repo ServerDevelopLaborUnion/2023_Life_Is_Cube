@@ -29,9 +29,9 @@ public class KarmaDropper : MonoBehaviour
         }
     }
 
-    public void Update()
-    {
-        if(Input.GetButtonDown("Jump"))
-            SpawnKarma();
-    }
+    // public void Update()
+    // {
+    //     if(Input.GetButtonDown("Jump"))
+    //         SpawnKarma();
+    // }
 }

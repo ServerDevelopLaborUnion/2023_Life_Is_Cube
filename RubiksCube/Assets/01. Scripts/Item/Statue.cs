@@ -10,11 +10,11 @@ public class Statue : MonoBehaviour, IInteractable
 
     private KarmaHandler karmaHandler = null;
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-            OnInteract(transform);
-    }
+    // private void Update()
+    // {
+    //     if (Input.GetKeyDown(KeyCode.Space))
+    //         OnInteract(transform);
+    // }
 
     public void OnInteract(Transform performer)
     {

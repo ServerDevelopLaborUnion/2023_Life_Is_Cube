@@ -1,21 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using static DEFINE;
 
 public class RollingState : State
 {
+    [SerializeField] float rollingSpeed = 20f;
 
     public override void OnStateEnter()
     {
-        playerAnimator.ToggleRolling(true);
-        playerMovement.StopImmediatly();
         playerAnimator.OnAnimationEndTrigger += OnAnimationEndHandle;
+
+        
+        playerMovement.IsActiveMove = false;
+        playerMovement.StopImmediatly();
+
         // 무적
         // 못움직이게, 공격 못하게
-        Vector3 dir = new Vector3(joyStick.lastDir.x, 0, joyStick.lastDir.y);
-        playerMovement.SetMovementDirection(dir);
+        Vector3 dir = playerInput.GetInputDirection();
+        if(dir.sqrMagnitude > 0)
+            playerMovement.SetMovementVelocity((Quaternion.Euler(0, 45f, 0) * dir.normalized) * rollingSpeed);
+        else
+            playerMovement.SetMovementVelocity(transform.forward * rollingSpeed);
+        
+        playerAnimator.ToggleRolling(true);
     }
 
     public override void StateUpdate()
@@ -28,6 +33,8 @@ public class RollingState : State
         playerAnimator.ToggleRolling(false);
 
         //playerMovement.IsActiveRotate = true;
+        Debug.Log(playerMovement.IsActiveMove);
+        playerMovement.IsActiveMove = true;
 
         playerAnimator.OnAnimationEndTrigger -= OnAnimationEndHandle;
     }

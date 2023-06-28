@@ -73,7 +73,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     public void SetMovementDirection(Vector3 value) => movementDir = value;
-    public void SetMovementVelocity(Vector3 value) => movementVelocity = value;
+    public void SetMovementVelocity(Vector3 value) => movementVelocity = value * Time.fixedDeltaTime;
 
     public void SetRotationImmediatly(Vector3 target)
     {
