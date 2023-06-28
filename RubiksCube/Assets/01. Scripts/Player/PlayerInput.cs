@@ -13,63 +13,59 @@ public class PlayerInput : MonoBehaviour
     public event Action OnSpecialAttackKeyPressed = null;
     public event Action OnSpecialAttack2KeyPressed = null;
 
+    private Vector3 input;
+
     private void Update()
     {
         //ConsumeInput();
 
-        //AttackInput();
-        #if UNITY_EDITOR
-        MovementInput_Dev();
-        #endif
+        MovementInput();
+        AttackInput();
+        SpecialAttackInput();
+        SpecialAttack2Input();
+        InteractInput();
+        RollingInput();
     }
 
-    public void MovementInput(Vector2 input)
-    {
-        Vector3 dir = new Vector3(input.x, 0, input.y);
-
-        OnMovementKeyPressed?.Invoke(dir);
-    }
-
-    public void MovementInput_Dev()
+    public void MovementInput()
     {
         float x = Input.GetAxisRaw("Horizontal");
         float y = Input.GetAxisRaw("Vertical");
         
-        Vector3 input = new Vector3(x, 0, y);
+        input = new Vector3(x, 0, y);
         
-        if(input.sqrMagnitude > 0)
-            OnMovementKeyPressed?.Invoke(input);
+        OnMovementKeyPressed?.Invoke(input);
     }
 
     public void RollingInput()
     {
-        OnRollingKeyPressed?.Invoke();
-    }
-
-    private void ConsumeInput()
-    {
         if (Input.GetKeyDown(KeyCode.Space))
-            OnConsumeKeyPressed?.Invoke();
+            OnRollingKeyPressed?.Invoke();
     }
 
     public void AttackInput()
     {
-        //if(Input.GetMouseButtonDown(0))
-        OnAttackKeyPressed?.Invoke();
+        if(Input.GetMouseButtonDown(0))
+            OnAttackKeyPressed?.Invoke();
     }
 
     public void SpecialAttackInput()
     {
-        OnSpecialAttackKeyPressed?.Invoke();
+        if(Input.GetKeyDown(KeyCode.Alpha1))
+            OnSpecialAttackKeyPressed?.Invoke();
     }
 
     public void SpecialAttack2Input()
     {
-        OnSpecialAttack2KeyPressed?.Invoke();
+        if(Input.GetKeyDown(KeyCode.Alpha2))
+            OnSpecialAttack2KeyPressed?.Invoke();
     }
 
     public void InteractInput()
     {
-        OnInteractKeyPressed?.Invoke();
+        if(Input.GetKeyDown(KeyCode.E))
+            OnInteractKeyPressed?.Invoke();
     }
+
+    public Vector3 GetInputDirection() => input;
 }
