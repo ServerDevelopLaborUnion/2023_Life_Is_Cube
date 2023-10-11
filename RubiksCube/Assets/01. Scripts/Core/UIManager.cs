@@ -2,7 +2,14 @@ using UnityEngine;
 
 public class UIManager
 {
-    public static UIManager Instance = null;
+    public static UIManager Instance { get; private set; } = null;
+
+    static UIManager() {
+        if (Instance != null)
+            return; // 실행되면 무언가 잘못된거임
+
+        Instance = new UIManager();
+    }
 
     private MenuBar menuPanel = null;
     public MenuBar MenuPanel
